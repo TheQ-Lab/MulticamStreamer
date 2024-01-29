@@ -2,15 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraArrayManager : MonoBehaviour
+public class CameraAssignManager : MonoBehaviour
 {
-    //public enum Type { BlueSpace, RedSpace, StarSpace, Fork, MinigameSpace };
-    //public Type type = Type.BlueSpace;
+    public static CameraAssignManager Instance;
+    private void Awake()
+    {
+        TooManyFuncts.Singletonize(ref Instance, this, false);
+    }
 
     private int[] toolbarIndices = { 1, 1, 1, 1 };
     private string[] toolbarStrings = { "" };
+
+
     void OnGUI()
     {
+        if (!menuActive)
+            return;
+
         for (int i = 0; i < camFrames.Count; i++)
         {
             WCamTx camFrame = camFrames[i];
@@ -45,7 +53,9 @@ public class CameraArrayManager : MonoBehaviour
         */
     }
 
-    WebCamDevice[] wcDeviceLst;
+    public bool menuActive;
+
+    List<WebCamDevice> wcDeviceLst;
     List<WebCamTexture> wcTextureLst;
 
     private List<WCamTx> camFrames;
@@ -61,7 +71,25 @@ public class CameraArrayManager : MonoBehaviour
     private void ScanForCameras()
     {
         // Scan for new Devices 
-        wcDeviceLst = WebCamTexture.devices;
+        if (wcDeviceLst == null) // initial
+        {
+            wcDeviceLst = new(WebCamTexture.devices);
+            // Creates Textures
+            wcTextureLst = new();
+            foreach (WebCamDevice wcDevice in wcDeviceLst)
+                wcTextureLst.Add(new WebCamTexture(wcDevice.name));
+        }
+        else // add more [WCDevice cant be just dumped and a new Device created - without stopping() it before]
+        {
+            foreach (WebCamDevice wcDevice in WebCamTexture.devices)
+            {
+                if (!wcDeviceLst.Contains(wcDevice))
+                {
+                    wcTextureLst.Add(new WebCamTexture(wcDevice.name));
+                }
+            }
+            wcDeviceLst = new(WebCamTexture.devices);
+        }
         foreach (WebCamDevice dev in wcDeviceLst)
             Debug.Log(dev.name);
 
@@ -71,10 +99,6 @@ public class CameraArrayManager : MonoBehaviour
         { names.Add(dev.name); }
         toolbarStrings = names.ToArray();
 
-        // Creates Textures
-        wcTextureLst = new();
-        foreach (WebCamDevice wcDevice in wcDeviceLst)
-            wcTextureLst.Add(new WebCamTexture(wcDevice.name));
     }
 
     private void ApplyCameraAssigns()
