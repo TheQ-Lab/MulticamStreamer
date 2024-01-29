@@ -19,18 +19,57 @@ public class CamGridHandler : MonoBehaviour
     }
 
     public List<CamFrameTransform> CamFrameTransforms = new ();
+    public List<CamGridAgent> CamGridAgents = new ();
+    //public Dictionary<CamGridAgent, CamFrameTransform> SlotList;
+    public CamGridAgent currentFullScreenCam;
+
     // Start is called before the first frame update
     void Start()
     {
+        InputManager.Instance.inSwapAnim.setEvent += SwapTriggered;
+
         foreach (Transform t in transform)
         {
-            CamFrameTransforms.Add(new(t.position, t.localScale));
+            if(t.TryGetComponent<CamGridAgent>(out CamGridAgent agent))
+            {
+                CamFrameTransform cft = new(t.position, t.localScale);
+                agent.CamFrameTransform = cft;
+                CamFrameTransforms.Add(cft);
+                CamGridAgents.Add(agent);
+            
+                // Final one is the Full screen
+                currentFullScreenCam = agent;
+            }
         }
     }
+
+    protected void SwapTriggered()
+    {
+        int swapTgt = InputManager.Instance.currentSwapAnimTgt;
+        CamGridAgent swapTgtAgent = CamGridAgents[swapTgt-1];
+        if (swapTgtAgent == currentFullScreenCam)
+        {
+            InputManager.Instance.inSwapAnim.Reset();
+            return;
+        }
+
+        swapTgtAgent.StartCoroutine(swapTgtAgent.LaunchAnim(currentFullScreenCam.CamFrameTransform));
+        currentFullScreenCam.StartCoroutine(currentFullScreenCam.LaunchAnim(swapTgtAgent.CamFrameTransform));
+
+        // yield wait for treturn blabla ...
+
+        currentFullScreenCam = swapTgtAgent;
+
+        InputManager.Instance.inSwapAnim.Reset();
+        return;
+    }
+
+
 
     // Update is called once per frame
     void Update()
     {
-        
+        /*SlotList.TryGetValue(new GameObject(), out CamFrameTransform t);
+        t = CamFrameTransforms[0];*/
     }
 }
