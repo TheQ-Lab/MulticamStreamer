@@ -10,7 +10,7 @@ public class CameraAssignManager : MonoBehaviour
         TooManyFuncts.Singletonize(ref Instance, this, false);
     }
 
-    private int[] toolbarIndices = { 1, 1, 1, 1 };
+    private int[] toolbarIndices = { 2, 3, 0, 1 };
     private string[] toolbarStrings = { "" };
 
 
@@ -24,7 +24,7 @@ public class CameraAssignManager : MonoBehaviour
             WCamTx camFrame = camFrames[i];
             GUI.Label(new Rect(25,105+(i*50),150, 30), camFrame.name);
             //GUILayout.Label(
-            toolbarIndices[i] = GUI.Toolbar(new Rect(25, 125+(i*50), 400, 30), toolbarIndices[i], toolbarStrings);
+            toolbarIndices[i] = GUI.Toolbar(new Rect(25, 125+(i*50), 800, 30), toolbarIndices[i], toolbarStrings);
         }
         /*
         foreach (WebCamDevice dev in wcDeviceLst)
@@ -58,11 +58,15 @@ public class CameraAssignManager : MonoBehaviour
     List<WebCamDevice> wcDeviceLst;
     List<WebCamTexture> wcTextureLst;
 
-    private List<WCamTx> camFrames;
+    private List<WCamTx> camFrames = new();
 
     private void Start()
     {
-        camFrames = new(GetComponentsInChildren<WCamTx>());
+        //camFrames = new(GetComponentsInChildren<WCamTx>());
+        camFrames = TooManyFuncts.GetComponentsInChildrenParametric<WCamTx>(transform, null, null, true);
+        //foreach(Transform c1 in transform)
+        //    camFrames.Add(c1.GetComponentInChildren<WCamTx>());
+
         ScanForCameras();
 
         ApplyCameraAssigns();

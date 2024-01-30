@@ -10,7 +10,7 @@
     "com.unity.timeline": "1.8.6",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.8.0",
-    "de.funk-software.marlinsunityessentials": "file:C:/Users/Merl/Downloads/funksoftware-marlinsunityessentials-64ea6a1cef08",
+    "de.funk-software.marlinsunityessentials": "file:../EXTERNAL_RESOURCES/funksoftware-marlinsunityessentials-64ea6a1cef08",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

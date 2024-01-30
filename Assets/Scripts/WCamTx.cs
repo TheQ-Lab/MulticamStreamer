@@ -10,17 +10,6 @@ public class WCamTx : MonoBehaviour
     private WebCamTexture tx;
     [SerializeField]
     private Material mat;
-
-    
-
-    
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
         
     public void SetupAssignTx(WebCamTexture newTexture)
     {
@@ -55,10 +44,5 @@ public class WCamTx : MonoBehaviour
 
 
        // IMPORTANT: Both X and Z are normally mirrored, else flip in scale in inspector
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

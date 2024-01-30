@@ -1,0 +1,16 @@
+{
+  "name": "de.funk-software.marlinsunityessentials",
+  "version": "1.9.5",
+  "displayName": "Marlins Unity Essentials",
+  "description": "Essential Unity Scripts that should work independently",
+  "unity": "2021.3",
+  "unityRelease": "20f1",
+  "documentationUrl": "https://marlin-ferlmann.de",
+  "changelogUrl": "https://bitbucket.org/funksoftware/marlinsunityessentials",
+  "licensesUrl": "https://www.funk-bowling.de",
+  "author": {
+    "name": "Marlin Ferlmann",
+    "email": "m.ferlmann@funk-bowling.de",
+    "url": "https://www.funk-bowling.de"
+  }
+}

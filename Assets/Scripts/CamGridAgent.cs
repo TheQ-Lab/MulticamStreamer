@@ -19,6 +19,7 @@ public class CamGridAgent : MonoBehaviour
         //StartCoroutine(PhaseBAnim(new Vector3(5.94999981f, -3.20000005f, 0)));
 
         yield return StartCoroutine(PhaseBAnim(frameTransform.position));
+        transform.localScale = frameTransform.scale;
         CamFrameTransform = frameTransform;
     }
 

@@ -277,7 +277,7 @@
       "url": "https://packages.unity.com"
     },
     "de.funk-software.marlinsunityessentials": {
-      "version": "file:C:/Users/Merl/Downloads/funksoftware-marlinsunityessentials-64ea6a1cef08",
+      "version": "file:../EXTERNAL_RESOURCES/funksoftware-marlinsunityessentials-64ea6a1cef08",
       "depth": 0,
       "source": "local",
       "dependencies": {}
