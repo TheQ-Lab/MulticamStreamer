@@ -53,8 +53,36 @@ public class CamTxAgent: MonoBehaviour
 
     public void CropToSize()
     {
-        float aspectRatio = Mathf.Abs(TooManyFuncts.Remap(tx.width, 0, tx.height, 0, 1)); //for height = 1, width of cam is <--
-        Debug.Log(aspectRatio);
+        float aspectRatioTx = Mathf.Abs(TooManyFuncts.Remap(tx.width, 0, tx.height, 0, 1)); //for height = 1, width of cam is <--
+        Debug.Log(aspectRatioTx);
+        aspectRatioTx = Mathf.Abs(TooManyFuncts.Remap(tx.height, 0, tx.width, 0, 1)); //for width = 1, height of cam is <--
+        // alias: 1 to x
+        Debug.Log(aspectRatioTx);
 
+        Vector3 frameSize = transform.parent.localScale;
+        float aspectRatioFrame = Mathf.Abs(TooManyFuncts.Remap(frameSize.y, 0, frameSize.x, 0, 1));
+        Debug.Log(aspectRatioFrame);
+
+        // aspectRaio of Tx < aspectRatio of Frame => crop to Height | crop of right and left edges
+
+        Vector2 txTiling = new(1f, 1);
+        Vector2 txOffset = new(0f, 0f);
+        if (aspectRatioTx < aspectRatioFrame)
+        {
+
+            float aspectRatioRel = Mathf.Abs(TooManyFuncts.Remap(tx.height, 0, tx.width, 0, 1/ aspectRatioFrame));
+
+
+            txTiling.x = aspectRatioRel;
+
+            txOffset.x = (1 - aspectRatioRel) / 2;
+
+            //txTiling.x = aspectRatioTx;
+            //txOffset.x = (1 - aspectRatioTx) / 2;
+        }
+
+        mat.mainTextureScale = txTiling;
+        mat.mainTextureOffset = txOffset;
+        //mat.SetTextureScale("_MainTex", txTiling);
     }
 }

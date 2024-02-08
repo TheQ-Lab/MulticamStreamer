@@ -81,6 +81,9 @@ public class CamAssignHandler : MonoBehaviour
         }
 
         ApplyCameraAssigns();
+
+
+        InvokeRepeating(nameof(ApplyCameraAssigns), 2f, 2f);
     }
 
     private void ScanForCameras()
