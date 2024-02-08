@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WCamTx : MonoBehaviour
+public class CamTxAgent: MonoBehaviour
 {
-    private WebCamDevice wcDevice;
+    //private WebCamDevice wcDevice;
     [SerializeField]
     private WebCamTexture tx;
     [SerializeField]
     private Material mat;
-        
+
+    [SerializeField]
+    private Vector2Int txResolution;
     public void SetupAssignTx(WebCamTexture newTexture)
     {
         /*if(tx != null)
@@ -22,18 +24,21 @@ public class WCamTx : MonoBehaviour
 
         //tx = new WebCamTexture(wcDevice.name);
         // --- Assign Texture
-        //GetComponent<Renderer>().material.mainTexture = tx;
-
+        //GetComponent<Renderer>().material.mainTexture = tx;  // Without instantiating
         mat = GetComponent<Renderer>().material;
         mat.mainTexture = tx;
 
         tx.Play();
+        txResolution = new(tx.width, tx.height);
+
+        //Debug.Log(tx.width + ", " + tx.height);
+
     }
 
 
-    public void SetupAdaptToAspectRatio()
+    public void ScaleWidthToHeight()
     {
-        // Debug.Log(tx.width + ", " + tx.height);
+        //Debug.Log(tx.width + ", " + tx.height);
         float aspectRatio = Mathf.Abs(TooManyFuncts.Remap(tx.width, 0, tx.height, 0, transform.localScale.z)); //for height = 1, width of cam is <--
         // when camHeight is planeHeight, camWidth is ?
         Vector3 scale = transform.localScale;
@@ -44,5 +49,12 @@ public class WCamTx : MonoBehaviour
 
 
        // IMPORTANT: Both X and Z are normally mirrored, else flip in scale in inspector
+    }
+
+    public void CropToSize()
+    {
+        float aspectRatio = Mathf.Abs(TooManyFuncts.Remap(tx.width, 0, tx.height, 0, 1)); //for height = 1, width of cam is <--
+        Debug.Log(aspectRatio);
+
     }
 }

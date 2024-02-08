@@ -146,11 +146,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 17869810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b21d5b552c0120445b896b468cbc3476, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf2937d0b039644291941fa0adfc623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
-  mat: {fileID: 2100000, guid: 9e035e94f882d6f429f572de963b20bf, type: 2}
+  mat: {fileID: 0}
+  txResolution: {x: 0, y: 0}
 --- !u!212 &17869812
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -264,11 +265,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 139757431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b21d5b552c0120445b896b468cbc3476, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf2937d0b039644291941fa0adfc623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
+  txResolution: {x: 0, y: 0}
 --- !u!64 &139757434
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -387,11 +389,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 275329514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b21d5b552c0120445b896b468cbc3476, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf2937d0b039644291941fa0adfc623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
+  txResolution: {x: 0, y: 0}
 --- !u!64 &275329517
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1527,9 +1530,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1209219590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11db0ee1561b87a4c8072eea1bed5e33, type: 3}
+  m_Script: {fileID: 11500000, guid: 1932774e5cdf9f24ea597a9f44887cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultToolbarIndices: 02000000030000000000000001000000
   menuActive: 0
 --- !u!4 &1209219592
 Transform:
@@ -1609,11 +1613,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1287102297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b21d5b552c0120445b896b468cbc3476, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf2937d0b039644291941fa0adfc623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
+  txResolution: {x: 0, y: 0}
 --- !u!64 &1287102300
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1806,11 +1811,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1374198452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b21d5b552c0120445b896b468cbc3476, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf2937d0b039644291941fa0adfc623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
+  txResolution: {x: 0, y: 0}
 --- !u!1 &1469683329
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,7 +42,7 @@ public class InputManager : MonoBehaviour
 
     private void ToggleMenu(InputAction.CallbackContext context)
     {
-        CameraAssignManager.Instance.menuActive = !CameraAssignManager.Instance.menuActive;
+        CamAssignHandler.Instance.menuActive = !CamAssignHandler.Instance.menuActive;
     }
 
     private void ShowCamN(int n, InputAction.CallbackContext context)

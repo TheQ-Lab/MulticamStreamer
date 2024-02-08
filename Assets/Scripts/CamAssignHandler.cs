@@ -2,18 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraAssignManager : MonoBehaviour
+public class CamAssignHandler : MonoBehaviour
 {
-    public static CameraAssignManager Instance;
-    private void Awake()
-    {
-        TooManyFuncts.Singletonize(ref Instance, this, false);
-    }
 
-    private int[] toolbarIndices = { 2, 3, 0, 1 };
+    [SerializeField] int[] defaultToolbarIndices = { 2, 3, 0, 1 };
+    List<int> toolbarIndices = new(4);
+
+    #region OnScreenMenu
+
     private string[] toolbarStrings = { "" };
-
-
     void OnGUI()
     {
         if (!menuActive)
@@ -21,7 +18,7 @@ public class CameraAssignManager : MonoBehaviour
 
         for (int i = 0; i < camFrames.Count; i++)
         {
-            WCamTx camFrame = camFrames[i];
+            CamTxAgent camFrame = camFrames[i];
             GUI.Label(new Rect(25,105+(i*50),150, 30), camFrame.name);
             //GUILayout.Label(
             toolbarIndices[i] = GUI.Toolbar(new Rect(25, 125+(i*50), 800, 30), toolbarIndices[i], toolbarStrings);
@@ -52,22 +49,36 @@ public class CameraAssignManager : MonoBehaviour
         }
         */
     }
+    #endregion
+
+    public static CamAssignHandler Instance;
+    private void Awake()
+    {
+        TooManyFuncts.Singletonize(ref Instance, this, false);
+    }
 
     public bool menuActive;
 
     List<WebCamDevice> wcDeviceLst;
     List<WebCamTexture> wcTextureLst;
 
-    private List<WCamTx> camFrames = new();
+    private List<CamTxAgent> camFrames = new();
 
     private void Start()
     {
         //camFrames = new(GetComponentsInChildren<WCamTx>());
-        camFrames = TooManyFuncts.GetComponentsInChildrenParametric<WCamTx>(transform, null, null, true);
+        camFrames = TooManyFuncts.GetComponentsInChildrenParametric<CamTxAgent>(transform, null, null, true);
         //foreach(Transform c1 in transform)
         //    camFrames.Add(c1.GetComponentInChildren<WCamTx>());
 
         ScanForCameras();
+
+        // Startup sanity check wether preffered cameras even are available - to get assigned
+        foreach(int ind in defaultToolbarIndices)
+        {
+            int nuInd = Mathf.Min(ind, wcDeviceLst.Count - 1);
+            toolbarIndices.Add(nuInd);
+        }
 
         ApplyCameraAssigns();
     }
@@ -111,9 +122,10 @@ public class CameraAssignManager : MonoBehaviour
             tx.Pause();
         for (int i = 0; i < camFrames.Count; i++)
         {
-            WCamTx camTx = camFrames[i];
+            CamTxAgent camTx = camFrames[i];
             camTx.SetupAssignTx(wcTextureLst[toolbarIndices[i]]);
-            camTx.SetupAdaptToAspectRatio();
+            //camTx.ScaleWidthToHeight();
+            camTx.CropToSize();
         }
     }
 }
