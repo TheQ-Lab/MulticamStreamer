@@ -69,19 +69,24 @@ public class CamTxAgent: MonoBehaviour
         Vector2 txOffset = new(0f, 0f);
         if (aspectRatioTx < aspectRatioFrame)
         {
-
             float aspectRatioRel = Mathf.Abs(TooManyFuncts.Remap(tx.height, 0, tx.width, 0, 1/ aspectRatioFrame));
 
-
             txTiling.x = aspectRatioRel;
-
             txOffset.x = (1 - aspectRatioRel) / 2;
 
+            // Old versions / Specific to 1:1 Frame-Aspect
             //txTiling.x = aspectRatioTx;
             //txOffset.x = (1 - aspectRatioTx) / 2;
         }
+        else if (aspectRatioTx > aspectRatioFrame)
+        {
+            float aspectRatioRel = Mathf.Abs(TooManyFuncts.Remap(tx.width, 0, tx.height, 0, aspectRatioFrame));
 
-        mat.mainTextureScale = txTiling;
+            txTiling.y = aspectRatioRel;
+            txOffset.y = (1 - aspectRatioRel) / 2;
+        }
+
+            mat.mainTextureScale = txTiling;
         mat.mainTextureOffset = txOffset;
         //mat.SetTextureScale("_MainTex", txTiling);
     }
