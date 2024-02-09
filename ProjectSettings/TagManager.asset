@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Labels
+    uniqueID: 1762864383
+    locked: 0
