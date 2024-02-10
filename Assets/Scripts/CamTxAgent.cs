@@ -54,7 +54,7 @@ public class CamTxAgent: MonoBehaviour
     {
         // ---fixed arguments:---
         //Vector3 frameSize = transform.parent.localScale;
-        Vector3 frameSize = transform.localScale;
+        Vector2 frameSize = new(transform.localScale.x, transform.localScale.z);
         // --------------------------------
 
 
