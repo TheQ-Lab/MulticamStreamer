@@ -28,7 +28,7 @@ public class CamGridHandler : MonoBehaviour
     {
         InputManager.Instance.inSwapAnim.setEvent += SwapTriggered;
 
-        foreach (Transform t in transform)
+        foreach (Transform t in TooManyFuncts.GetChildrenParametric(transform, null, null, true))
         {
             if(t.TryGetComponent<CamGridAgent>(out CamGridAgent agent))
             {

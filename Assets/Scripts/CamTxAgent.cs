@@ -15,18 +15,17 @@ public class CamTxAgent: MonoBehaviour
     private Vector2Int txResolution;
     public void SetupAssignTx(WebCamTexture newTexture)
     {
+        mat = GetComponent<Renderer>().material;
+        //mat = TooManyFuncts2.GetComponentInChildrenParametric<MeshRenderer>(transform, null, null, null, true);
+
         /*if(tx != null)
             tx.Stop();*/
         // --- Get Tx
         tx = newTexture;
         
-        //Debug.Log(newTexture.name + " selected");
-
-        //tx = new WebCamTexture(wcDevice.name);
         // --- Assign Texture
-        //GetComponent<Renderer>().material.mainTexture = tx;  // Without instantiating
-        mat = GetComponent<Renderer>().material;
-        mat.mainTexture = tx;
+        //GetComponent<Renderer>().material.mainTexture = tx;   // Without instantiating
+        mat.mainTexture = tx;                                   // With instantiating
 
         tx.Play();
         txResolution = new(tx.width, tx.height);
@@ -53,15 +52,20 @@ public class CamTxAgent: MonoBehaviour
 
     public void CropToSize()
     {
-        float aspectRatioTx = Mathf.Abs(TooManyFuncts.Remap(tx.width, 0, tx.height, 0, 1)); //for height = 1, width of cam is <--
-        Debug.Log(aspectRatioTx);
-        aspectRatioTx = Mathf.Abs(TooManyFuncts.Remap(tx.height, 0, tx.width, 0, 1)); //for width = 1, height of cam is <--
-        // alias: 1 to x
-        Debug.Log(aspectRatioTx);
+        // ---fixed arguments:---
+        //Vector3 frameSize = transform.parent.localScale;
+        Vector3 frameSize = transform.localScale;
+        // --------------------------------
 
-        Vector3 frameSize = transform.parent.localScale;
+
+        //float aspectRatioTx = Mathf.Abs(TooManyFuncts.Remap(tx.width, 0, tx.height, 0, 1)); //for height = 1, width of cam is <--
+        //Debug.Log(aspectRatioTx);
+        float aspectRatioTx = Mathf.Abs(TooManyFuncts.Remap(tx.height, 0, tx.width, 0, 1)); //for width = 1, height of cam is <-- // alias: 1 to x
+
+        //Debug.Log(aspectRatioTx);
+
         float aspectRatioFrame = Mathf.Abs(TooManyFuncts.Remap(frameSize.y, 0, frameSize.x, 0, 1));
-        Debug.Log(aspectRatioFrame);
+        //Debug.Log(aspectRatioFrame);
 
         // aspectRaio of Tx < aspectRatio of Frame => crop to Height | crop of right and left edges
 
@@ -86,7 +90,7 @@ public class CamTxAgent: MonoBehaviour
             txOffset.y = (1 - aspectRatioRel) / 2;
         }
 
-            mat.mainTextureScale = txTiling;
+        mat.mainTextureScale = txTiling;
         mat.mainTextureOffset = txOffset;
         //mat.SetTextureScale("_MainTex", txTiling);
     }

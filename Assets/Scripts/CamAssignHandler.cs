@@ -67,7 +67,8 @@ public class CamAssignHandler : MonoBehaviour
     private void Start()
     {
         //camFrames = new(GetComponentsInChildren<WCamTx>());
-        camFrames = TooManyFuncts.GetComponentsInChildrenParametric<CamTxAgent>(transform, null, null, true);
+        // camFrames = TooManyFuncts.GetComponentsInChildrenParametric<CamTxAgent>(transform, null, null, true);
+         camFrames = TooManyFuncts2.GetComponentsInChildrenParametric<CamTxAgent>(transform, null, null, true, true);
         //foreach(Transform c1 in transform)
         //    camFrames.Add(c1.GetComponentInChildren<WCamTx>());
 
@@ -123,6 +124,7 @@ public class CamAssignHandler : MonoBehaviour
     {
         foreach(WebCamTexture tx in wcTextureLst)
             tx.Pause();
+
         for (int i = 0; i < camFrames.Count; i++)
         {
             CamTxAgent camTx = camFrames[i];
