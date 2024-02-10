@@ -5,7 +5,7 @@ using UnityEngine;
 public class CamAssignHandler : MonoBehaviour
 {
 
-    [SerializeField] int[] defaultToolbarIndices = { 2, 3, 0, 1 };
+    [SerializeField] int[] defaultToolbarIndices = { 2, 3, 1, 0 };
     List<int> toolbarIndices = new(4);
 
     #region OnScreenMenu
@@ -16,18 +16,22 @@ public class CamAssignHandler : MonoBehaviour
         if (!menuActive)
             return;
 
+        //GUIStyle style = new GUIStyle();
+        //style.normal.background
+
+        GUI.skin.label.fontSize = 24;
+        //GUI.skin.label.
+        GUI.skin.button.fontSize = 22;
         for (int i = 0; i < camFrames.Count; i++)
         {
             CamTxAgent camFrame = camFrames[i];
-            GUI.Label(new Rect(25,105+(i*50),150, 30), camFrame.name);
+            GUI.Label(new Rect(25,100+(i*95),150, 30), camFrame.name);
             //GUILayout.Label(
-            toolbarIndices[i] = GUI.Toolbar(new Rect(25, 125+(i*50), 800, 30), toolbarIndices[i], toolbarStrings);
+            toolbarIndices[i] = GUI.Toolbar(new Rect(25, 135+(i*95), 800, 50), toolbarIndices[i], toolbarStrings);
         }
         /*
         foreach (WebCamDevice dev in wcDeviceLst)
-        {
             GUILayout.Label(dev.name);
-        }
         */
 
         if (GUILayout.Button("Apply changes"))
@@ -40,7 +44,6 @@ public class CamAssignHandler : MonoBehaviour
             ScanForCameras();
             Debug.Log("Scanned!");
         }
-
         /*
         if(GUI.changed)
         {
@@ -77,7 +80,10 @@ public class CamAssignHandler : MonoBehaviour
         // Startup sanity check wether preffered cameras even are available - to get assigned
         foreach(int ind in defaultToolbarIndices)
         {
-            int nuInd = Mathf.Min(ind, wcDeviceLst.Count - 1);
+            //int nuInd = Mathf.Min(ind, wcDeviceLst.Count - 1);
+            int nuInd = ind;
+            if(nuInd >= wcDeviceLst.Count)
+                nuInd = 0;
             toolbarIndices.Add(nuInd);
         }
 
