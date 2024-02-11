@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CamAssignHandler : MonoBehaviour
 {
+    public static CamAssignHandler Instance;
 
     [SerializeField] int[] defaultToolbarIndices = { 2, 3, 1, 0 };
-    List<int> toolbarIndices = new(4);
+    private List<int> toolbarIndices = new(4);
 
     #region OnScreenMenu
-
     private string[] toolbarStrings = { "" };
     void OnGUI()
     {
@@ -22,9 +22,9 @@ public class CamAssignHandler : MonoBehaviour
         GUI.skin.label.fontSize = 24;
         //GUI.skin.label.
         GUI.skin.button.fontSize = 22;
-        for (int i = 0; i < camFrames.Count; i++)
+        for (int i = 0; i < camAgents.Count; i++)
         {
-            CamTxAgent camFrame = camFrames[i];
+            CamAssignAgent camFrame = camAgents[i];
             GUI.Label(new Rect(25,100+(i*95),150, 30), camFrame.name);
             //GUILayout.Label(
             toolbarIndices[i] = GUI.Toolbar(new Rect(25, 135+(i*95), 800, 50), toolbarIndices[i], toolbarStrings);
@@ -54,7 +54,6 @@ public class CamAssignHandler : MonoBehaviour
     }
     #endregion
 
-    public static CamAssignHandler Instance;
     private void Awake()
     {
         TooManyFuncts.Singletonize(ref Instance, this, false);
@@ -65,13 +64,13 @@ public class CamAssignHandler : MonoBehaviour
     List<WebCamDevice> wcDeviceLst;
     List<WebCamTexture> wcTextureLst;
 
-    private List<CamTxAgent> camFrames = new();
+    private List<CamAssignAgent> camAgents = new();
 
     private void Start()
     {
         //camFrames = new(GetComponentsInChildren<WCamTx>());
-        // camFrames = TooManyFuncts.GetComponentsInChildrenParametric<CamTxAgent>(transform, null, null, true);
-         camFrames = TooManyFuncts2.GetComponentsInChildrenParametric<CamTxAgent>(transform, null, null, true, true);
+        // camFrames = TooManyFuncts.GetComponentsInChildrenParametric<CamAssignAgent>(transform, null, null, true);
+         camAgents = TooManyFuncts2.GetComponentsInChildrenParametric<CamAssignAgent>(transform, null, null, true, true);
         //foreach(Transform c1 in transform)
         //    camFrames.Add(c1.GetComponentInChildren<WCamTx>());
 
@@ -90,7 +89,7 @@ public class CamAssignHandler : MonoBehaviour
         ApplyCameraAssigns();
 
 
-        InvokeRepeating(nameof(ApplyCameraAssigns), 2f, .2f);
+        InvokeRepeating(nameof(ApplyCameraResizes), 2f, .2f);
     }
 
     private void ScanForCameras()
@@ -131,12 +130,33 @@ public class CamAssignHandler : MonoBehaviour
         foreach(WebCamTexture tx in wcTextureLst)
             tx.Pause();
 
-        for (int i = 0; i < camFrames.Count; i++)
+        foreach(CamAssignAgent camAgnt in camAgents)
         {
-            CamTxAgent camTx = camFrames[i];
-            camTx.SetupAssignTx(wcTextureLst[toolbarIndices[i]]);
+            int i = camAgents.IndexOf(camAgnt);
+            camAgnt.AssignTx(wcTextureLst[toolbarIndices[i]]);
             //camTx.ScaleWidthToHeight();
-            camTx.CropToSize();
+            //camAgnt.CropToSize();
+        }
+
+        ApplyCameraResizes();
+    }
+
+    private void ApplyCameraResizes()
+    {
+        ApplyCameraResizes(null);
+    }
+
+#nullable enable
+    private void ApplyCameraResizes(List<CamAssignAgent>? resizedCamAgents)
+    {
+        // null means resize all!
+        if (resizedCamAgents is null)
+            resizedCamAgents = camAgents;
+
+        foreach(CamAssignAgent agent in resizedCamAgents)
+        {
+            agent.CropToSize();
         }
     }
+#nullable disable
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CamTxAgent: MonoBehaviour
+public class CamAssignAgent: MonoBehaviour
 {
     //private WebCamDevice wcDevice;
     [SerializeField]
@@ -13,7 +13,7 @@ public class CamTxAgent: MonoBehaviour
 
     [SerializeField]
     private Vector2Int txResolution;
-    public void SetupAssignTx(WebCamTexture newTexture)
+    public void AssignTx(WebCamTexture newTexture)
     {
         mat = GetComponent<Renderer>().material;
         //mat = TooManyFuncts2.GetComponentInChildrenParametric<MeshRenderer>(transform, null, null, null, true);
