@@ -89,7 +89,7 @@ public class CamAssignHandler : MonoBehaviour
         ApplyCameraAssigns();
 
 
-        InvokeRepeating(nameof(ApplyCameraResizes), 2f, .2f);
+        //InvokeRepeating(nameof(ApplyCameraResizes), 2f, .2f);
     }
 
     private void ScanForCameras()
@@ -141,13 +141,13 @@ public class CamAssignHandler : MonoBehaviour
         ApplyCameraResizes();
     }
 
-    private void ApplyCameraResizes()
+    public void ApplyCameraResizes()
     {
         ApplyCameraResizes(null);
     }
 
 #nullable enable
-    private void ApplyCameraResizes(List<CamAssignAgent>? resizedCamAgents)
+    public void ApplyCameraResizes(List<CamAssignAgent>? resizedCamAgents)
     {
         // null means resize all!
         if (resizedCamAgents is null)

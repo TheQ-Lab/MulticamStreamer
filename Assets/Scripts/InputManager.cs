@@ -47,9 +47,11 @@ public class InputManager : MonoBehaviour
 
     private void ShowCamN(int n, InputAction.CallbackContext context)
     {
+        //Debug.LogError("hello?");
+        if (inSwapAnim) return;
+
         currentSwapAnimTgt = n;
-        inSwapAnim.Set();
-        //...
+        CamGridHandler.Instance.SwapTriggered();
     }
 
     private void OnDisable()
