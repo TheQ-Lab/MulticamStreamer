@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MBExtensions;
 
 public class CamGridAgent : MonoBehaviour
 {
@@ -17,8 +18,21 @@ public class CamGridAgent : MonoBehaviour
         //StartCoroutine(PhaseBAnim(new Vector3(-2.98f, 0, 0)));
         //StartCoroutine(PhaseBAnim(new Vector3(5.94999981f, -3.20000005f, 0)));
 
+        //assignAgent.tx.Pause();
+
         yield return StartCoroutine(PhaseBAnim(tgtFrameTransform.position, tgtFrameTransform.scale));
         CamFrameTransform = tgtFrameTransform;
+
+        //StartCoroutine(this.DelayedExecution(resumeOperation, new WaitForSeconds(0.1f)));
+        void resumeOperation()
+        {
+            assignAgent.tx.Play();
+        };
+
+        //assignAgent.CropToSize();
+        assignAgent.tx.Play();
+        yield return new WaitForSeconds(0.05f);
+
     }
 
     private IEnumerator PhaseBAnim(Vector3 tgtPos, Vector3 tgtScale)
@@ -59,6 +73,8 @@ public class CamGridAgent : MonoBehaviour
 
             var currentScale = Vector3.Lerp(startScale, tgtScale, t);
             transform.localScale = currentScale;
+
+            //assignAgent.CropToSize();     // for continuous resizing
 
             yield return null;
             timeElapsed += Time.deltaTime;

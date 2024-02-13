@@ -60,31 +60,20 @@ public class CamGridHandler : MonoBehaviour
         InputManager.Instance.inSwapAnim.Set();
 
         StartCoroutine(SwapTriggeredRoutine(swapTgtAgent));
-        /*
-        swapTgtAgent.StartCoroutine(swapTgtAgent.LaunchAnim(currentFullScreenCam.CamFrameTransform));
-        currentFullScreenCam.StartCoroutine(currentFullScreenCam.LaunchAnim(swapTgtAgent.CamFrameTransform));
+        IEnumerator SwapTriggeredRoutine(CamGridAgent swapTgtAgent)
+        {
 
-        // yield wait for treturn blabla ...
+            swapTgtAgent.StartCoroutine(swapTgtAgent.LaunchAnim(currentFullScreenCam.CamFrameTransform));
+            yield return currentFullScreenCam.StartCoroutine(currentFullScreenCam.LaunchAnim(swapTgtAgent.CamFrameTransform));
 
-        currentFullScreenCam = swapTgtAgent;
+            List<CamAssignAgent> lst = new();
+            lst.Add(swapTgtAgent.assignAgent);
+            lst.Add(currentFullScreenCam.assignAgent);
+            CamAssignHandler.Instance.ApplyCameraResizes(lst);
 
-        InputManager.Instance.inSwapAnim.Reset();
-        return;
-        */
+            currentFullScreenCam = swapTgtAgent;
+            InputManager.Instance.inSwapAnim.Reset();
+        }
     }
 
-    private IEnumerator SwapTriggeredRoutine(CamGridAgent swapTgtAgent)
-    {
-
-        swapTgtAgent.StartCoroutine(swapTgtAgent.LaunchAnim(currentFullScreenCam.CamFrameTransform));
-        yield return currentFullScreenCam.StartCoroutine(currentFullScreenCam.LaunchAnim(swapTgtAgent.CamFrameTransform));
-
-        List<CamAssignAgent> lst = new();
-        lst.Add(swapTgtAgent.assignAgent);
-        lst.Add(currentFullScreenCam.assignAgent);
-        CamAssignHandler.Instance.ApplyCameraResizes(lst);
-
-        currentFullScreenCam = swapTgtAgent;
-        InputManager.Instance.inSwapAnim.Reset();
-    }
 }

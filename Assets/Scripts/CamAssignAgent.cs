@@ -7,7 +7,7 @@ public class CamAssignAgent: MonoBehaviour
 {
     //private WebCamDevice wcDevice;
     [SerializeField]
-    private WebCamTexture tx;
+    public WebCamTexture tx;
     [SerializeField]
     private Material mat;
 
