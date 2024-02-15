@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      icon_video_plus_bg_0: -2857203273319748331
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

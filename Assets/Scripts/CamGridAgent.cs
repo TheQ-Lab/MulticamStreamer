@@ -6,11 +6,15 @@ using MBExtensions;
 public class CamGridAgent : MonoBehaviour
 {
     public CamAssignAgent assignAgent;
+    public Label label;
+
     public CamGridHandler.CamFrameTransform CamFrameTransform;
 
     private void Awake()
     {
         assignAgent = GetComponent<CamAssignAgent>();
+        var index = transform.GetSiblingIndex();
+        label = GameObject.Find("Labels").transform.GetChild(index).GetComponent<Label>();
     }
 
     public IEnumerator LaunchAnim(CamGridHandler.CamFrameTransform tgtFrameTransform)
@@ -20,8 +24,10 @@ public class CamGridAgent : MonoBehaviour
 
         //assignAgent.tx.Pause();
 
+        label.SwapStarted();
         yield return StartCoroutine(PhaseBAnim(tgtFrameTransform.position, tgtFrameTransform.scale));
         CamFrameTransform = tgtFrameTransform;
+        label.SwapEnded();
 
         //StartCoroutine(this.DelayedExecution(resumeOperation, new WaitForSeconds(0.1f)));
         void resumeOperation()
