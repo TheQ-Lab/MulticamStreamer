@@ -30,10 +30,10 @@ public class CamGridAgent : MonoBehaviour
         label.SwapEnded();
 
         //StartCoroutine(this.DelayedExecution(resumeOperation, new WaitForSeconds(0.1f)));
-        void resumeOperation()
+        /*void resumeOperation()
         {
             assignAgent.tx.Play();
-        };
+        };*/
 
         //assignAgent.CropToSize();
         assignAgent.tx.Play();

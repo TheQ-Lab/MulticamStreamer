@@ -13,6 +13,7 @@ public class VoteButton : MonoBehaviour
     private List<Coroutine> coroutines = new();
 
     private Animator animator;
+    private ObjTracker tracker;
     //private Button button;
     private Image circleBar; //arrow;
 
@@ -22,14 +23,16 @@ public class VoteButton : MonoBehaviour
         //button = GetComponent<Button>();
 
         circleBar = TooManyFuncts.GetComponentInChildrenParametric<Image>(transform, "Bar", null, null);
+        TryGetComponent(out tracker);
         //arrow = TooManyFuncts.GetComponentInChildrenParametric<Image>(transform, "Arrow", null, null);
     }
 
     public void InitializeVote(int maxVotes)
     {
         currentVotes = 0;
-
+        tracker.enabled = true;
         //Spawn Btn as Square initially
+        CallPanel();
     }
 
     public void UpdateVote(int updatedVotes)
@@ -119,9 +122,9 @@ public class VoteButton : MonoBehaviour
     private void Start()
     {
         //StartCoroutine(this.DelayedExecution(on, 1.5f));
-        StartCoroutine(this.DelayedExecution(CallPanel, 1f));
+        StartCoroutine(this.DelayedExecution(delegate { InitializeVote(5); }, 1f));
         StartCoroutine(this.DelayedExecution(delegate { UpdateVote(1); }, 2.5f));
-        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(2); }, 4f));
+        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(2); }, 4.0f));
         StartCoroutine(this.DelayedExecution(delegate { UpdateVote(3); }, 5.2f));
         StartCoroutine(this.DelayedExecution(delegate { UpdateVote(4); }, 6.4f));
         StartCoroutine(this.DelayedExecution(delegate { UpdateVote(5); }, 7.6f));
@@ -182,6 +185,7 @@ public class VoteButton : MonoBehaviour
         animator.Play("Idle", 1);
         //animator.StopPlayback();
 
+        tracker.enabled = false;
         foreach (Image i in TooManyFuncts.GetComponentsInChildrenParametric<Image>(transform.parent, null, null, null))
             i.enabled = false;
 

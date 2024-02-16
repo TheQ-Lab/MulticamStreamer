@@ -1953,6 +1953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7763960400055d4ab84628081635cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
   trackedObj: {fileID: 2069735136}
 --- !u!4 &659099480
 Transform:
@@ -3269,7 +3270,7 @@ Transform:
   m_GameObject: {fileID: 1257975863}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5, y: -0, z: -5}
+  m_LocalPosition: {x: 7.69, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3414,6 +3415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7763960400055d4ab84628081635cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
   trackedObj: {fileID: 1162301706}
 --- !u!4 &1271506131
 Transform:
@@ -3816,6 +3818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7763960400055d4ab84628081635cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
   trackedObj: {fileID: 646081581}
 --- !u!212 &1449735669
 SpriteRenderer:
@@ -5630,6 +5633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7763960400055d4ab84628081635cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
   trackedObj: {fileID: 1630425523}
 --- !u!4 &1913936865
 Transform:
@@ -5668,6 +5672,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1929126618}
+  - component: {fileID: 1929126625}
   - component: {fileID: 1929126623}
   - component: {fileID: 1929126622}
   - component: {fileID: 1929126624}
@@ -5820,6 +5825,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVotes: 0
   maxVotes: 5
+--- !u!114 &1929126625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929126617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7763960400055d4ab84628081635cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 1
+  trackedObj: {fileID: 1257975864}
 --- !u!1 &1944909301
 GameObject:
   m_ObjectHideFlags: 0

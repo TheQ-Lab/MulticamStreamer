@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class Label : MonoBehaviour
 {
-    WorldSpTracker tracker;
+    ObjTracker tracker;
     TextMeshPro tmp;
 
     private void Awake()
     {
-        tracker = GetComponent<WorldSpTracker>();
+        tracker = GetComponent<ObjTracker>();
         tmp = GetComponentInChildren<TextMeshPro>();
     }
 
