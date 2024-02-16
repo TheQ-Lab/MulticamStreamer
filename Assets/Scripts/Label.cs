@@ -28,15 +28,18 @@ public class Label : MonoBehaviour
 
     IEnumerator Animation(bool show)
     {
-        float duration = 0.3f;
+        float duration = 0.5f;
+        if (show is true)
+            duration = 0.4f;
         var t = 0f;
         Color c = tmp.color;
 
+        float progress, smoothed;
         while (t < duration)
         {
-            var progress = TooManyFuncts.Remap(t, 0f, duration, 0f, 1f);
+            progress = TooManyFuncts.Remap(t, 0f, duration, 0f, 1f);
                 
-            var smoothed = Mathf.Pow(progress, 3f);
+            smoothed = Mathf.Pow(progress, 3f);
             if (show is false)
                 smoothed = -(smoothed-1);
             c.a = smoothed;

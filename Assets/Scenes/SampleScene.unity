@@ -1877,9 +1877,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 659099480}
+  - component: {fileID: 659099481}
   - component: {fileID: 659099479}
   - component: {fileID: 659099478}
-  - component: {fileID: 659099481}
   m_Layer: 0
   m_Name: Label3
   m_TagString: Untagged
@@ -3338,9 +3338,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1271506131}
+  - component: {fileID: 1271506132}
   - component: {fileID: 1271506130}
   - component: {fileID: 1271506129}
-  - component: {fileID: 1271506132}
   m_Layer: 0
   m_Name: Label2
   m_TagString: Untagged
@@ -3778,9 +3778,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1449735667}
+  - component: {fileID: 1449735670}
   - component: {fileID: 1449735668}
   - component: {fileID: 1449735669}
-  - component: {fileID: 1449735670}
   m_Layer: 0
   m_Name: Label1
   m_TagString: Untagged
@@ -5554,9 +5554,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1913936865}
+  - component: {fileID: 1913936866}
   - component: {fileID: 1913936864}
   - component: {fileID: 1913936863}
-  - component: {fileID: 1913936866}
   m_Layer: 0
   m_Name: Label4
   m_TagString: Untagged
