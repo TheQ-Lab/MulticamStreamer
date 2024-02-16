@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Label : MonoBehaviour
+public class CamLabel : MonoBehaviour
 {
     ObjTracker tracker;
     TextMeshPro tmp;

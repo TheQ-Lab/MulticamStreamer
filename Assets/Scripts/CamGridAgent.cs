@@ -6,7 +6,7 @@ using MBExtensions;
 public class CamGridAgent : MonoBehaviour
 {
     public CamAssignAgent assignAgent;
-    public Label label;
+    public CamLabel label;
 
     public CamGridHandler.CamFrameTransform CamFrameTransform;
 
@@ -14,7 +14,7 @@ public class CamGridAgent : MonoBehaviour
     {
         assignAgent = GetComponent<CamAssignAgent>();
         var index = transform.GetSiblingIndex();
-        label = GameObject.Find("Labels").transform.GetChild(index).GetComponent<Label>();
+        label = GameObject.Find("Labels").transform.GetChild(index).GetComponent<CamLabel>();
     }
 
     public IEnumerator LaunchAnim(CamGridHandler.CamFrameTransform tgtFrameTransform)

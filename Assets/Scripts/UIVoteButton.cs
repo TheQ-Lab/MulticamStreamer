@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using MBExtensions;
 using System;
 
-public class VoteButton : MonoBehaviour
+public class UIVoteButton : MonoBehaviour
 {
     public int currentVotes = 0;
     public int maxVotes = 5;
