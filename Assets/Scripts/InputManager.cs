@@ -14,7 +14,6 @@ public class InputManager : MonoBehaviour
     [SerializeField] private InputAction ShowCam3;
     [SerializeField] private InputAction ShowCam4;
 
-
     public Flag inSwapAnim = new();
     public int currentSwapAnimTgt;
 
@@ -25,10 +24,10 @@ public class InputManager : MonoBehaviour
         TooManyFuncts.Singletonize(ref Instance, this, false);
 
         MenuToggle.performed += ctx => ToggleMenu(ctx);
-        ShowCam1.performed += ctx => ShowCamN(1, ctx);
-        ShowCam2.performed += ctx => ShowCamN(2, ctx);
-        ShowCam3.performed += ctx => ShowCamN(3, ctx);
-        ShowCam4.performed += ctx => ShowCamN(4, ctx);
+        ShowCam1.performed += ctx => OnPressNum(1, ctx);
+        ShowCam2.performed += ctx => OnPressNum(2, ctx);
+        ShowCam3.performed += ctx => OnPressNum(3, ctx);
+        ShowCam4.performed += ctx => OnPressNum(4, ctx);
     }
 
     private void OnEnable()
@@ -45,14 +44,25 @@ public class InputManager : MonoBehaviour
         CamAssignHandler.Instance.menuActive = !CamAssignHandler.Instance.menuActive;
     }
 
+    private void OnPressNum(int n, InputAction.CallbackContext context)
+    {
+        //Debug.Log("InSwap " + (bool)inSwapAnim + " voteOpen " + (bool)VoteManager.voteOpen);
+        if (inSwapAnim) return;
+        if ((bool) VoteManager.voteOpen is false) return;
+
+        //currentSwapAnimTgt = n;
+        //CamGridHandler.Instance.SwapTriggered(n);
+        VoteManager.AddVotes(n, +1);
+    }
+    /*
     private void ShowCamN(int n, InputAction.CallbackContext context)
     {
         //Debug.LogError("hello?");
         if (inSwapAnim) return;
 
         currentSwapAnimTgt = n;
-        CamGridHandler.Instance.SwapTriggered();
-    }
+        CamGridHandler.Instance.SwapTriggered(n);
+    }*/
 
     private void OnDisable()
     {

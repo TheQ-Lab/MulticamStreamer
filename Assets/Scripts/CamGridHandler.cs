@@ -26,6 +26,20 @@ public class CamGridHandler : MonoBehaviour
     private void Awake()
     {
         TooManyFuncts.Singletonize(ref Instance, this, false);
+
+        foreach (Transform t in TooManyFuncts.GetChildrenParametric(transform, null, null, true))
+        {
+            if (t.TryGetComponent<CamGridAgent>(out CamGridAgent agent))
+            {
+                CamFrameTransform cft = new(t.position, t.localScale);
+                agent.CamFrameTransform = cft;
+                CamFrameTransforms.Add(cft);
+                CamGridAgents.Add(agent);
+
+                // Final one is the Full screen
+                currentFullScreenCam = agent;
+            }
+        }
     }
 
     // Start is called before the first frame update
@@ -33,27 +47,15 @@ public class CamGridHandler : MonoBehaviour
     {
         //InputManager.Instance.inSwapAnim.setEvent += SwapTriggered;
 
-        foreach (Transform t in TooManyFuncts.GetChildrenParametric(transform, null, null, true))
-        {
-            if(t.TryGetComponent<CamGridAgent>(out CamGridAgent agent))
-            {
-                CamFrameTransform cft = new(t.position, t.localScale);
-                agent.CamFrameTransform = cft;
-                CamFrameTransforms.Add(cft);
-                CamGridAgents.Add(agent);
-            
-                // Final one is the Full screen
-                currentFullScreenCam = agent;
-            }
-        }
+        
     }
 
-    public void SwapTriggered()
+    public void SwapTriggered(int tgtCamNo)
     {
         //Debug.LogWarning("boop");
 
-        int swapTgt = InputManager.Instance.currentSwapAnimTgt;
-        CamGridAgent swapTgtAgent = CamGridAgents[swapTgt-1];
+        //int swapTgt = InputManager.Instance.currentSwapAnimTgt;
+        CamGridAgent swapTgtAgent = CamGridAgents[tgtCamNo-1];
         if (swapTgtAgent == currentFullScreenCam)
             return;
 
@@ -74,6 +76,11 @@ public class CamGridHandler : MonoBehaviour
             currentFullScreenCam = swapTgtAgent;
             InputManager.Instance.inSwapAnim.Reset();
         }
+    }
+
+    public static void PassOnVoteUpdate(int camNo, int votesDelta)
+    {
+
     }
 
 }

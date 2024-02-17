@@ -12,8 +12,10 @@ public class UIVoteButton : MonoBehaviour
 
     private List<Coroutine> coroutines = new();
 
-    private Animator animator;
     private ObjTracker tracker;
+    private CamGridAgent camGridAgent;
+
+    private Animator animator;
     //private Button button;
     private Image circleBar; //arrow;
 
@@ -24,11 +26,24 @@ public class UIVoteButton : MonoBehaviour
 
         circleBar = TooManyFuncts.GetComponentInChildrenParametric<Image>(transform, "Bar", null, null);
         TryGetComponent(out tracker);
+        //camGridAgent = tracker.trackedObj.parent.GetComponent<CamGridAgent>();
         //arrow = TooManyFuncts.GetComponentInChildrenParametric<Image>(transform, "Arrow", null, null);
     }
 
-    public void InitializeVote(int maxVotes)
+    //1st time Init stuff
+    public void SetupVoteBtn()
     {
+        
+    }
+
+    public void InitializeVote(CamGridAgent newAgent, int maxVotes)
+    {
+        camGridAgent = newAgent;
+        tracker.trackedObj = TooManyFuncts.GetChildParametric(camGridAgent.transform, "Squircle", null, null);
+        Debug.Log("boop");
+        Debug.Log(TooManyFuncts.GetChildParametric(camGridAgent.transform, "Squircle", null, null));
+
+
         currentVotes = 0;
         tracker.enabled = true;
         //Spawn Btn as Square initially
@@ -37,7 +52,7 @@ public class UIVoteButton : MonoBehaviour
 
     public void UpdateVote(int updatedVotes)
     {
-        updatedVotes = Mathf.Clamp(updatedVotes, 0, maxVotes);
+        //int updatedVotes = Mathf.Clamp(deltaVotes + currentVotes, 0, maxVotes);
 
         if (currentVotes == 0 && updatedVotes > 0)
         {
@@ -64,7 +79,7 @@ public class UIVoteButton : MonoBehaviour
             float duration = .5f;
             var t = 0f;
 
-            Debug.Log("StartAnimatin");
+            //Debug.Log("StartAnimatin");
             while (t < duration)
             {
                 //float x = TooManyFuncts.Remap(t, 0f, duration, 0f, Mathf.PI * .5f);
@@ -74,7 +89,7 @@ public class UIVoteButton : MonoBehaviour
 
                 float segmentProgAbs = TooManyFuncts.Remap(segmentProgPerc, 0f, 1f, currentVotes, updatedVotes);
                 float circleProg = TooManyFuncts.Remap(segmentProgAbs, 0f, maxVotes, 0f, 1f);
-                Debug.Log(circleProg);
+                //Debug.Log(circleProg);
                 circleBar.fillAmount = circleProg;
                 //float x = TooManyFuncts.Remap(t, 0f, duration, 0, Mathf.PI * .5f);
                 //circleBar.fillAmount = Mathf.Sin(x);
@@ -90,17 +105,17 @@ public class UIVoteButton : MonoBehaviour
             currentVotes = updatedVotes;
             if(updatedVotes == maxVotes)
             {
-                yield return new WaitForSeconds(.5f);
+                //yield return new WaitForSeconds(.1f);
                 DismissPanel();
             }
 
-            Debug.Log("DoneAnimatin");
+            //Debug.Log("DoneAnimatin");
         }
     }
 
 
 
-
+    /*
     Stack<Action> lateUpdate = new();
     private void LateUpdate()
     {
@@ -113,24 +128,25 @@ public class UIVoteButton : MonoBehaviour
             delayedExecution.Clear();
         }
         */
+    /*
         // new version with Stack instead of List
         #endregion
         while (lateUpdate.Count > 0)
             lateUpdate.Pop().Invoke();
     }
-
+*/
     private void Start()
     {
         //StartCoroutine(this.DelayedExecution(on, 1.5f));
+        /*
         StartCoroutine(this.DelayedExecution(delegate { InitializeVote(5); }, 1f));
         StartCoroutine(this.DelayedExecution(delegate { UpdateVote(1); }, 2.5f));
         StartCoroutine(this.DelayedExecution(delegate { UpdateVote(2); }, 4.0f));
         StartCoroutine(this.DelayedExecution(delegate { UpdateVote(3); }, 5.2f));
         StartCoroutine(this.DelayedExecution(delegate { UpdateVote(4); }, 6.4f));
         StartCoroutine(this.DelayedExecution(delegate { UpdateVote(5); }, 7.6f));
+        */
 
-
-        KillPanel();
 
         /*void on()
         {
@@ -138,6 +154,8 @@ public class UIVoteButton : MonoBehaviour
             gameObject.SetActive(true);
             animator.Play("Pop in", 1);
         }*/
+
+        KillPanel();
     }
 
 
@@ -153,7 +171,7 @@ public class UIVoteButton : MonoBehaviour
         animator.Play("Pop in", 1);
 
         //lateUpdate.Push(readOutAnimLength);
-        StartCoroutine(this.DelayedExecution(readOutAnimLength, new WaitForEndOfFrame()));
+        //StartCoroutine(this.DelayedExecution(readOutAnimLength, new WaitForEndOfFrame()));
         void readOutAnimLength()
         {
             var info = animator.GetCurrentAnimatorStateInfo(1); // this needs to be checked delayed
@@ -166,10 +184,10 @@ public class UIVoteButton : MonoBehaviour
     private void DismissPanel()
     {
         animator.Play("Pop out", 1);
-
-        lateUpdate.Push(scheduleKill);
+        tracker.enabled = false;
+        //lateUpdate.Push(scheduleKill);
         //coroutines.Add(
-        //StartCoroutine(this.DelayedExecution(scheduleKill, new WaitForEndOfFrame()));
+        StartCoroutine(this.DelayedExecution(scheduleKill, new WaitForEndOfFrame()));
         void scheduleKill()
         {
             var info = animator.GetCurrentAnimatorStateInfo(1); // this needs to be checked delayed
