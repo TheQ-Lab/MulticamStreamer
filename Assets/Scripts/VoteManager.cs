@@ -35,10 +35,16 @@ public class VoteManager : MonoBehaviour
 
     public static void InitializeVote(int maxVotes)
     {
+        int index = 0;
         foreach(UIVoteButton scr in Instance.voteButtons)
         {
-            var gridAgent = CamGridHandler.Instance.CamGridAgents[Instance.voteButtons.IndexOf(scr)];
+            var gridAgent = CamGridHandler.Instance.CamGridAgents[index];
+            if(CamGridHandler.Instance.currentFullScreenCam == gridAgent)
+                gridAgent = CamGridHandler.Instance.CamGridAgents[++index];
+            //var gridAgent = CamGridHandler.Instance.CamGridAgents[Instance.voteButtons.IndexOf(scr)];
+            gridAgent.voteBtn = scr;
             scr.InitializeVote(gridAgent, maxVotes);
+            index++;
         }
         //VoteManager.maxVotes = maxVotes;
 
@@ -47,9 +53,14 @@ public class VoteManager : MonoBehaviour
 
     public static void AddVotes(int camNo, int votesDelta)
     {
-        CamGridHandler.PassOnVoteUpdate(camNo, votesDelta);
+        var tgtCam = CamGridHandler.Instance.GetCam(camNo, votesDelta);
 
-        var voteButton = Instance.voteButtons[camNo - 1];
+        //var voteButton = Instance.voteButtons[camNo - 1];
+        var voteButton = tgtCam.voteBtn;
+
+        // This would mean, that the vote requested is for the cam in Fullscreen position - which has no button assigned
+        if (voteButton == null)
+            return;
 
         int updatedVotes = Mathf.Clamp(votesDelta + voteButton.currentVotes, 0, voteButton.maxVotes);
         voteButton.UpdateVote(updatedVotes);
@@ -59,7 +70,26 @@ public class VoteManager : MonoBehaviour
         if (updatedVotes == voteButton.maxVotes)
         {
             //CamGridHandler.Instance.SwapTriggered(camNo);
+            /*foreach(UIVoteButton v in Instance.voteButtons)
+            {
+                if (v.Equals(voteButton)) continue;
+                v.DismissPanel();
+            }*/
+
+            foreach (CamGridAgent cam in CamGridHandler.Instance.CamGridAgents)
+                cam.voteBtn = null;
+
             Instance.StartCoroutine(Instance.DelayedExecution(delegate { CamGridHandler.Instance.SwapTriggered(camNo); }, 1.0f));
+            Instance.StartCoroutine(Instance.DelayedExecution(delegate { InitializeVote(5); }, 5.0f));
+        }
+    }
+
+    public static void DismissAllPanels()
+    {
+        foreach (UIVoteButton v in Instance.voteButtons)
+        {
+            //if (v.Equals(voteButton)) continue;
+            v.DismissPanel();
         }
     }
 }

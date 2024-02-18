@@ -49,67 +49,102 @@ public class UIVoteButton : MonoBehaviour
         //Spawn Btn as Square initially
         CallPanel();
     }
-
+    /*
+    private void Update()
+    {
+        Debug.Log(coroutines.Count);
+        foreach(Coroutine c in coroutines)
+        {
+            Debug.Log(c.ToString());
+        }
+        //Debug.Log(coroutines.Contains();
+    }
+    */
+    Coroutine _animation, _executeAnimation, _delayExecuteAnimation;
     public void UpdateVote(int updatedVotes)
     {
         //int updatedVotes = Mathf.Clamp(deltaVotes + currentVotes, 0, maxVotes);
 
-        if (currentVotes == 0 && updatedVotes > 0)
+        var prevVotes = currentVotes;
+        currentVotes = updatedVotes;
+
+        if(_animation is not null)
+        {
+            StopCoroutine(_animation);
+            ExecuteAnimation();
+        }
+        else if(_delayExecuteAnimation is not null || _executeAnimation is not null)
+        {
+
+        }
+
+        if (prevVotes == 0 && currentVotes > 0)
         {
             //Transform Btn to circle at first vote cast for it
             animator.Play("Fill", 0);
 
-            //float GetAnimLength(int layer) => animator.GetCurrentAnimatorStateInfo(layer).length;
-            void DelayedAnimation() 
+            _delayExecuteAnimation = StartCoroutine(this.DelayedExecution(DelayExecuteAnimation, new WaitForEndOfFrame()));
+            void DelayExecuteAnimation() 
             {
                 var len = animator.GetCurrentAnimatorStateInfo(0).length;
-                StartCoroutine(this.DelayedExecution(StartAnimation, new WaitForSeconds(len))); 
+                _executeAnimation = StartCoroutine(this.DelayedExecution(ExecuteAnimation, new WaitForSeconds(len)));
+                _delayExecuteAnimation = null;
             }
-            StartCoroutine(this.DelayedExecution(DelayedAnimation, new WaitForEndOfFrame()));
+            //float GetAnimLength(int layer) => animator.GetCurrentAnimatorStateInfo(layer).length;
         }
         else
         {
-            StartAnimation();
+            ExecuteAnimation();
         }
 
         // Update circle around accordingly soft
-        void StartAnimation() => StartCoroutine(Animation()); 
+        void ExecuteAnimation()
+        {
+            _animation = StartCoroutine(Animation());
+            _executeAnimation = null;
+        }
         IEnumerator Animation()
         {
             float duration = .5f;
             var t = 0f;
 
+            float startCircleProg = circleBar.fillAmount;
+            float tgtCircleProg = TooManyFuncts.Remap(currentVotes, 0, maxVotes, 0f, 1f);
             //Debug.Log("StartAnimatin");
             while (t < duration)
             {
                 //float x = TooManyFuncts.Remap(t, 0f, duration, 0f, Mathf.PI * .5f);
                 //float segmentProgPerc = Mathf.Sin(x);
+                /*
                 float x = TooManyFuncts.Remap(t, 0f, duration, Mathf.PI, Mathf.PI * 2f);
                 float segmentProgPerc = (Mathf.Cos(x) + 1f) * 0.5f;
 
                 float segmentProgAbs = TooManyFuncts.Remap(segmentProgPerc, 0f, 1f, currentVotes, updatedVotes);
                 float circleProg = TooManyFuncts.Remap(segmentProgAbs, 0f, maxVotes, 0f, 1f);
+                */
+                float x = TooManyFuncts.Remap(t, 0f, duration, Mathf.PI, Mathf.PI * 2f);
+                float segmentProgPerc = (Mathf.Cos(x) + 1f) * 0.5f;
+                float circleProg = TooManyFuncts.Remap(segmentProgPerc, 0f, 1f, startCircleProg, tgtCircleProg);
+
                 //Debug.Log(circleProg);
                 circleBar.fillAmount = circleProg;
-                //float x = TooManyFuncts.Remap(t, 0f, duration, 0, Mathf.PI * .5f);
-                //circleBar.fillAmount = Mathf.Sin(x);
-                // alternative with ease in&out
-                //float x = TooManyFuncts.Remap(t, 0f, duration, Mathf.PI, Mathf.PI * 2f);
-                //circleBar.fillAmount = (Mathf.Cos(x) + 1f) * 0.5f;
 
                 yield return null;
                 t += Time.deltaTime;
             }
-            circleBar.fillAmount = (float)updatedVotes / (float)maxVotes;
+            //circleBar.fillAmount = (float)updatedVotes / (float)maxVotes;
+            circleBar.fillAmount = tgtCircleProg;
 
-            currentVotes = updatedVotes;
+            //currentVotes = updatedVotes;
+            
             if(updatedVotes == maxVotes)
             {
                 //yield return new WaitForSeconds(.1f);
-                DismissPanel();
+                VoteManager.DismissAllPanels();
             }
-
+            
             //Debug.Log("DoneAnimatin");
+            _animation = null;
         }
     }
 
@@ -167,6 +202,7 @@ public class UIVoteButton : MonoBehaviour
             i.enabled = true;
 
         gameObject.SetActive(true);
+        enabled = true;
         //button.interactable = false;
         animator.Play("Pop in", 1);
 
@@ -181,7 +217,7 @@ public class UIVoteButton : MonoBehaviour
         }
     }
 
-    private void DismissPanel()
+    public void DismissPanel()
     {
         animator.Play("Pop out", 1);
         tracker.enabled = false;
@@ -202,11 +238,15 @@ public class UIVoteButton : MonoBehaviour
         animator.Play("Idle", 0);
         animator.Play("Idle", 1);
         //animator.StopPlayback();
+        _animation = null;
+        _executeAnimation = null;
+        _delayExecuteAnimation = null;
 
         tracker.enabled = false;
-        foreach (Image i in TooManyFuncts.GetComponentsInChildrenParametric<Image>(transform.parent, null, null, null))
-            i.enabled = false;
-
+        /*
+        foreach (UIVoteButton v in TooManyFuncts.GetComponentsInChildrenParametric<UIVoteButton>(transform.parent, null, null, null))
+            v.gameObject.SetActive(false);
+        */
         //Invoke(nameof(DeactivatePanel), animator.GetCurrentAnimatorStateInfo(1).length);
         Deactivate();
     }
@@ -219,7 +259,7 @@ public class UIVoteButton : MonoBehaviour
     
     public void Deactivate()
     {
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
         enabled = false;
     }
     private void OnDisable()

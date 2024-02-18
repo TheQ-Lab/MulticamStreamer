@@ -7,6 +7,7 @@ public class CamGridAgent : MonoBehaviour
 {
     public CamAssignAgent assignAgent;
     public CamLabel label;
+    public UIVoteButton voteBtn;
 
     public CamGridHandler.CamFrameTransform CamFrameTransform;
 

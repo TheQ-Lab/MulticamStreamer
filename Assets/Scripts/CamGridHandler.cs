@@ -78,9 +78,10 @@ public class CamGridHandler : MonoBehaviour
         }
     }
 
-    public static void PassOnVoteUpdate(int camNo, int votesDelta)
+    public CamGridAgent GetCam(int camNo, int votesDelta)
     {
-
+        CamGridAgent voteTgt = CamGridAgents[camNo - 1];
+        return voteTgt;
     }
 
 }
