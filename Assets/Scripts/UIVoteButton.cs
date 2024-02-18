@@ -235,8 +235,8 @@ public class UIVoteButton : MonoBehaviour
 
     public void KillPanel()
     {
-        animator.Play("Idle", 0);
-        animator.Play("Idle", 1);
+        if (gameObject.activeSelf) animator.Play("Idle", 0);
+        if (gameObject.activeSelf) animator.Play("Idle", 1);
         //animator.StopPlayback();
         _animation = null;
         _executeAnimation = null;

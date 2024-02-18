@@ -81,7 +81,7 @@ public class CamGridAgent : MonoBehaviour
             var currentScale = Vector3.Lerp(startScale, tgtScale, t);
             transform.localScale = currentScale;
 
-            //assignAgent.CropToSize();     // for continuous resizing
+            assignAgent.CropToSize();     // for continuous resizing
 
             yield return null;
             timeElapsed += Time.deltaTime;
