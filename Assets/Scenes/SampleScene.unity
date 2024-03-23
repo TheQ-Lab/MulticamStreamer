@@ -3155,6 +3155,8 @@ GameObject:
   - component: {fileID: 1105715358}
   - component: {fileID: 1105715359}
   - component: {fileID: 1105715360}
+  - component: {fileID: 1105715361}
+  - component: {fileID: 1105715362}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3288,6 +3290,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   voteButtons: []
+--- !u!114 &1105715361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105715357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f181dbe5dac040429df2af6f0a7317f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1105715362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105715357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2c121518b007ae49ad8e11dd3d44fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1130842310
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,8 +40,8 @@ public class UIVoteButton : MonoBehaviour
     {
         camGridAgent = newAgent;
         tracker.trackedObj = TooManyFuncts.GetChildParametric(camGridAgent.transform, "Squircle", null, null);
-        Debug.Log("boop");
-        Debug.Log(TooManyFuncts.GetChildParametric(camGridAgent.transform, "Squircle", null, null));
+        //Debug.Log("boop");
+        //Debug.Log(TooManyFuncts.GetChildParametric(camGridAgent.transform, "Squircle", null, null));
 
 
         currentVotes = 0;
@@ -208,13 +208,13 @@ public class UIVoteButton : MonoBehaviour
 
         //lateUpdate.Push(readOutAnimLength);
         //StartCoroutine(this.DelayedExecution(readOutAnimLength, new WaitForEndOfFrame()));
-        void readOutAnimLength()
+        /*void readOutAnimLength()
         {
             var info = animator.GetCurrentAnimatorStateInfo(1); // this needs to be checked delayed
                                                                 // (after setting a new Animation to play right before)
             ////Invoke(nameof(RemoveSafetyPin), info.length);
             //StartCoroutine(PopInTransform(info.length, nextPos, currentPos));
-        }
+        }*/
     }
 
     public void DismissPanel()
