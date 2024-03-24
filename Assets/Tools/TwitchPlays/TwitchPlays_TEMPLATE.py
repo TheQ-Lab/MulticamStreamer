@@ -75,8 +75,7 @@ def handle_message(message):
         # I've added some example videogame logic code below:
         
         if msg == "go":
-            TypeText("cadderfab")
-            #HoldAndReleaseKey(M, 0.1)
+            TypeText("restmüll25Tonnes")
         if msg == "m": 
             HoldAndReleaseKey(M, 0.1)
         if msg == "space":

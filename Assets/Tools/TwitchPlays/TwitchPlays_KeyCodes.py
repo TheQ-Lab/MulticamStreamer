@@ -128,7 +128,43 @@ charDict = {
     'C': C,
     'D': D,
     'E': E,
-    'F': F
+    'F': F,
+    'G': G,
+    'H': H,
+    'I': I,
+    'J': J,
+    'K': K,
+    'L': L,
+    'M': M,
+    'N': N,
+    'O': O,
+    'P': P,
+    'Q': Q,
+    'R': R,
+    'S': S,
+    'T': T,
+    'U': U,
+    'V': V,
+    'W': W,
+    'X': X,
+    'Y': Y,
+    'Z': Z,
+    'Ä': A,
+    'Ö': O,
+    'Ü': U
+}
+
+numDict = {
+    '1': ONE,
+    '2': TWO,
+    '3': THREE,
+    '4': FOUR,
+    '5': FIVE,
+    '6': SIX,
+    '7': SEVEN,
+    '8': EIGHT,
+    '9': NINE,
+    '0': ZERO
 }
 
 # Direct Input functions found at: https://stackoverflow.com/questions/53643273/how-to-keep-pynput-and-ctypes-from-clashing
@@ -164,8 +200,14 @@ def TypeText(string):
     for ch in string:
         code = charDict.get(ch)
         if code == None:
-            continue
-        HoldAndReleaseKey(code, 0.05)
+            code = numDict.get(ch)
+            if code == None:
+                continue
+            ReleaseKey(RIGHT_SHIFT)
+            HoldAndReleaseKey(code, 0.05)
+            HoldKey(RIGHT_SHIFT)
+        else:
+            HoldAndReleaseKey(code, 0.05)
         outputCheck += ch;
     ReleaseKey(RIGHT_SHIFT)
     print("TextBridge output: " + outputCheck)
