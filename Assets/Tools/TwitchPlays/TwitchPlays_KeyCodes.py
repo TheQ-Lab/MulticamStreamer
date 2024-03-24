@@ -122,6 +122,15 @@ MOUSE_WHEEL_DOWN = 0x109
 ################## DIRECT INPUT FUNCTIONS ###################
 #############################################################
 
+charDict = {
+    'A': A,
+    'B': B,
+    'C': C,
+    'D': D,
+    'E': E,
+    'F': F
+}
+
 # Direct Input functions found at: https://stackoverflow.com/questions/53643273/how-to-keep-pynput-and-ctypes-from-clashing
 # Use these to prevent conflict errors with pynput.
 SendInput = ctypes.windll.user32.SendInput
@@ -145,3 +154,19 @@ def HoldAndReleaseKey(hexKeyCode, seconds):
     HoldKey(hexKeyCode)
     time.sleep(seconds)
     ReleaseKey(hexKeyCode)
+    
+def TypeText(string):
+    print("translating input <<" + string + ">>...")
+    string = string.upper()
+    outputCheck = ""
+    #to_array = [char for char in string]
+    HoldKey(RIGHT_SHIFT)
+    for ch in string:
+        code = charDict.get(ch)
+        if code == None:
+            continue
+        HoldAndReleaseKey(code, 0.05)
+        outputCheck += ch;
+    ReleaseKey(RIGHT_SHIFT)
+    print("TextBridge output: " + outputCheck)
+    
