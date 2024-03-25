@@ -75,7 +75,14 @@ def handle_message(message):
         # I've added some example videogame logic code below:
         
         if msg == "go":
-            TypeText("restmüll25Tonnes")
+            TypeText("restmüll25Tonnes", username)
+        if msg == "r" or msg == "red" or msg == "rot":
+            TypeText("redcmd", username)
+        if msg == "g" or msg == "green" or msg == "grün":
+            TypeText("greencmd", username)
+        if msg == "b" or msg == "blue" or msg == "blau":
+            TypeText("bluecmd", username)
+            
         if msg == "m": 
             HoldAndReleaseKey(M, 0.1)
         if msg == "space":
@@ -88,6 +95,7 @@ def handle_message(message):
             HoldAndReleaseKey(3, 0.1)
         if msg == "4":
             HoldAndReleaseKey(4, 0.1)
+        '''
         if msg == "r":
             # If Shift held GravitraxCli doesnt register commands (like r,g,b)
             HoldKey(RIGHT_SHIFT)
@@ -98,6 +106,8 @@ def handle_message(message):
             HoldAndReleaseKey(G, 0.1)
         if msg == "b":
             HoldAndReleaseKey(B, 0.1)
+            
+        '''
         '''
         ###################################
         # Example GTA V Code 

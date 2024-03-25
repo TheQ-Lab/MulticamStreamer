@@ -19,12 +19,18 @@ public class InputSimulatorScript : MonoBehaviour
         Invoke(nameof(RunTwitchPlaysScript), 1.1f);
 
         //Invoke(nameof(CloseGravitraxConnectCliScript), 15f);
-        Invoke(nameof(CloseTwitchPlaysScript), 16f);
+        //Invoke(nameof(CloseTwitchPlaysScript), 16f);
 
         //inputSimulator.Keyboard.KeyDown(VirtualKeyCode.SHIFT);
         GravitraxConnex.Instance = new GravitraxConnex(this);
     }
-    
+    /*
+    private void OnDestroy()
+    {
+        //Invoke(nameof(CloseGravitraxConnectCliScript), 15f);
+        CloseTwitchPlaysScript();
+    }
+    */
     void PressBtn()
     {
         UnityEngine.Debug.Log("Press");
@@ -69,7 +75,7 @@ public class InputSimulatorScript : MonoBehaviour
         inputSimulator.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
     }
 
-    class GravitraxConnex
+    public class GravitraxConnex
     {
         public static GravitraxConnex Instance;
         public Dictionary<cmds, Action> Commands = new();
@@ -95,7 +101,7 @@ public class InputSimulatorScript : MonoBehaviour
                 delegate { inputSimulator.Keyboard.KeyPress(VirtualKeyCode.VK_B); }
                 );
 
-            parent.InvokeRepeating(nameof(KeepAwake), 10f, 30f);
+            //parent.InvokeRepeating(nameof(KeepAwake), 10f, 30f);
         }
 
         public void RunCommand(cmds cmd)

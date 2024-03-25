@@ -6,6 +6,16 @@ using UnityEngine.InputSystem;
 public class ChatInterpreter : MonoBehaviour
 {
     string text = string.Empty;
+    public enum Phase { Idle, Msg, Name }
+    public Phase phase = Phase.Idle;
+
+    private InputSimulatorScript InputSimulatorScript;
+
+    private void Start()
+    {
+        InputSimulatorScript = GetComponent<InputSimulatorScript>();
+    }
+
     private void OnEnable()
     {
         Keyboard.current.onTextInput += OnTextInput;
@@ -22,11 +32,64 @@ public class ChatInterpreter : MonoBehaviour
 
     private void OnTextInput(char ch)
     {
-        text += ch;
-        if(ch == 'Q')
+        if(ch == ':')
         {
-            Debug.Log("Output: " + text);
+            Debug.Log("Listening...");
             text = string.Empty;
+            phase = Phase.Msg;
+            return;
         }
+        else if(ch == ',')
+        {
+            ReferMsg(text);
+            text = string.Empty;
+            phase = Phase.Name;
+            return;
+        }
+        else if(ch == '.')
+        {
+            ReferUsername(text);
+            text = string.Empty;
+            phase = Phase.Idle;
+            return;
+        }
+
+        if ((phase == Phase.Msg || phase == Phase.Name) && char.IsUpper(ch))
+        {
+            text += ch;
+            if (phase == Phase.Name)
+                CommandVisualizer.Instance.ReceiveUsernameUpdate(text);
+        }
+    }
+
+    private void ReferMsg(string dirtyMsg)
+    {
+        string cmd = dirtyMsg;
+
+        Debug.Log("Msg: " + cmd);
+        InputSimulatorScript.GravitraxConnex.cmds cmdEnum;
+        if (cmd == "REDCMD")
+            cmdEnum = InputSimulatorScript.GravitraxConnex.cmds.red;
+        else if (cmd == "GREENCMD")
+            cmdEnum = InputSimulatorScript.GravitraxConnex.cmds.green;
+        else if (cmd == "BLUECMD")
+            cmdEnum = InputSimulatorScript.GravitraxConnex.cmds.blue;
+        else
+            return;
+
+        CommandVisualizer.Instance.ReceiveCmd(cmdEnum);
+        InputSimulatorScript.GravitraxConnex.Instance.RunCommand(cmdEnum);
+    }
+
+    private void ReferUsername(string dirtyUsername)
+    {
+        string username = dirtyUsername.ToLower();
+        var firstLetter = char.ToUpper(username[0]);
+        username = username.Remove(0, 1);
+        username = username.Insert(0, firstLetter.ToString());
+
+        Debug.Log("Name: " + username);
+
+        CommandVisualizer.Instance.ReceiveUsernameUpdate(username);
     }
 }

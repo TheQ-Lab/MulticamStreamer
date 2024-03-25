@@ -10,6 +10,9 @@ import pynput
 #################### DIRECT X KEY CODES #####################
 #############################################################
 
+TYPING_SPEED = 0.016
+#TYPING_SPEED = 0.03
+
 # Key Codes found at: https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-6.0/aa299374(v=vs.60)
 Q = 0x10
 W = 0x11
@@ -191,10 +194,17 @@ def HoldAndReleaseKey(hexKeyCode, seconds):
     time.sleep(seconds)
     ReleaseKey(hexKeyCode)
     
-def TypeText(string):
+def ModifiedKeyPress(hexKeyCodeModifier, hexKeyCodeActuator, seconds):
+    HoldKey(hexKeyCodeModifier)
+    HoldAndReleaseKey(hexKeyCodeActuator, seconds)
+    ReleaseKey(hexKeyCodeModifier)
+    
+def TypeText(string, username):
     print("translating input <<" + string + ">>...")
     string = string.upper()
     outputCheck = ""
+    
+    ModifiedKeyPress(LEFT_SHIFT, PERIOD, TYPING_SPEED)
     #to_array = [char for char in string]
     HoldKey(RIGHT_SHIFT)
     for ch in string:
@@ -204,11 +214,30 @@ def TypeText(string):
             if code == None:
                 continue
             ReleaseKey(RIGHT_SHIFT)
-            HoldAndReleaseKey(code, 0.05)
+            HoldAndReleaseKey(code, TYPING_SPEED)
             HoldKey(RIGHT_SHIFT)
         else:
-            HoldAndReleaseKey(code, 0.05)
+            HoldAndReleaseKey(code, TYPING_SPEED)
         outputCheck += ch;
     ReleaseKey(RIGHT_SHIFT)
+    
+    HoldAndReleaseKey(COMMA, TYPING_SPEED)
+    
+    username = username.upper()
+    HoldKey(RIGHT_SHIFT)
+    for ch in username:
+        code = charDict.get(ch)
+        if code == None:
+            code = numDict.get(ch)
+            if code == None:
+                continue
+            ReleaseKey(RIGHT_SHIFT)
+            HoldAndReleaseKey(code, TYPING_SPEED)
+            HoldKey(RIGHT_SHIFT)
+        else:
+            HoldAndReleaseKey(code, TYPING_SPEED)
+        outputCheck += ch;
+    ReleaseKey(RIGHT_SHIFT)
+    HoldAndReleaseKey(PERIOD, TYPING_SPEED)
     print("TextBridge output: " + outputCheck)
     
