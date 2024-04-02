@@ -15,14 +15,20 @@ public class InputSimulatorScript : MonoBehaviour
         inputSimulator = new InputSimulator();
         //InvokeRepeating(nameof(PressBtn), 5f, 2f);
 
+        UnityEngine.Debug.LogError(Application.dataPath);
+
         Invoke(nameof(RunGravitraxConnectCliScript), 1.0f);
         Invoke(nameof(RunTwitchPlaysScript), 1.1f);
+
+        //Invoke(nameof(ShutownProgram), 8f);
 
         //Invoke(nameof(CloseGravitraxConnectCliScript), 15f);
         //Invoke(nameof(CloseTwitchPlaysScript), 16f);
 
         //inputSimulator.Keyboard.KeyDown(VirtualKeyCode.SHIFT);
         GravitraxConnex.Instance = new GravitraxConnex(this);
+
+        Application.wantsToQuit += OnShutdown;
     }
     /*
     private void OnDestroy()
@@ -31,6 +37,49 @@ public class InputSimulatorScript : MonoBehaviour
         CloseTwitchPlaysScript();
     }
     */
+    bool isShutdownRequested, isShutdownProcessesFinished;
+    bool OnShutdown()
+    {
+        if (isShutdownProcessesFinished)
+        {
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #endif
+            return true;
+        }
+        CloseGravitraxConnectCliScript();
+        CloseTwitchPlaysScript();
+
+        if (isShutdownRequested)
+            return false;
+        UnityEngine.Debug.LogError("Quit MSG received");
+        InvokeRepeating(nameof(RetryQuit), 0f, 1.0f);
+        isShutdownRequested = true;
+
+        return false;
+    }
+
+    void RetryQuit()
+    {
+        UnityEngine.Debug.LogError("Retry Quit..");
+        #if UNITY_EDITOR
+            OnShutdown();
+        #else
+            Application.Quit();
+        #endif
+    }
+
+    public void ShutownProgram()
+    {
+        UnityEngine.Debug.LogError("Inducing Quit...");
+        #if UNITY_EDITOR
+            //UnityEditor.EditorApplication.isPlaying = false;
+            OnShutdown();
+        #else
+            Application.Quit();
+        #endif
+    }
+
     void PressBtn()
     {
         UnityEngine.Debug.Log("Press");
@@ -38,35 +87,45 @@ public class InputSimulatorScript : MonoBehaviour
         //inputSimulator.Keyboard.TextEntry("Pimmelö");
     }
 
+    float startTimeTwitch;
     void RunTwitchPlaysScript()
     {
         string path = Application.dataPath + "/Tools/TwitchPlays/TwitchPlays_TEMPLATE.py";
         //string command = "cd " + path;
         UnityEngine.Debug.Log(path);
         System.Diagnostics.Process process = System.Diagnostics.Process.Start(path);
+
+        startTimeTwitch = Time.unscaledTime;
     }
 
+    float startTimeGravitrax;
     void RunGravitraxConnectCliScript()
     {
         string path = Application.dataPath + "/Tools/GraviTrax-Connect/Applications/CLI_Application/gravitrax_cli.py";
         //string command = "cd " + path;
         UnityEngine.Debug.Log(path);
         System.Diagnostics.Process process = System.Diagnostics.Process.Start(path);
+
+        startTimeGravitrax = Time.unscaledTime;
     }
 
     void CloseTwitchPlaysScript()
     {
-        //inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.RSHIFT, VirtualKeyCode.BACK);
-        //inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.BACK);
+        //UnityEngine.Debug.Log("now " + Time.unscaledTime);
+        //UnityEngine.Debug.Log(startTimeTwitch + 8f);
+        if (Time.unscaledTime < startTimeTwitch + 8f) // if not at least 5+3s since start of TwitchCli have passed, twitchcli is at risk of not registering Quit-Input
+            return;
         StartCoroutine(CloseTwitchPlaysScriptCoroutine());
 
         IEnumerator CloseTwitchPlaysScriptCoroutine()
         {
+            //inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.RSHIFT, VirtualKeyCode.BACK);
             inputSimulator.Keyboard.KeyDown(VirtualKeyCode.RSHIFT);
             inputSimulator.Keyboard.KeyDown(VirtualKeyCode.BACK);
             yield return new WaitForSeconds(0.1f);
-            inputSimulator.Keyboard.KeyUp(VirtualKeyCode.RSHIFT);
             inputSimulator.Keyboard.KeyUp(VirtualKeyCode.BACK);
+            inputSimulator.Keyboard.KeyUp(VirtualKeyCode.RSHIFT);
+            isShutdownProcessesFinished = true;
         }
     }
 

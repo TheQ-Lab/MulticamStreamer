@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      gravitraxGUI_screenshot_0: 2473658619792820282
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

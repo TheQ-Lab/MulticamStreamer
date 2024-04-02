@@ -3249,8 +3249,8 @@ GameObject:
   - component: {fileID: 1105715359}
   - component: {fileID: 1105715360}
   - component: {fileID: 1105715361}
-  - component: {fileID: 1105715362}
   - component: {fileID: 1105715363}
+  - component: {fileID: 1105715362}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3293,6 +3293,39 @@ MonoBehaviour:
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
+    m_Flags: 0
+  SoftShutdown:
+    m_Name: Soft Shutdown
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0b705241-b63d-46f2-9313-84c694575055
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: One Modifier
+      m_Id: 516bb650-5cc7-42dc-8f92-919ad2d58511
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Soft Shutdown
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: ba25c105-6bdb-4139-b2af-d7b5759e30a5
+      m_Path: <Keyboard>/ctrl
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Soft Shutdown
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 1c0b08c3-0b28-42c9-8eef-12ff9d61c11d
+      m_Path: <Keyboard>/#(Q)
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Soft Shutdown
+      m_Flags: 8
     m_Flags: 0
   ShowCam1:
     m_Name: Show Cam 1

@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      GravitraxReactionGameLayout_0: -5653604940676575751
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

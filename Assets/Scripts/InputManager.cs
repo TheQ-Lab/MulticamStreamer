@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance;
 
     [SerializeField] private InputAction MenuToggle;
+    [SerializeField] private InputAction SoftShutdown;
     [SerializeField] private InputAction ShowCam1;
     [SerializeField] private InputAction ShowCam2;
     [SerializeField] private InputAction ShowCam3;
@@ -24,6 +26,7 @@ public class InputManager : MonoBehaviour
         TooManyFuncts.Singletonize(ref Instance, this, false);
 
         MenuToggle.performed += ctx => ToggleMenu(ctx);
+        SoftShutdown.performed += ctx => PerformSoftShutdown(ctx);
         ShowCam1.performed += ctx => OnPressNum(1, ctx);
         ShowCam2.performed += ctx => OnPressNum(2, ctx);
         ShowCam3.performed += ctx => OnPressNum(3, ctx);
@@ -33,6 +36,7 @@ public class InputManager : MonoBehaviour
     private void OnEnable()
     {
         MenuToggle.Enable();
+        SoftShutdown.Enable();
         ShowCam1.Enable();
         ShowCam2.Enable();
         ShowCam3.Enable();
@@ -42,6 +46,11 @@ public class InputManager : MonoBehaviour
     private void ToggleMenu(InputAction.CallbackContext context)
     {
         CamAssignHandler.Instance.menuActive = !CamAssignHandler.Instance.menuActive;
+    }
+
+    private void PerformSoftShutdown(CallbackContext ctx)
+    {
+        GetComponent<InputSimulatorScript>().ShutownProgram();
     }
 
     private void OnPressNum(int n, InputAction.CallbackContext context)
@@ -67,6 +76,7 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         MenuToggle.Disable();
+        SoftShutdown.Disable();
         ShowCam1.Disable();
         ShowCam2.Disable();
         ShowCam3.Disable();
