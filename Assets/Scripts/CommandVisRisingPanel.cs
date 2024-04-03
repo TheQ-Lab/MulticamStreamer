@@ -7,12 +7,15 @@ using TMPro;
 public class CommandVisRisingPanel : MonoBehaviour
 {
     [SerializeField] float durationShown = 4.0f;
+    [SerializeField] Vector2 velocity = new(0f, +1f);
 
     //public Color red, green, blue;
     Image color;
     TMPro.TextMeshProUGUI username;
 
     double time;
+    public bool moving;
+
     public static CommandVisRisingPanel Instance;
     private void Awake()
     {
@@ -36,12 +39,19 @@ public class CommandVisRisingPanel : MonoBehaviour
             if (time <= 0)
                 gameObject.SetActive(false);
         }
+        
+        if(moving)
+        {
+            Moving();
+        }
     }
 
-    public void ReceiveUsernameUpdate(string userString)
+    void Moving()
     {
-        username.text = userString + ":" + @"\u0009" + @"\u0009";
-        time = durationShown;
+        //Debug.LogWarning("MOVE!");
+        //transform.position = transform.position + velocity;
+        var rBody = GetComponent<Rigidbody2D>();
+        rBody.position = rBody.position + velocity;
     }
 
     public void ReceiveCmd(InputSimulatorScript.GravitraxConnex.cmds cmd)
@@ -58,4 +68,11 @@ public class CommandVisRisingPanel : MonoBehaviour
         gameObject.SetActive(true);
         username.text = string.Empty;
     }
+
+    public void ReceiveUsernameUpdate(string userString)
+    {
+        username.text = userString + ":" + @"\u0009" + @"\u0009";
+        time = durationShown;
+    }
+
 }
