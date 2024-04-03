@@ -47,13 +47,15 @@ public class InputSimulatorScript : MonoBehaviour
             #endif
             return true;
         }
+        if (isShutdownRequested)
+            return false;
+
+        UnityEngine.Debug.LogError("Quit MSG received");
+
         CloseGravitraxConnectCliScript();
         CloseTwitchPlaysScript();
 
-        if (isShutdownRequested)
-            return false;
-        UnityEngine.Debug.LogError("Quit MSG received");
-        InvokeRepeating(nameof(RetryQuit), 0f, 1.0f);
+        InvokeRepeating(nameof(RetryQuit), 0.5f, 1.0f);
         isShutdownRequested = true;
 
         return false;
@@ -71,7 +73,7 @@ public class InputSimulatorScript : MonoBehaviour
 
     public void ShutownProgram()
     {
-        UnityEngine.Debug.LogError("Inducing Quit...");
+        //UnityEngine.Debug.LogError("Inducing Quit...");
         #if UNITY_EDITOR
             //UnityEditor.EditorApplication.isPlaying = false;
             OnShutdown();
@@ -113,18 +115,29 @@ public class InputSimulatorScript : MonoBehaviour
     {
         //UnityEngine.Debug.Log("now " + Time.unscaledTime);
         //UnityEngine.Debug.Log(startTimeTwitch + 8f);
+        /*
         if (Time.unscaledTime < startTimeTwitch + 8f) // if not at least 5+3s since start of TwitchCli have passed, twitchcli is at risk of not registering Quit-Input
+        {
+            UnityEngine.Debug.LogWarning("Halt Stopp!");
             return;
+            UnityEngine.Debug.LogWarning("Dem isch ja illegal!!!11!");
+        }
+        */
         StartCoroutine(CloseTwitchPlaysScriptCoroutine());
 
         IEnumerator CloseTwitchPlaysScriptCoroutine()
         {
+            yield return new WaitWhile(() => (Time.unscaledTime < startTimeTwitch + 8f));
+
             //inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.RSHIFT, VirtualKeyCode.BACK);
+            //UnityEngine.Debug.Log("Press RShift");
             inputSimulator.Keyboard.KeyDown(VirtualKeyCode.RSHIFT);
             inputSimulator.Keyboard.KeyDown(VirtualKeyCode.BACK);
             yield return new WaitForSeconds(0.1f);
+            //UnityEngine.Debug.Log("De-Press RShift");
             inputSimulator.Keyboard.KeyUp(VirtualKeyCode.RSHIFT);
             inputSimulator.Keyboard.KeyUp(VirtualKeyCode.BACK);
+            //yield return new WaitForSeconds(0.05f);
             isShutdownProcessesFinished = true;
         }
     }

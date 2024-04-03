@@ -66,8 +66,9 @@ public class ChatInterpreter : MonoBehaviour
                 ch = char.ToLower(ch);
 
             text += ch;
-            //if (phase == Phase.Name)
-                CommandVisualizer.Instance.ReceiveUsernameUpdate(text);
+
+            CommandVisualizer.Instance.ReceiveUsernameUpdate(text);
+            CommandVisRisingPanel.Instance.ReceiveUsernameUpdate(text);
         }
     }
 
@@ -87,6 +88,7 @@ public class ChatInterpreter : MonoBehaviour
             return;
 
         CommandVisualizer.Instance.ReceiveCmd(cmdEnum);
+        CommandVisRisingPanel.Instance.ReceiveCmd(cmdEnum);
         InputSimulatorScript.GravitraxConnex.Instance.RunCommand(cmdEnum);
     }
 
@@ -100,5 +102,6 @@ public class ChatInterpreter : MonoBehaviour
         Debug.Log("Name: " + username);
 
         CommandVisualizer.Instance.ReceiveUsernameUpdate(username);
+        CommandVisRisingPanel.Instance.ReceiveUsernameUpdate(username);
     }
 }
