@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class CommandVisualizer : MonoBehaviour
+public class CommandVisRisingPanel : MonoBehaviour
 {
     [SerializeField] float durationShown = 4.0f;
 
@@ -13,7 +13,7 @@ public class CommandVisualizer : MonoBehaviour
     TMPro.TextMeshProUGUI username;
 
     double time;
-    public static CommandVisualizer Instance;
+    public static CommandVisRisingPanel Instance;
     private void Awake()
     {
         TooManyFuncts.Singletonize(ref Instance, this, false);
@@ -24,7 +24,7 @@ public class CommandVisualizer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
