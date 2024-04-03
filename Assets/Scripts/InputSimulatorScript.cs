@@ -123,8 +123,8 @@ public class InputSimulatorScript : MonoBehaviour
             inputSimulator.Keyboard.KeyDown(VirtualKeyCode.RSHIFT);
             inputSimulator.Keyboard.KeyDown(VirtualKeyCode.BACK);
             yield return new WaitForSeconds(0.1f);
-            inputSimulator.Keyboard.KeyUp(VirtualKeyCode.BACK);
             inputSimulator.Keyboard.KeyUp(VirtualKeyCode.RSHIFT);
+            inputSimulator.Keyboard.KeyUp(VirtualKeyCode.BACK);
             isShutdownProcessesFinished = true;
         }
     }

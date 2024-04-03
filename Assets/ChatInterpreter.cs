@@ -54,10 +54,19 @@ public class ChatInterpreter : MonoBehaviour
             return;
         }
 
-        if ((phase == Phase.Msg || phase == Phase.Name) && char.IsUpper(ch))
+        if (phase == Phase.Msg && char.IsUpper(ch))
         {
             text += ch;
-            if (phase == Phase.Name)
+        }
+        else if (phase == Phase.Name && char.IsUpper(ch))
+        {
+            if (text.Length == 0)
+                ch = char.ToLower(ch);
+            else
+                ch = char.ToLower(ch);
+
+            text += ch;
+            //if (phase == Phase.Name)
                 CommandVisualizer.Instance.ReceiveUsernameUpdate(text);
         }
     }

@@ -6,6 +6,8 @@ using TMPro;
 
 public class CommandVisualizer : MonoBehaviour
 {
+    [SerializeField] float durationShown = 4.0f;
+
     public Color red, green, blue;
     Image color;
     TMPro.TextMeshProUGUI username;
@@ -39,7 +41,7 @@ public class CommandVisualizer : MonoBehaviour
     public void ReceiveUsernameUpdate(string userString)
     {
         username.text = userString + ":" + @"\u0009" + @"\u0009";
-        time = 4.0f;
+        time = durationShown;
     }
 
     public void ReceiveCmd(InputSimulatorScript.GravitraxConnex.cmds cmd)
