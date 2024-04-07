@@ -5,10 +5,13 @@ using UnityEngine;
 public class Constants : MonoBehaviour
 {
     public static Constants I;
-    [SerializeField] public Color red, green, blue;
-
     private void Awake()
     {
         TooManyFuncts.Singletonize(ref I, this, false);
     }
+
+    [SerializeField] public Color red, green, blue;
+    [SerializeField] public int commandPanelsPoolSize = 10;
+    [SerializeField] public int votesNeededGtrxColor = 6;
+
 }
