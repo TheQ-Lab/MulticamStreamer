@@ -5,14 +5,23 @@ using UnityEngine.UI;
 
 public class CommandPanelSpawner : MonoBehaviour
 {
-    public GameObject HexBtnR, HexBtnG, HexBtnB;
+    
 
     List<CommandVisRisingPanel> listCommandPanels = new();
 
+    public static CommandPanelSpawner Instance;
+    private void Awake()
+    {
+        TooManyFuncts.Singletonize(ref Instance, this, false);
+    }
+
+    Vector2 panelStartPos;
     // Start is called before the first frame update
     void Start()
     {
-        var blueprint = GetComponentInChildren<CommandVisRisingPanel>();
+        var blueprint = TooManyFuncts.GetComponentInChildrenParametric<CommandVisRisingPanel>(transform, null, null, null);
+        panelStartPos = new Vector2(blueprint.transform.position.x, blueprint.transform.position.y);
+        Debug.Log(blueprint);
         listCommandPanels.Add(blueprint);
         for (int i = 0; i < Constants.I.commandPanelsPoolSize; i++)
         {
@@ -29,27 +38,20 @@ public class CommandPanelSpawner : MonoBehaviour
         
     }
 
-    public void OnSpawnNewPanel()
+    public CommandVisRisingPanel OnSpawnNewPanel()
     {
-
-    }
-
-    private void IterateBtnProg(ColorBtn btn)
-    {
-        btn.currentValue = Mathf.Clamp(btn.currentValue +1, 0, Constants.I.votesNeededGtrxColor);
-        btn.rim.fillAmount = btn.currentValue / Constants.I.votesNeededGtrxColor;
-    }
-
-    public class ColorBtn
-    {
-        public GameObject gameObj;
-        public Image rim;
-        public int currentValue;
-        public ColorBtn(GameObject obj)
+        foreach(CommandVisRisingPanel panel in listCommandPanels)
         {
-            gameObj = obj;
-            rim = TooManyFuncts.GetComponentInChildrenParametric<Image>(obj.transform, "rim", null, null);
-            currentValue = 0;
+            if(panel.gameObject.activeSelf == false)
+            {
+                panel.gameObject.SetActive(true);
+                panel.transform.position = (Vector3) panelStartPos;
+                panel.moving = true;
+                return panel;
+            }
         }
+        Debug.LogWarning("No free panel found! Consider increasing pool size.");
+        return null;
     }
+
 }

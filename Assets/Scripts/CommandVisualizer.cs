@@ -44,7 +44,7 @@ public class CommandVisualizer : MonoBehaviour
         time = durationShown;
     }
 
-    public void ReceiveCmd(InputSimulatorScript.GravitraxConnex.cmds cmd)
+    public void DisplayCmd(InputSimulatorScript.GravitraxConnex.cmds cmd)
     {
         if (cmd == InputSimulatorScript.GravitraxConnex.cmds.red)
             color.color = Constants.I.red;

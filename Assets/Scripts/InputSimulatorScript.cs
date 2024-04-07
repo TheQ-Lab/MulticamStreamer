@@ -17,8 +17,8 @@ public class InputSimulatorScript : MonoBehaviour
 
         UnityEngine.Debug.LogError(Application.dataPath);
 
-        Invoke(nameof(RunGravitraxConnectCliScript), 1.0f);
-        Invoke(nameof(RunTwitchPlaysScript), 1.1f);
+        Invoke(nameof(RunGravitraxConnectCliScript), 0.3f);
+        Invoke(nameof(RunTwitchPlaysScript), 0.1f);
 
         //Invoke(nameof(ShutownProgram), 8f);
 

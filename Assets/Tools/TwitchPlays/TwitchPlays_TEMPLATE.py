@@ -76,11 +76,11 @@ def handle_message(message):
         
         if msg == "go":
             TypeText("restmüll25Tonnes", username)
-        if msg == "r" or msg == "red" or msg == "rot":
+        if msg == "r" or msg == "red" or msg == "rot" or msg == "🔴":
             TypeText("redcmd", username)
-        if msg == "g" or msg == "green" or msg == "grün":
+        if msg == "g" or msg == "green" or msg == "grün" or msg == "🟢":
             TypeText("greencmd", username)
-        if msg == "b" or msg == "blue" or msg == "blau":
+        if msg == "b" or msg == "blue" or msg == "blau" or msg == "🔵":
             TypeText("bluecmd", username)
             
         if msg == "m": 

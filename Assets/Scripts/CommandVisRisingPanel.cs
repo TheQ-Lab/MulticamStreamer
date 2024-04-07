@@ -16,10 +16,10 @@ public class CommandVisRisingPanel : MonoBehaviour
     double time;
     public bool moving;
 
-    public static CommandVisRisingPanel Instance;
+    //public static CommandVisRisingPanel Instance;
     private void Awake()
     {
-        TooManyFuncts.Singletonize(ref Instance, this, false);
+        //TooManyFuncts.Singletonize(ref Instance, this, false);
         color = TooManyFuncts.GetComponentInChildrenParametric<Image>(transform, "Color", null, null);
         username = TooManyFuncts.GetComponentInChildrenParametric<TextMeshProUGUI>(transform, "Username", null, null);
         gameObject.SetActive(false);
@@ -54,7 +54,7 @@ public class CommandVisRisingPanel : MonoBehaviour
         rBody.position = rBody.position + velocity;
     }
 
-    public void ReceiveCmd(InputSimulatorScript.GravitraxConnex.cmds cmd)
+    public void DisplayCmd(InputSimulatorScript.GravitraxConnex.cmds cmd)
     {
         if (cmd == InputSimulatorScript.GravitraxConnex.cmds.red)
             color.color = Constants.I.red;
@@ -69,7 +69,7 @@ public class CommandVisRisingPanel : MonoBehaviour
         username.text = string.Empty;
     }
 
-    public void ReceiveUsernameUpdate(string userString)
+    public void DisplayUsernameUpdate(string userString)
     {
         username.text = userString + ":" + @"\u0009" + @"\u0009";
         time = durationShown;

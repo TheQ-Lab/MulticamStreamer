@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class ChatInterpreter : MonoBehaviour
 {
+    CommandVisRisingPanel panel;
     string text = string.Empty;
     public enum Phase { Idle, Msg, Name }
     public Phase phase = Phase.Idle;
@@ -68,7 +69,7 @@ public class ChatInterpreter : MonoBehaviour
             text += ch;
 
             CommandVisualizer.Instance.ReceiveUsernameUpdate(text);
-            CommandVisRisingPanel.Instance.ReceiveUsernameUpdate(text);
+            panel.DisplayUsernameUpdate(text);
         }
     }
 
@@ -87,8 +88,12 @@ public class ChatInterpreter : MonoBehaviour
         else
             return;
 
-        CommandVisualizer.Instance.ReceiveCmd(cmdEnum);
-        CommandVisRisingPanel.Instance.ReceiveCmd(cmdEnum);
+        CommandVisualizer.Instance.DisplayCmd(cmdEnum);
+
+        panel = CommandPanelSpawner.Instance.OnSpawnNewPanel();
+        panel?.DisplayCmd(cmdEnum);
+        HexButtons.Instance.IterateBtnProg(cmdEnum);
+
         InputSimulatorScript.GravitraxConnex.Instance.RunCommand(cmdEnum);
     }
 
@@ -102,6 +107,6 @@ public class ChatInterpreter : MonoBehaviour
         Debug.Log("Name: " + username);
 
         CommandVisualizer.Instance.ReceiveUsernameUpdate(username);
-        CommandVisRisingPanel.Instance.ReceiveUsernameUpdate(username);
+        panel?.DisplayUsernameUpdate(username);
     }
 }
