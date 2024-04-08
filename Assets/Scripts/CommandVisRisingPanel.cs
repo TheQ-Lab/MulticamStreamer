@@ -13,17 +13,18 @@ public class CommandVisRisingPanel : MonoBehaviour
     Image color;
     TMPro.TextMeshProUGUI username;
 
-    double time;
+    public bool isFree;
     public bool moving;
+    double time;
 
     //public static CommandVisRisingPanel Instance;
     private void Awake()
     {
         //TooManyFuncts.Singletonize(ref Instance, this, false);
-        color = TooManyFuncts.GetComponentInChildrenParametric<Image>(transform, "Color", null, null);
-        username = TooManyFuncts.GetComponentInChildrenParametric<TextMeshProUGUI>(transform, "Username", null, null);
+
         gameObject.SetActive(false);
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,13 +38,33 @@ public class CommandVisRisingPanel : MonoBehaviour
         {
             time -= Time.deltaTime;
             if (time <= 0)
-                gameObject.SetActive(false);
+                ToDeactivate();
         }
         
         if(moving)
         {
             Moving();
         }
+    }
+
+    public void ToInitialize()
+    {
+        gameObject.SetActive(true);
+
+        color = TooManyFuncts.GetComponentInChildrenParametric<Image>(transform, "Color", null, null);
+        username = TooManyFuncts.GetComponentInChildrenParametric<TextMeshProUGUI>(transform, "Username", null, null);
+        isFree = true;
+    }
+
+    public void ToActivate()
+    {
+
+    }
+
+    public void ToDeactivate()
+    {
+        gameObject.SetActive(false);
+        isFree = true;
     }
 
     void Moving()
@@ -65,11 +86,10 @@ public class CommandVisRisingPanel : MonoBehaviour
         else
             return;
 
-        gameObject.SetActive(true);
         username.text = string.Empty;
     }
 
-    public void DisplayUsernameUpdate(string userString)
+    public void DisplayUsername(string userString)
     {
         username.text = userString + ":" + @"\u0009" + @"\u0009";
         time = durationShown;

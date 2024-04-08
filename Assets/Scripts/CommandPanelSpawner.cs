@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class CommandPanelSpawner : MonoBehaviour
 {
-    
-
     List<CommandVisRisingPanel> listCommandPanels = new();
 
     public static CommandPanelSpawner Instance;
@@ -26,7 +24,11 @@ public class CommandPanelSpawner : MonoBehaviour
         for (int i = 0; i < Constants.I.commandPanelsPoolSize; i++)
         {
             var instance = Instantiate(blueprint.gameObject, transform, false);
-            listCommandPanels.Add(instance.GetComponent<CommandVisRisingPanel>());
+
+            instance.TryGetComponent(out CommandVisRisingPanel panel);
+            listCommandPanels.Add(panel);
+
+            panel.ToInitialize();
         }
 
 
@@ -42,11 +44,14 @@ public class CommandPanelSpawner : MonoBehaviour
     {
         foreach(CommandVisRisingPanel panel in listCommandPanels)
         {
-            if(panel.gameObject.activeSelf == false)
+            if(panel.isFree)
             {
-                panel.gameObject.SetActive(true);
+                //panel.gameObject.SetActive(true);
                 panel.transform.position = (Vector3) panelStartPos;
+
                 panel.moving = true;
+
+                panel.isFree = false;
                 return panel;
             }
         }

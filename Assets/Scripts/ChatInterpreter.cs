@@ -69,7 +69,7 @@ public class ChatInterpreter : MonoBehaviour
             text += ch;
 
             CommandVisualizer.Instance.ReceiveUsernameUpdate(text);
-            panel.DisplayUsernameUpdate(text);
+            //panel.DisplayUsernameUpdate(text);
         }
     }
 
@@ -107,6 +107,7 @@ public class ChatInterpreter : MonoBehaviour
         Debug.Log("Name: " + username);
 
         CommandVisualizer.Instance.ReceiveUsernameUpdate(username);
-        panel?.DisplayUsernameUpdate(username);
+        panel?.DisplayUsername(username);
+        panel?.gameObject.SetActive(true);
     }
 }

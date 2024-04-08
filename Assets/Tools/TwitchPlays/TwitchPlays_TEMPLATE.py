@@ -74,7 +74,7 @@ def handle_message(message):
 
         # I've added some example videogame logic code below:
         
-        if msg == "go":
+        if msg == "test":
             TypeText("restmüll25Tonnes", username)
         if msg == "r" or msg == "red" or msg == "rot" or msg == "🔴":
             TypeText("redcmd", username)
@@ -83,18 +83,20 @@ def handle_message(message):
         if msg == "b" or msg == "blue" or msg == "blau" or msg == "🔵":
             TypeText("bluecmd", username)
             
-        if msg == "m": 
+        if msg == "1" or msg == "top" or msg == "t":
+            HoldAndReleaseKey(ONE, 0.1)
+        if msg == "2" or msg == "close" or msg == "c":
+            HoldAndReleaseKey(TWO, 0.1)
+        if msg == "3" or msg == "gate" or msg == "ga":
+            HoldAndReleaseKey(THREE, 0.1)
+        if msg == "4" or msg == "wide" or msg == "w":
+            HoldAndReleaseKey(FOUR, 0.1)
+            
+        if msg == "m" or msg == "menu": 
             HoldAndReleaseKey(M, 0.1)
         if msg == "space":
             HoldAndReleaseKey(SPACE, 0.1)
-        if msg == "1":
-            HoldAndReleaseKey(1, 0.1)
-        if msg == "2":
-            HoldAndReleaseKey(2, 0.1)
-        if msg == "3":
-            HoldAndReleaseKey(3, 0.1)
-        if msg == "4":
-            HoldAndReleaseKey(4, 0.1)
+        
         '''
         if msg == "r":
             # If Shift held GravitraxCli doesnt register commands (like r,g,b)
