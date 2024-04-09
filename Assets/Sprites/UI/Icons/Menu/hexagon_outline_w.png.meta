@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      hexagon_outline_w_0: 3027491036737871234
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
