@@ -90,4 +90,32 @@ public class CamGridAgent : MonoBehaviour
         transform.localScale = tgtScale;
         //* phase = 'a';
     }
+
+    public IEnumerator ArcAnimation(Transform subject, Transform tgtObj, float duration)
+    {
+        Vector3 startPos = subject.position;
+        Vector3 tgtPos = tgtObj.position;
+        Vector3 directPathVector = tgtPos - startPos;
+        Vector3 normal = Vector3.down;
+        Vector3.OrthoNormalize(ref directPathVector, ref normal);
+
+        float timeElapsed = 0.0f;
+        while(timeElapsed < duration)
+        {
+            var t = Mathf.Pow(timeElapsed, 3f); //3rd root
+            var currentPos = Vector3.Lerp(startPos, tgtPos, t);
+
+            var x = TooManyFuncts.Remap((t + timeElapsed) / 2, 0, 1, 0, Mathf.PI);
+            var sin = Mathf.Sin(x);
+
+            currentPos += 2.5f * sin * normal;
+            //Debug.Log(timeElapsed + " " + sin);
+            subject.position = currentPos;
+
+            yield return null;
+            timeElapsed += Time.deltaTime;
+        }
+
+        subject.position = tgtPos;
+    }
 }
