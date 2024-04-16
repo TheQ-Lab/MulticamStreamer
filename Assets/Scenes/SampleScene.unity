@@ -5258,7 +5258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultToolbarIndices: 00000000010000000000000001000000
-  menuActive: 1
+  menuActive: 0
 --- !u!4 &1209219592
 Transform:
   m_ObjectHideFlags: 0
