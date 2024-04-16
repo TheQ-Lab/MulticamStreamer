@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestAnimationBlob : MonoBehaviour
+public class ColorParticleBlob : MonoBehaviour
 {
     public Transform tgt;
     public float swerveFactor = 0.2f;
     public float startLingerFactor = 2f;
     public float duration = 1.0f;
 
+    Vector2 startPos;
+    InputSimulatorScript.GravitraxConnex.cmds colorCmd;
+
     // Start is called before the first frame update
     void Start()
     {
-        Invoke(nameof(TriggerAnim), 2f);
+        ToInit();
+        //Invoke(nameof(TriggerAnim), 2f);
     }
 
     // Update is called once per frame
@@ -21,12 +26,37 @@ public class TestAnimationBlob : MonoBehaviour
         
     }
 
-    public void TriggerAnim()
+    public void ToInit()
     {
-        StartCoroutine(ArcAnimation(transform, tgt, swerveFactor, startLingerFactor, duration));
+        startPos = new Vector2(this.transform.position.x, this.transform.position.y);
     }
 
-    public IEnumerator ArcAnimation(Transform subject, Transform tgtObj, float swerveFactor, float startLingerFactor, float duration)
+    public void ToActivate(InputSimulatorScript.GravitraxConnex.cmds color)
+    {
+        gameObject.SetActive(true);
+        colorCmd = color;
+        tgt = HexButtons.Instance.GetCorrespondingButton(color).gameObj.transform;
+        Invoke(nameof(TriggerAnim), 0.5f);
+    }
+
+    private void CompleteAnimation()
+    {
+        HexButtons.Instance.IterateBtnProg(colorCmd);
+        ToDeactivate();
+    }
+
+    public void ToDeactivate()
+    {
+        transform.position = (Vector3)startPos;
+        gameObject.SetActive(false);
+    }
+
+    public void TriggerAnim()
+    {
+        StartCoroutine(ArcAnimation(transform, tgt, swerveFactor, startLingerFactor, duration, delegate { }, CompleteAnimation)) ;
+    }
+
+    public IEnumerator ArcAnimation(Transform subject, Transform tgtObj, float swerveFactor, float startLingerFactor, float duration, Action OnEveryFrameAction, Action OnCompleteAction)
     {
         Vector2 startPos = subject.position;
         Vector2 tgtPos = tgtObj.position;
@@ -47,11 +77,13 @@ public class TestAnimationBlob : MonoBehaviour
             // Debug.Log(timeElapsed + " " + x);
             subject.position = currentPos;
 
+            OnEveryFrameAction();
             yield return null;
             timeElapsed += Time.deltaTime;
         }
 
         subject.position = tgtPos;
+        OnCompleteAction();
     }
 
     public IEnumerator ArcAnimationOld3D(Transform subject, Transform tgtObj, float duration)

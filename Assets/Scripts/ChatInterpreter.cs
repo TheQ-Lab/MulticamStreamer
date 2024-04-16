@@ -69,7 +69,7 @@ public class ChatInterpreter : MonoBehaviour
             text += ch;
 
             CommandVisualizer.Instance.ReceiveUsernameUpdate(text);
-            //panel.DisplayUsernameUpdate(text);
+            panel.FinishUsernameTransmission();
         }
     }
 
@@ -92,7 +92,7 @@ public class ChatInterpreter : MonoBehaviour
 
         panel = CommandPanelSpawner.Instance.OnSpawnNewPanel();
         panel?.DisplayCmd(cmdEnum);
-        HexButtons.Instance.IterateBtnProg(cmdEnum);
+        //HexButtons.Instance.IterateBtnProg(cmdEnum);
 
         InputSimulatorScript.GravitraxConnex.Instance.RunCommand(cmdEnum);
     }

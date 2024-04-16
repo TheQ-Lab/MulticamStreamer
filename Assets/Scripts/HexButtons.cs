@@ -25,6 +25,11 @@ public class HexButtons : MonoBehaviour
 
     }
 
+    public ColorBtn GetCorrespondingButton(InputSimulatorScript.GravitraxConnex.cmds color)
+    {
+        return buttonDict[color];
+    }
+
     public void IterateBtnProg(InputSimulatorScript.GravitraxConnex.cmds color)
     {
         ColorBtn btn = buttonDict[color];

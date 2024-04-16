@@ -17,8 +17,8 @@ public class InputSimulatorScript : MonoBehaviour
 
         UnityEngine.Debug.LogError(Application.dataPath);
 
-        Invoke(nameof(RunGravitraxConnectCliScript), 0.3f);
-        Invoke(nameof(RunTwitchPlaysScript), 0.1f);
+        Invoke(nameof(RunGravitraxConnectCliScript), 0.15f);
+        Invoke(nameof(RunTwitchPlaysScript), 0.05f);
 
         //Invoke(nameof(ShutownProgram), 8f);
 
@@ -127,7 +127,7 @@ public class InputSimulatorScript : MonoBehaviour
 
         IEnumerator CloseTwitchPlaysScriptCoroutine()
         {
-            yield return new WaitWhile(() => (Time.unscaledTime < startTimeTwitch + 8f));
+            yield return new WaitWhile(() => (Time.unscaledTime < startTimeTwitch + 7f));
 
             //inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.RSHIFT, VirtualKeyCode.BACK);
             //UnityEngine.Debug.Log("Press RShift");

@@ -3,7 +3,7 @@ using System;
 public class Flag
 {
     private bool value;
-    public Action setEvent; // better Speed etc, but not useful for in-Editor Events
+    public Action setEvent = delegate { }; // better Speed etc, but not useful for in-Editor Events
 
     /// <summary>
     /// Standard Constructor with value set false; events initialized

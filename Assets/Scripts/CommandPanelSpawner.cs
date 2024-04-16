@@ -13,12 +13,12 @@ public class CommandPanelSpawner : MonoBehaviour
         TooManyFuncts.Singletonize(ref Instance, this, false);
     }
 
-    Vector2 panelStartPos;
+    //Vector2 panelStartPos;
     // Start is called before the first frame update
     void Start()
     {
         var blueprint = TooManyFuncts.GetComponentInChildrenParametric<CommandVisRisingPanel>(transform, null, null, null);
-        panelStartPos = new Vector2(blueprint.transform.position.x, blueprint.transform.position.y);
+        //panelStartPos = new Vector2(blueprint.transform.position.x, blueprint.transform.position.y);
         Debug.Log(blueprint);
         listCommandPanels.Add(blueprint);
         for (int i = 0; i < Constants.I.commandPanelsPoolSize; i++)
@@ -47,11 +47,14 @@ public class CommandPanelSpawner : MonoBehaviour
             if(panel.isFree)
             {
                 //panel.gameObject.SetActive(true);
+                /*
                 panel.transform.position = (Vector3) panelStartPos;
 
                 panel.moving = true;
 
                 panel.isFree = false;
+                */
+                panel.ToActivate();
                 return panel;
             }
         }
