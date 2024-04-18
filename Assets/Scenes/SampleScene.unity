@@ -4343,7 +4343,15 @@ MonoBehaviour:
     m_Id: 2d1bd53a-76bc-4eb4-bcc4-cca820798efa
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: e93d7dd2-8e7e-412b-9d34-d985d9dbecd6
+      m_Path: <Keyboard>/#(M)
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Menu Toggle
+      m_Flags: 0
     m_Flags: 0
   SoftShutdown:
     m_Name: Soft Shutdown
