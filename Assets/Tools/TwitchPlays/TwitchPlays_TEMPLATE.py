@@ -87,7 +87,7 @@ def handle_message(message):
             HoldAndReleaseKey(ONE, 0.1)
         if msg == "2" or msg == "close" or msg == "c":
             HoldAndReleaseKey(TWO, 0.1)
-        if msg == "3" or msg == "gate" or msg == "ga":
+        if msg == "3" or msg == "switch" or msg == "s":
             HoldAndReleaseKey(THREE, 0.1)
         if msg == "4" or msg == "wide" or msg == "w":
             HoldAndReleaseKey(FOUR, 0.1)
