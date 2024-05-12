@@ -6253,7 +6253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1932774e5cdf9f24ea597a9f44887cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultToolbarIndices: 00000000010000000200000003000000
+  defaultToolbarIndices: 02000000000000000100000003000000
   menuActive: 0
 --- !u!4 &1209219592
 Transform:
