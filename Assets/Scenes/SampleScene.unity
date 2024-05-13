@@ -4250,7 +4250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentVotes: 0
-  maxVotes: 5
+  maxVotes: 1
 --- !u!114 &833465567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5332,15 +5332,7 @@ MonoBehaviour:
     m_Id: 2d1bd53a-76bc-4eb4-bcc4-cca820798efa
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: e93d7dd2-8e7e-412b-9d34-d985d9dbecd6
-      m_Path: <Keyboard>/#(M)
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Menu Toggle
-      m_Flags: 0
+    m_SingletonActionBindings: []
     m_Flags: 0
   SoftShutdown:
     m_Name: Soft Shutdown
@@ -6493,7 +6485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentVotes: 0
-  maxVotes: 5
+  maxVotes: 1
 --- !u!114 &1225446068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11058,7 +11050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentVotes: 0
-  maxVotes: 5
+  maxVotes: 1
 --- !u!114 &1929126625
 MonoBehaviour:
   m_ObjectHideFlags: 0
