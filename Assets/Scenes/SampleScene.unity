@@ -188,7 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!212 &17869812
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -477,6 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultToolbarIndices: 02000000030000000000000001000000
+  requestedRessolutionHz: {x: 1920, y: 1080, z: 30}
   menuActive: 0
 --- !u!4 &80330700
 Transform:
@@ -928,7 +929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!23 &139757435
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1397,7 +1398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!23 &275329518
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2640,7 +2641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3024,7 +3025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!64 &641130132
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3711,7 +3712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!1 &759631770
 GameObject:
   m_ObjectHideFlags: 0
@@ -4045,7 +4046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!1 &824391128
 GameObject:
   m_ObjectHideFlags: 0
@@ -4902,7 +4903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!1 &946222161
 GameObject:
   m_ObjectHideFlags: 0
@@ -6254,6 +6255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultToolbarIndices: 02000000000000000100000003000000
+  requestedRessolutionHz: {x: 1920, y: 1080, z: 30}
   menuActive: 0
 --- !u!4 &1209219592
 Transform:
@@ -7004,7 +7006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!23 &1287102301
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7317,7 +7319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!64 &1329197177
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7687,7 +7689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!1 &1398763390
 GameObject:
   m_ObjectHideFlags: 0
@@ -9860,7 +9862,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!64 &1813827747
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10070,7 +10072,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!64 &1855893349
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11370,7 +11372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tx: {fileID: 0}
   mat: {fileID: 0}
-  txResolution: {x: 0, y: 0}
+  txResolution: {x: 0, y: 0, z: 0}
 --- !u!114 &2011338753
 MonoBehaviour:
   m_ObjectHideFlags: 0

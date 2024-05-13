@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MBExtensions;
 
 public class CamAssignHandler : MonoBehaviour
 {
     public static CamAssignHandler Instance;
 
     [SerializeField] int[] defaultToolbarIndices = { 2, 3, 1, 0 };
+    [SerializeField] public Vector3Int requestedRessolutionHz = new(1920, 1080, 30);
     private List<int> toolbarIndices = new(4);
 
     #region OnScreenMenu
@@ -74,22 +76,27 @@ public class CamAssignHandler : MonoBehaviour
         //foreach(Transform c1 in transform)
         //    camFrames.Add(c1.GetComponentInChildren<WCamTx>());
 
-        ScanForCameras();
-
-        // Startup sanity check wether preffered cameras even are available - to get assigned
-        foreach(int ind in defaultToolbarIndices)
+        //StartCoroutine(this.DelayedExecution(DelayedStart, 3f));
+        DelayedStart();
+        void DelayedStart()
         {
-            //int nuInd = Mathf.Min(ind, wcDeviceLst.Count - 1);
-            int nuInd = ind;
-            if(nuInd >= wcDeviceLst.Count)
-                nuInd = 0;
-            toolbarIndices.Add(nuInd);
+            ScanForCameras();
+
+            // Startup sanity check wether preffered cameras even are available - to get assigned
+            foreach (int ind in defaultToolbarIndices)
+            {
+                //int nuInd = Mathf.Min(ind, wcDeviceLst.Count - 1);
+                int nuInd = ind;
+                if (nuInd >= wcDeviceLst.Count)
+                    nuInd = 0;
+                toolbarIndices.Add(nuInd);
+            }
+
+            ApplyCameraAssigns();
+
+
+            //InvokeRepeating(nameof(ApplyCameraResizes), 2f, .2f);
         }
-
-        ApplyCameraAssigns();
-
-
-        //InvokeRepeating(nameof(ApplyCameraResizes), 2f, .2f);
     }
 
     private void ScanForCameras()
@@ -101,7 +108,11 @@ public class CamAssignHandler : MonoBehaviour
             // Creates Textures
             wcTextureLst = new();
             foreach (WebCamDevice wcDevice in wcDeviceLst)
-                wcTextureLst.Add(new WebCamTexture(wcDevice.name));
+            {
+                wcTextureLst.Add(new WebCamTexture(wcDevice.name, requestedRessolutionHz.x, requestedRessolutionHz.y, requestedRessolutionHz.z));
+                Debug.Log(wcTextureLst[wcTextureLst.Count - 1].requestedHeight);
+                Debug.Log(wcTextureLst[wcTextureLst.Count - 1].height);
+            }
         }
         else // add more [WCDevice cant be just dumped and a new Device created - without stopping() it before]
         {
@@ -109,7 +120,7 @@ public class CamAssignHandler : MonoBehaviour
             {
                 if (!wcDeviceLst.Contains(wcDevice))
                 {
-                    wcTextureLst.Add(new WebCamTexture(wcDevice.name));
+                    wcTextureLst.Add(new WebCamTexture(wcDevice.name, requestedRessolutionHz.x, requestedRessolutionHz.y, requestedRessolutionHz.z));
                 }
             }
             wcDeviceLst = new(WebCamTexture.devices);
@@ -127,8 +138,8 @@ public class CamAssignHandler : MonoBehaviour
 
     private void ApplyCameraAssigns()
     {
-        foreach(WebCamTexture tx in wcTextureLst)
-            tx.Pause();
+        //foreach(WebCamTexture tx in wcTextureLst)
+        //    tx.Pause();
 
         foreach(CamAssignAgent camAgnt in camAgents)
         {

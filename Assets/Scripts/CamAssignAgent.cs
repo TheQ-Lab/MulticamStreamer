@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using MBExtensions;
+using UnityEditor.ShaderGraph.Internal;
 
 public class CamAssignAgent: MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class CamAssignAgent: MonoBehaviour
     private Material mat;
 
     [SerializeField]
-    private Vector2Int txResolution;
+    private Vector3 txResolution;
     public void AssignTx(WebCamTexture newTexture)
     {
         mat = GetComponent<Renderer>().material;
@@ -28,10 +30,14 @@ public class CamAssignAgent: MonoBehaviour
         mat.mainTexture = tx;                                   // With instantiating
 
         tx.Play();
-        txResolution = new(tx.width, tx.height);
-
+        txResolution = new(tx.width, tx.height, 0);
         //Debug.Log(tx.width + ", " + tx.height);
 
+        StartCoroutine(this.DelayedExecution(MeasureFPS, 3f));
+        void MeasureFPS()
+        {
+            txResolution.z = tx.updateCount / 3f;
+        }
     }
 
 
