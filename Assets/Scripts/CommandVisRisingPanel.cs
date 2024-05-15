@@ -124,5 +124,6 @@ public class CommandVisRisingPanel : MonoBehaviour
     public void FinishUsernameTransmission()
     {
         colorParticleScript.ToActivate(colorCmd);
+        Debug.Log("Finished");
     }
 }

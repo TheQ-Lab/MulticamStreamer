@@ -37,6 +37,7 @@ public class ColorParticleBlob : MonoBehaviour
         colorCmd = color;
         tgt = HexButtons.Instance.GetCorrespondingButton(color).gameObj.transform;
         Invoke(nameof(TriggerAnim), 0.5f);
+        
     }
 
     private void CompleteAnimation()

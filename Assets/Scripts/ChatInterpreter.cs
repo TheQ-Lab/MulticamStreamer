@@ -68,8 +68,8 @@ public class ChatInterpreter : MonoBehaviour
 
             text += ch;
 
-            CommandVisualizer.Instance.ReceiveUsernameUpdate(text);
-            panel.FinishUsernameTransmission();
+            //CommandVisualizer.Instance.ReceiveUsernameUpdate(text);
+            
         }
     }
 
@@ -88,7 +88,7 @@ public class ChatInterpreter : MonoBehaviour
         else
             return;
 
-        CommandVisualizer.Instance.DisplayCmd(cmdEnum);
+        //CommandVisualizer.Instance.DisplayCmd(cmdEnum);
 
         panel = CommandPanelSpawner.Instance.OnSpawnNewPanel();
         panel?.DisplayCmd(cmdEnum);
@@ -106,8 +106,9 @@ public class ChatInterpreter : MonoBehaviour
 
         Debug.Log("Name: " + username);
 
-        CommandVisualizer.Instance.ReceiveUsernameUpdate(username);
+        //CommandVisualizer.Instance.ReceiveUsernameUpdate(username);
         panel?.DisplayUsername(username);
         panel?.gameObject.SetActive(true);
+        panel.FinishUsernameTransmission();
     }
 }

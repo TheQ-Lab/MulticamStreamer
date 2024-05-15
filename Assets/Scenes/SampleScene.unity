@@ -10165,7 +10165,6 @@ GameObject:
   - component: {fileID: 1744876880}
   - component: {fileID: 1744876883}
   - component: {fileID: 1744876882}
-  - component: {fileID: 1744876881}
   m_Layer: 5
   m_Name: TooltipBox
   m_TagString: Untagged
@@ -10199,19 +10198,6 @@ RectTransform:
   m_AnchoredPosition: {x: 187.62721, y: -800}
   m_SizeDelta: {x: 828.94556, y: 177.3923}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1744876881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1744876879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6940506992bf5824eb299bbc121d6988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  durationShown: 4
 --- !u!114 &1744876882
 MonoBehaviour:
   m_ObjectHideFlags: 0
