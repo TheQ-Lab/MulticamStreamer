@@ -15,7 +15,7 @@ public class InputSimulatorScript : MonoBehaviour
         inputSimulator = new InputSimulator();
         //InvokeRepeating(nameof(PressBtn), 5f, 2f);
 
-        UnityEngine.Debug.LogError(Application.dataPath);
+        UnityEngine.Debug.LogWarning(Application.dataPath);
 
         Invoke(nameof(RunGravitraxConnectCliScript), 0.15f);
         Invoke(nameof(RunTwitchPlaysScript), 0.05f);

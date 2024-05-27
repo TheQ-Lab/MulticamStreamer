@@ -253,7 +253,7 @@ public class UIVoteButton : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("enable");
+        //Debug.Log("enable");
         //animator.Play("Pop in", 1);
     }
     
