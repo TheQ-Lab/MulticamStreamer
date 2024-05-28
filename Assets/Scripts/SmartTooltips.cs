@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
+using MBExtensions;
 
 public class SmartTooltips : MonoBehaviour
 {
@@ -11,11 +13,15 @@ public class SmartTooltips : MonoBehaviour
     public UserStatsList userStatsList;
     public class UserStatsList
     {
-        public UserStats[] list;
+        public List<UserStats> list = new();
+        //public UserStats[] listo;
 
         public UserStatsList()
         {
-            this.list = new UserStats[2];
+            //this.list = new UserStats[2];
+            list.Add(new("ElTesto", DateTime.Now));
+            //list.Add(new("popool", DateTime.Now));
+            //list.Add(new("popollololo", DateTime.Now));
         }
 
         public bool IsNewUser(string username)
@@ -66,8 +72,8 @@ public class SmartTooltips : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //UserStatsStorageInit();
-        UserStatsSaveTest();
+        UserStatsStorageInit();
+        //UserStatsSaveTest();
     }
 
     public void UserMsgReceived(string username, string msg)
@@ -81,7 +87,25 @@ public class SmartTooltips : MonoBehaviour
         else
         {
             var newUser = new UserStats(username, DateTime.Now);
+            userStatsList.list.Add(newUser);
+            Save(userStatsList);
+            PrintWelcomeMsg(username);
 
+        }
+    }
+    public GameObject TempReferenceToUnderlyingTooltipBox;
+    public void PrintWelcomeMsg(string name)
+    {
+        TooManyFuncts.GetComponentInChildrenParametric<TextMeshProUGUI>(transform.GetChild(0), "Username", null, null).text = '\n' + name;
+        transform.GetChild(0).gameObject.SetActive(true);
+        TempReferenceToUnderlyingTooltipBox.SetActive(false);
+
+        StopAllCoroutines();
+        StartCoroutine(this.DelayedExecution(ReenableUnderlying, 5.0f));
+        void ReenableUnderlying()
+        {
+            TempReferenceToUnderlyingTooltipBox.SetActive(true);
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
@@ -89,6 +113,9 @@ public class SmartTooltips : MonoBehaviour
     {
         userStatsList = new();
         Load(ref userStatsList);
+        //if (userStatsList is null)
+        //    userStatsList = new();
+        Debug.Log(userStatsList.list.ToString());
     }
 
     public void Save(object obj)
@@ -103,7 +130,9 @@ public class SmartTooltips : MonoBehaviour
         {
             string jsonString = File.ReadAllText(saveFile);
 
-            obj = JsonUtility.FromJson<Type>(jsonString);
+            var newObj = JsonUtility.FromJson<Type>(jsonString);
+            if (newObj is Type)
+                obj = newObj;
         }
     }
 
