@@ -7,6 +7,8 @@ public class ChatInterpreter : MonoBehaviour
 {
     CommandVisRisingPanel panel;
     string text = string.Empty;
+
+    string username, cmd;
     public enum Phase { Idle, Msg, Name }
     public Phase phase = Phase.Idle;
 
@@ -75,7 +77,7 @@ public class ChatInterpreter : MonoBehaviour
 
     private void ReferMsg(string dirtyMsg)
     {
-        string cmd = dirtyMsg;
+        cmd = dirtyMsg;
 
         Debug.Log("Msg: " + cmd);
         InputSimulatorScript.GravitraxConnex.cmds cmdEnum;
@@ -99,7 +101,7 @@ public class ChatInterpreter : MonoBehaviour
 
     private void ReferUsername(string dirtyUsername)
     {
-        string username = dirtyUsername.ToLower();
+        username = dirtyUsername.ToLower();
         var firstLetter = char.ToUpper(username[0]);
         username = username.Remove(0, 1);
         username = username.Insert(0, firstLetter.ToString());
@@ -110,5 +112,6 @@ public class ChatInterpreter : MonoBehaviour
         panel?.DisplayUsername(username);
         panel?.gameObject.SetActive(true);
         panel.FinishUsernameTransmission();
+        SmartTooltips.Instance.UserMsgReceived(username, cmd);
     }
 }

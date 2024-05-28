@@ -21,6 +21,12 @@ public class TooManyFuncts
         // If (Instance == this) already, no need to act
         // (probably: no scene was ever loaded OR last load is done and completed)
     }
+    
+    public static bool Singletonize<T>(ref T Instance, T @this) where T : MonoBehaviour
+    {
+        return Singletonize<T>(ref Instance, @this, false);
+    }
+
 
 #region Remaps
     public static float Remap(float value, int start1, int stop1, int start2, int stop2)
