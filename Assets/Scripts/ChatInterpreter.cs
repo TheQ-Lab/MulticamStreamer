@@ -97,6 +97,7 @@ public class ChatInterpreter : MonoBehaviour
         //HexButtons.Instance.IterateBtnProg(cmdEnum);
 
         InputSimulatorScript.GravitraxConnex.Instance.RunCommand(cmdEnum);
+        SfxManager.Instance.PlaySfx(SfxManager.Sfx.Message);
     }
 
     private void ReferUsername(string dirtyUsername)

@@ -64,6 +64,7 @@ public class CamGridHandler : MonoBehaviour
         StartCoroutine(SwapTriggeredRoutine(swapTgtAgent));
         IEnumerator SwapTriggeredRoutine(CamGridAgent swapTgtAgent)
         {
+            SfxManager.Instance.PlaySfx(SfxManager.Sfx.CameraSwap);
 
             swapTgtAgent.StartCoroutine(swapTgtAgent.LaunchAnim(currentFullScreenCam.CamFrameTransform));
             yield return currentFullScreenCam.StartCoroutine(currentFullScreenCam.LaunchAnim(swapTgtAgent.CamFrameTransform));
@@ -71,8 +72,9 @@ public class CamGridHandler : MonoBehaviour
             List<CamAssignAgent> lst = new();
             lst.Add(swapTgtAgent.assignAgent);
             lst.Add(currentFullScreenCam.assignAgent);
-            CamAssignHandler.Instance.ApplyCameraResizes(lst);
+            CamAssignHandler.Instance.ApplyCameraResizes(lst); // necessary? the last 4 lines?
 
+            SfxManager.Instance.PlaySfx(SfxManager.Sfx.CameraSwapCompleted);
             currentFullScreenCam = swapTgtAgent;
             InputManager.Instance.inSwapAnim.Reset();
         }

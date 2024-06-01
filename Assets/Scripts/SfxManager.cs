@@ -1,22 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 using MBExtensions;
 
 public class SfxManager : MonoBehaviour
 {
     public static SfxManager Instance;
-	private AudioSource audioSource;
+	private List<AudioSource> audioSource;
 
-    [System.Serializable] public enum Sfx { Message, CameraSwap };
+    [System.Serializable] public enum Sfx { Message, CameraSwap, CameraSwapCompleted, Red, Green, Blue };
 
 	[Serializable]
-	public class SfxReference
-    {
-        public Sfx type;
-		public AudioClip clip;
-    }[Serializable]
 	public class SfxReference2
     {
         public Sfx type;
@@ -24,6 +19,7 @@ public class SfxManager : MonoBehaviour
 		[Range(0.0f, 1.0f)] public float vol = 1.0f;
     }
 
+	/*
     [Serializable]
 	public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
 	{
@@ -62,9 +58,13 @@ public class SfxManager : MonoBehaviour
     // public AudioClip testClip;
     //[SerializeField] public DictionaryOfStringAndInt sfxDict;
 	//[SerializeField] public SfxReference newMessage;
-	[SerializeField] private List<SfxReference> sfxReferences;
-	[SerializeField] private List<SfxReference2> sfxReferences2;
-	private Dictionary<Sfx, AudioClip> sfxReferencesDict;
+	*/
+
+	[SerializeField] private List<SfxReference2> sfxReferences;
+	//[SerializeField] private SortedList<Sfx, SfxReference2> sfxReferences3;
+	//[SerializeField] private HashSet<SfxReference2> sfxReferences4;
+
+	private Dictionary<Sfx, SfxReference2> sfxReferencesDict;
 
 
 
@@ -72,18 +72,18 @@ public class SfxManager : MonoBehaviour
     {
         TooManyFuncts.Singletonize(ref Instance, this);
 
-		audioSource = GetComponent<AudioSource>();
+		audioSource = new();
+		audioSource = new(GetComponents<AudioSource>());
 
 		sfxReferencesDict = new();
 		foreach (var reference in sfxReferences)
-			sfxReferencesDict.TryAdd(reference.type, reference.clip);
+			sfxReferencesDict.TryAdd(reference.type, reference);
 	}
 
     // Start is called before the first frame update
     void Start()
     {
-		StartCoroutine(this.DelayedExecution(() => PlaySfx(Sfx.CameraSwap), 2f));
-		StartCoroutine(this.DelayedExecution(() => PlaySfx(Sfx.Message), 3f));
+
     }
 
     // Update is called once per frame
@@ -94,11 +94,30 @@ public class SfxManager : MonoBehaviour
 
     public void PlaySfx(Sfx sfx)
     {
+		/*
 		sfxReferencesDict.TryGetValue(sfx, out var clip);
 		if(clip is AudioClip)
         {
 			audioSource.clip = clip;
 			audioSource.Play();
+        }
+		*/
+		sfxReferencesDict.TryGetValue(sfx, out var bundle);
+		var bundle2 = sfxReferences.Find(x => x.type == sfx);
+		if(bundle is SfxReference2)
+        {
+			AudioSource usedSrc = audioSource.Find(x => !x.isPlaying);
+			if (usedSrc is not AudioSource)
+				return;
+			var randomClip = UnityEngine.Random.Range(0, bundle.clip.Count);
+			if (!(bundle.clip.Count > randomClip))
+				throw new IndexOutOfRangeException("---HEY! Empty List element in " + bundle.type.ToString() + "---");
+
+			usedSrc.clip = bundle.clip[randomClip];	
+			usedSrc.volume = bundle.vol;
+
+			//usedSrc.clip = sfxReferences2.Find(x => x.type == sfx).clip[0];
+			usedSrc.Play();
         }
     }
 }
