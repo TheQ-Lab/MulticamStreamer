@@ -421,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bce97cdfb7c9943839c2d0206eda47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TempTooltipRed: {fileID: 1788717091}
   TempReferenceToUnderlyingTooltipBox: {fileID: 1744876879}
 --- !u!114 &46238471
 MonoBehaviour:
@@ -3042,7 +3043,7 @@ GameObject:
   - component: {fileID: 476374029}
   - component: {fileID: 476374028}
   m_Layer: 5
-  m_Name: bg (1)
+  m_Name: bg-Tri
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5898,7 +5899,7 @@ GameObject:
   - component: {fileID: 933726947}
   - component: {fileID: 933726946}
   m_Layer: 5
-  m_Name: Username
+  m_Name: Text-Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5943,7 +5944,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Did you know? You can toggle a switch by typing its color in chat.
+  m_text: 'Did you know? You can toggle a switch by typing its flag color in chat.
 
 '
   m_isRightToLeft: 0
@@ -7003,8 +7004,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 946222162}
   - {fileID: 1134076343}
+  - {fileID: 946222162}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7917,7 +7918,7 @@ GameObject:
   - component: {fileID: 1210755591}
   - component: {fileID: 1210755590}
   m_Layer: 5
-  m_Name: Example
+  m_Name: Text-Example
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11962,6 +11963,7 @@ GameObject:
   - component: {fileID: 1788717092}
   - component: {fileID: 1788717096}
   - component: {fileID: 1788717095}
+  - component: {fileID: 1788717097}
   m_Layer: 5
   m_Name: Tooltip
   m_TagString: Untagged
@@ -11989,7 +11991,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 423.59, y: -471.64465}
+  m_AnchoredPosition: {x: -909, y: -509}
   m_SizeDelta: {x: 965.6116, y: 194.0816}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1788717095
@@ -12030,6 +12032,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788717091}
   m_CullTransparentMesh: 1
+--- !u!114 &1788717097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788717091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa2f0184400f4ed468ebedfbb9c98f26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StorageImg: []
+  StorageTmp: []
+  counter: 0
 --- !u!1 &1791437582
 GameObject:
   m_ObjectHideFlags: 0

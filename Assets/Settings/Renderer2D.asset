@@ -84,7 +84,7 @@ MonoBehaviour:
   passMaterial: {fileID: 2100000, guid: 9a8eb162fcf11334b9094303c0316ed6, type: 2}
   passIndex: 0
   injectionPoint: 600
-  intensity: 1
-  downsample: 2.58
-  scale: 0.14
-  iterations: 8
+  intensity: 0.996
+  downsample: 2.07
+  scale: 0.12
+  iterations: 7

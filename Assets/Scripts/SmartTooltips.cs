@@ -74,6 +74,25 @@ public class SmartTooltips : MonoBehaviour
     {
         UserStatsStorageInit();
         //UserStatsSaveTest();
+
+        DoTooltipRed();
+    }
+
+    public GameObject TempTooltipRed;
+    private void DoTooltipRed()
+    {
+        DisableRed();
+        InvokeRepeating(nameof(EnableRed), 20f, 40f);
+        InvokeRepeating(nameof(DisableRed), 35f, 40f);
+    }
+
+    private void EnableRed()
+    {
+        TempTooltipRed.SetActive(true);
+    }
+    private void DisableRed()
+    {
+        TempTooltipRed.SetActive(false);
     }
 
     public void UserMsgReceived(string username, string msg)
