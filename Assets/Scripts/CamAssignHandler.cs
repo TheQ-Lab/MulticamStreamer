@@ -110,8 +110,8 @@ public class CamAssignHandler : MonoBehaviour
             foreach (WebCamDevice wcDevice in wcDeviceLst)
             {
                 wcTextureLst.Add(new WebCamTexture(wcDevice.name, requestedRessolutionHz.x, requestedRessolutionHz.y, requestedRessolutionHz.z));
-                Debug.Log(wcTextureLst[wcTextureLst.Count - 1].requestedHeight);
-                Debug.Log(wcTextureLst[wcTextureLst.Count - 1].height);
+                //Debug.Log(wcTextureLst[wcTextureLst.Count - 1].requestedHeight);
+                //Debug.Log(wcTextureLst[wcTextureLst.Count - 1].height);
             }
         }
         else // add more [WCDevice cant be just dumped and a new Device created - without stopping() it before]
