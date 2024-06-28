@@ -1,6 +1,6 @@
 #include <FastLED.h>
 
-#define NUM_LEDS 26
+#define NUM_LEDS 38
 // ALL: 38 | Outer RING: 26 max
 #define DATA_PIN A4
 #define BUTTON_PIN 2
@@ -8,9 +8,12 @@
 #define BRIGHTNESS 130
 #define FRAMES_PER_SECOND 120
 
-CRGB stripA1[38];
+CRGB stripA[38];
 //CRGB stripA2[12];
-CRGB stripB1[NUM_LEDS];
+CRGB stripB[NUM_LEDS];
+CRGB stripC[NUM_LEDS];
+CRGB stripD[NUM_LEDS];
+CRGB stripE[NUM_LEDS];
 
 int state = 2;
 
@@ -29,15 +32,18 @@ int blinkDelta = -10;
 void setup() {
   // put your setup code here, to run once:
   //FastLED.addLeds<WS2812B, DATA_PIN, GRB>(stripA1,-12, NUM_LEDS+12);  // GRB ordering is typical
-  FastLED.addLeds<WS2812B, DATA_PIN, GRB>(stripA1, 0, 38);  // GRB ordering is typical
   //FastLED.addLeds<WS2812B, DATA_PIN, GRB>(stripA2, -NUM_LEDS, NUM_LEDS+12);
-  FastLED.addLeds<WS2812B, A5, GRB>(stripB1, NUM_LEDS); 
+  FastLED.addLeds<WS2812B, A5, GRB>(stripA, 0, 38);  // GRB ordering is typical
+  FastLED.addLeds<WS2812B, A4, GRB>(stripB, NUM_LEDS); 
+  FastLED.addLeds<WS2812B, A3, GRB>(stripC, NUM_LEDS); 
+  FastLED.addLeds<WS2812B, A2, GRB>(stripD, NUM_LEDS); 
+  FastLED.addLeds<WS2812B, 7, GRB>(stripE, NUM_LEDS); 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   FastLED.setMaxPowerInVoltsAndMilliamps(5,2500); 
   FastLED.setBrightness(BRIGHTNESS);
   
   for (int i=0; i<NUM_LEDS; i++) {
-      stripA1[i].setHSV(0, 255, 0);
+      stripA[i].setHSV(0, 255, 0);
   }
   FastLED.show(); 
 
@@ -52,7 +58,7 @@ void loop() {
   Serial.println(FastLED.getFPS());
   if(false){
     for (int i=0; i<NUM_LEDS; i++) {
-      stripA1[i].setColorCode(CRGB::YellowGreen);
+      stripA[i].setColorCode(CRGB::YellowGreen);
     }
   }
   else if(state == 1) {
@@ -60,17 +66,20 @@ void loop() {
   }
   else if(state == 2) {
     cycleProgress = mapF((lastUpdate % cycleLength), 0, cycleLength, 0, 1000);
-    setCycleColors(stripA1, cycleProgress);
+    setCycleColors(stripA, cycleProgress);
   }
   else if (state == 3) {
     //sinelon(stripA1, NUM_LEDS);
-    lightplanke(stripA1, 0, NUM_LEDS, false);
+    lightplanke(stripA, 0, NUM_LEDS, false);
+    lightplanke(stripB, 0, NUM_LEDS, false);
+    lightplanke(stripC, 0, NUM_LEDS, false);
+    lightplanke(stripD, 0, NUM_LEDS, false);
   }
   else if (state == 4) {
-    lightplanke(stripA1, 0, NUM_LEDS, true);
+    lightplanke(stripA, 0, NUM_LEDS, true);
   }
   else if (state == 5) {
-    flash(stripA1, 0, 38);
+    flash(stripA, 0, 38);
   }
 
   if(digitalRead(BUTTON_PIN) == 0 && remainingPhase<=0 ){
@@ -80,7 +89,7 @@ void loop() {
   }
 
   cycleProgress = mapF((lastUpdate % cycleLength), 0, cycleLength, 0, 1000);
-  setCycleColors(stripB1, cycleProgress);
+  setCycleColors(stripE, cycleProgress);
 
   FastLED.show();  
   lastUpdate = millis();
@@ -95,7 +104,7 @@ void incrementState(short firstState, short lastState){
   if(state > lastState){
     state = firstState;
     for (int i=0; i<38; i++) {
-      stripA1[i].setHSV(0, 255, 0);
+      stripA[i].setHSV(0, 255, 0);
     }
   }
 }
@@ -125,10 +134,10 @@ void flash(CRGB* strip, int startLed, int stopLed) {
 
 void juggle() {
   // eight colored dots, weaving in and out of sync with each other
-  fadeToBlackBy( stripA1, NUM_LEDS, 20);
+  fadeToBlackBy( stripA, NUM_LEDS, 20);
   uint8_t dothue = 0;
   for( int i = 0; i < 8; i++) {
-    stripA1[beatsin16( i+7, 0, NUM_LEDS-1 )] |= CHSV(dothue, 200, 255);
+    stripA[beatsin16( i+7, 0, NUM_LEDS-1 )] |= CHSV(dothue, 200, 255);
     dothue += 32;
   }
 }
