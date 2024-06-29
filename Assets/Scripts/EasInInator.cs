@@ -16,7 +16,10 @@ public class EasInInator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Init();
+        InitAnimFade();
+
+        InvokeRepeating(nameof(LaterExecution), 1f, 1f);
+        //StartCoroutine(AnimFade(false, FadeDuration));
     }
 
     // Update is called once per frame
@@ -25,24 +28,56 @@ public class EasInInator : MonoBehaviour
         
     }
 
-    void Init()
+
+    void LaterExecution()
     {
-        CrawlForColoredComponents();
-        SaveComponentColors();
-        StartCoroutine(FadeOut(true));
+        if(isActiveAndEnabled)
+            StartCoroutine(AnimPulse(0.7f));
     }
 
 #nullable enable
 #nullable disable
 
-    private IEnumerator FadeOut(bool isOut)
+    private IEnumerator AnimPulse(float duration)
     {
         float startTime = Time.time;
-        float endTime = Time.time + 0.7f;
+        float endTime = Time.time + duration;
 
+        Vector2 startScl = (Vector2) transform.localScale;
+        Vector2 endScl = (Vector2) transform.localScale * 1.2f;
+        Vector2 currentScl = new();
+
+        StartCoroutine(AnimFade(true, duration));
+
+        float animPercentage = 0f;
+        while (Time.time < endTime)
+        {
+            animPercentage = TooManyFuncts.Remap(Time.time, startTime, endTime, 0f, 1f);
+            currentScl.x = TooManyFuncts.Remap(animPercentage, 0f, 1f, startScl.x, endScl.x);
+            currentScl.y = TooManyFuncts.Remap(animPercentage, 0f, 1f, startScl.y, endScl.y);
+
+            transform.localScale = currentScl;
+            yield return null;
+        }
+        animPercentage = 1f;
+        currentScl.x = TooManyFuncts.Remap(animPercentage, 0f, 1f, startScl.x, endScl.x);
+        currentScl.y = TooManyFuncts.Remap(animPercentage, 0f, 1f, startScl.y, endScl.y);
+        transform.localScale = currentScl;
+
+        yield return null;
+
+        transform.localScale = startScl;
+    }
+
+    const float FadeDuration = 0.7f;
+    private IEnumerator AnimFade(bool isOut, float duration)
+    {
+        float startTime = Time.time;
+        float endTime = Time.time + duration;
+
+        float animPercentage = 0f;
         while(Time.time < endTime)
         {
-            float animPercentage = 0f;
             if (isOut is true)
                 animPercentage = TooManyFuncts.Remap(Time.time, startTime, endTime, 1f, 0f);
             else if (isOut is false)
@@ -50,7 +85,9 @@ public class EasInInator : MonoBehaviour
             SetAllComponentsToAlphaPercentage(animPercentage);
             yield return null;
         }
-        SetAllComponentsToAlphaPercentage(0f);
+        if(isOut)   animPercentage = 0f;
+        else        animPercentage = 1f;
+        SetAllComponentsToAlphaPercentage(animPercentage);
 
         void SetAllComponentsToAlphaPercentage(float alphaPercentage)
         {
@@ -68,6 +105,13 @@ public class EasInInator : MonoBehaviour
             }
         }
     }
+
+    void InitAnimFade()
+    {
+        CrawlForColoredComponents();
+        SaveComponentColors();
+    }
+
     private void CrawlForColoredComponents()
     {
         //AlphaStorage = new();
