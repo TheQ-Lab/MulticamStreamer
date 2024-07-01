@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class EasInInator : MonoBehaviour
+public class AnimEngine : MonoBehaviour
 {
     //private List<float> AlphaStorage;
     public List<Image> StorageImg;
@@ -16,9 +16,9 @@ public class EasInInator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitAnimFade();
+        SetupAnimFade();
 
-        InvokeRepeating(nameof(LaterExecution), 1f, 1f);
+        
         //StartCoroutine(AnimFade(false, FadeDuration));
     }
 
@@ -28,8 +28,12 @@ public class EasInInator : MonoBehaviour
         
     }
 
+    public void SchedulePulse()
+    {
+        InvokeRepeating(nameof(TriggerPulse), 1f, 1f);
+    }
 
-    void LaterExecution()
+    public void TriggerPulse()
     {
         if(isActiveAndEnabled)
             StartCoroutine(AnimPulse(0.7f));
@@ -106,7 +110,7 @@ public class EasInInator : MonoBehaviour
         }
     }
 
-    void InitAnimFade()
+    private void SetupAnimFade()
     {
         CrawlForColoredComponents();
         SaveComponentColors();

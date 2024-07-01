@@ -65,7 +65,7 @@ public class VoteManager : MonoBehaviour
         int updatedVotes = Mathf.Clamp(votesDelta + voteButton.currentVotes, 0, voteButton.maxVotes);
         voteButton.UpdateVote(updatedVotes);
 
-        Debug.Log(updatedVotes + " of " + voteButton.maxVotes);
+        Debug.Log(updatedVotes + " of " + voteButton.maxVotes + " votes cast");
 
         if (updatedVotes == voteButton.maxVotes)
         {
