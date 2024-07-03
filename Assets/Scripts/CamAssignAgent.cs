@@ -60,6 +60,9 @@ public class CamAssignAgent: MonoBehaviour
         // ---fixed arguments:---
         //Vector3 frameSize = transform.parent.localScale;
         Vector2 frameSize = new(transform.localScale.x, transform.localScale.z);
+        var mesh = GetComponent<MeshFilter>().mesh;
+        Vector2 meshSize = new(mesh.bounds.size.x, mesh.bounds.size.z);
+        Debug.LogWarning("REEE - " + transform.name + " " + meshSize.ToString());
         // --------------------------------
 
 
@@ -70,6 +73,8 @@ public class CamAssignAgent: MonoBehaviour
         //Debug.Log(aspectRatioTx);
 
         float aspectRatioFrame = Mathf.Abs(TooManyFuncts.Remap(frameSize.y, 0, frameSize.x, 0, 1));
+        aspectRatioFrame *= Mathf.Abs(TooManyFuncts.Remap(meshSize.y, 0, meshSize.x, 0, 1));
+
         //Debug.Log(aspectRatioFrame);
 
         // aspectRaio of Tx < aspectRatio of Frame => crop to Height | crop of right and left edges

@@ -103,7 +103,7 @@ Shader "Unify/operationUniversalBlurForUI"
             {
                 half4 mainTexColor = tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd;
                 
-                half4 color = (tex2D(_GlobalFullScreenBlurTexture, IN.screenPos) + _TextureSampleAdd) * (1 / IN.color); // "1/" is new, inverts color and lets me make white opaque instead of black
+                half4 color = (tex2D(_GlobalFullScreenBlurTexture, IN.screenPos) + _TextureSampleAdd) *  (IN.color); // "1/" is new, inverts color and lets me make white opaque instead of black
 
                 #ifdef UNITY_UI_CLIP_RECT
                 mainTexColor.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
@@ -113,18 +113,32 @@ Shader "Unify/operationUniversalBlurForUI"
                 clip (mainTexColor.a - 0.001);
                 #endif
                 
-                color *= mainTexColor;
+                //color *= mainTexColor;
     //float gradient = (1 / IN.texcoord.x);
-    float gradient = (1 / IN.texcoord.x);
-    //gradient = clamp(gradient, 1.2, 2.0);
+    float gradient = IN.texcoord.x;
     
-    half4 remapBounds = half4(1.2, 2.0, 0., 2.0);
+    gradient = clamp(gradient, 0.0, 1.0);
+    
+    
+    gradient = sqrt(gradient);
+    
+    //half4 remapBounds = half4(1.2, 2.0, 0., 2.0);
+    //half4 remapBounds = half4(0.4, 1, 4.9, 0);
+    half4 remapBounds = half4(0.5, 0.99, 0.45, 0);
 
     gradient = remapBounds.z + (remapBounds.w - remapBounds.z) * ((gradient - remapBounds.x) / (remapBounds.y - remapBounds.x));
+    //gradient = clamp(gradient, 1., 300.);
+    //color *= IN.texcoord.x; // new!
+    //color *= (mainTexColor * gradient);
+    //color *= gradient;
+    //color = 0;
     
-                color *= gradient; // new!
-
-
+    gradient = clamp(gradient, 0.0, 1.0);
+    gradient = clamp(gradient, remapBounds.w, remapBounds.z);
+    
+    //color += gradient;
+    color += ((1 - color) * gradient);
+    color = clamp(color, .0, 1.0);
                 return color;
             }
         ENDCG

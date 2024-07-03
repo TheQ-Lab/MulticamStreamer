@@ -3316,7 +3316,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 513962846}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: c07e4c45ed83b97438ffe571817dbec9, type: 3}
 --- !u!4 &513962851
 Transform:
   m_ObjectHideFlags: 0
@@ -3327,7 +3327,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -2.6709, y: 0.8047, z: 0}
-  m_LocalScale: {x: -1.242405, y: 1, z: -0.8391}
+  m_LocalScale: {x: -1.242405, y: 1, z: -1.242405}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1287102298}
@@ -4621,7 +4621,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 6.39, y: 0, z: 0}
-  m_LocalScale: {x: -0.5, y: 1, z: -0.31}
+  m_LocalScale: {x: -0.5, y: 1, z: -0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 139757432}
@@ -4681,7 +4681,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 679534662}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: c07e4c45ed83b97438ffe571817dbec9, type: 3}
 --- !u!114 &679534668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5212,7 +5212,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 6.39, y: 3.45, z: 0}
-  m_LocalScale: {x: -0.5, y: 1, z: -0.31}
+  m_LocalScale: {x: -0.5, y: 1, z: -0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1374198453}
@@ -5271,7 +5271,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815169763}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: c07e4c45ed83b97438ffe571817dbec9, type: 3}
 --- !u!114 &815169769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7091,7 +7091,15 @@ MonoBehaviour:
     m_Id: 2d1bd53a-76bc-4eb4-bcc4-cca820798efa
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: ac07f626-e5b1-4099-8009-3dfdf5397beb
+      m_Path: <Keyboard>/f12
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Menu Toggle
+      m_Flags: 0
     m_Flags: 0
   SoftShutdown:
     m_Name: Soft Shutdown
@@ -14085,7 +14093,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1371.33, y: 677.1}
+  m_SizeDelta: {x: 960.5, y: 596}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1973971129
 MonoBehaviour:
@@ -14107,14 +14115,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3e02dffbf7d813c4c8151b4a59e20048, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 6ebad600c1ac2e846981ae73b32f22fb, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillMethod: 1
+  m_FillAmount: 0.168
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1973971130
@@ -14372,7 +14380,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1193, y: -767}
+  m_AnchoredPosition: {x: 1227, y: -662}
   m_SizeDelta: {x: 965.6116, y: 194.0816}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2023908120
