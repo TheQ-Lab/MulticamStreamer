@@ -11,7 +11,8 @@ public class AnimEngine : MonoBehaviour
     public List<Color> StorageImgColors;
     public List<TextMeshProUGUI> StorageTMP;
     public List<Color> StorageTMPColors;
-    public int counter = 0;
+    [Tooltip("You know what this one is for. It's safer this way. Trust me.")]
+    public int recursionSanityCounter = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -41,14 +42,15 @@ public class AnimEngine : MonoBehaviour
 
 #nullable enable
 #nullable disable
-
+    [Tooltip("Set the factor for the scale at the end of the anim | Used only in AnimPulse")]
+    public float AnimPulseEndScale = 1.2f;
     private IEnumerator AnimPulse(float duration)
     {
         float startTime = Time.time;
         float endTime = Time.time + duration;
 
         Vector2 startScl = (Vector2) transform.localScale;
-        Vector2 endScl = (Vector2) transform.localScale * 1.2f;
+        Vector2 endScl = (Vector2) transform.localScale * AnimPulseEndScale;
         Vector2 currentScl = new();
 
         StartCoroutine(AnimFade(true, duration));
@@ -127,7 +129,7 @@ public class AnimEngine : MonoBehaviour
         void Recurse(Transform t)
         {
             IdentifyComponentMatches(t);
-            counter++;
+            recursionSanityCounter++;
             foreach (Transform c in t)
             {
                 Recurse(c);
