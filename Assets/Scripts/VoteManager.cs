@@ -29,7 +29,7 @@ public class VoteManager : MonoBehaviour
             scr.SetupVoteBtn(gridAgent);
         }*/
         // TEMP
-        StartCoroutine(this.DelayedExecution(delegate { InitializeVote(5); }, 10.0f));
+        StartCoroutine(this.DelayedExecution(delegate { InitializeVote(5); }, Constants.I.votesDelay));
         //StartCoroutine(this.DelayedExecution(delegate { AddVotes(1, 2); }, 5.0f));
     }
 
@@ -80,7 +80,7 @@ public class VoteManager : MonoBehaviour
                 cam.voteBtn = null;
 
             Instance.StartCoroutine(Instance.DelayedExecution(delegate { CamGridHandler.Instance.SwapTriggered(camNo); }, 1.0f));
-            Instance.StartCoroutine(Instance.DelayedExecution(delegate { InitializeVote(5); }, 8.0f));
+            Instance.StartCoroutine(Instance.DelayedExecution(delegate { InitializeVote(5); }, Constants.I.votesDelay));
         }
     }
 

@@ -14,13 +14,15 @@ public class AnimEngine : MonoBehaviour
     [Tooltip("You know what this one is for. It's safer this way. Trust me.")]
     public int recursionSanityCounter = 0;
 
+    public bool stopAllAnimations = false;
+
     // Start is called before the first frame update
     void Start()
     {
         SetupAnimFade();
 
         
-        //StartCoroutine(AnimFade(false, FadeDuration));
+        //StartCoroutine(AnimFade(false, AnimFadeDuration));
     }
 
     // Update is called once per frame
@@ -55,8 +57,10 @@ public class AnimEngine : MonoBehaviour
 
         StartCoroutine(AnimFade(true, duration));
 
+        yield return null;
+        stopAllAnimations = false;
         float animPercentage = 0f;
-        while (Time.time < endTime)
+        while (Time.time < endTime && !stopAllAnimations)
         {
             animPercentage = TooManyFuncts.Remap(Time.time, startTime, endTime, 0f, 1f);
             currentScl.x = TooManyFuncts.Remap(animPercentage, 0f, 1f, startScl.x, endScl.x);
@@ -65,24 +69,27 @@ public class AnimEngine : MonoBehaviour
             transform.localScale = currentScl;
             yield return null;
         }
+        /*
         animPercentage = 1f;
         currentScl.x = TooManyFuncts.Remap(animPercentage, 0f, 1f, startScl.x, endScl.x);
         currentScl.y = TooManyFuncts.Remap(animPercentage, 0f, 1f, startScl.y, endScl.y);
         transform.localScale = currentScl;
-
         yield return null;
+        */
 
         transform.localScale = startScl;
     }
 
-    const float FadeDuration = 0.7f;
+    public float AnimFadeDuration = 0.7f;
     private IEnumerator AnimFade(bool isOut, float duration)
     {
         float startTime = Time.time;
         float endTime = Time.time + duration;
 
+        yield return null;
+        stopAllAnimations = false;
         float animPercentage = 0f;
-        while(Time.time < endTime)
+        while(Time.time < endTime && !stopAllAnimations)
         {
             if (isOut is true)
                 animPercentage = TooManyFuncts.Remap(Time.time, startTime, endTime, 1f, 0f);
@@ -110,6 +117,15 @@ public class AnimEngine : MonoBehaviour
                 StorageTMP[i].color = new(col.r, col.g, col.b, newAlpha);
             }
         }
+    }
+
+    public void TriggerAnimFade(bool isOut)
+    {
+        if (!isActiveAndEnabled)
+            return;
+        CancelInvoke();
+        StopAllCoroutines();
+        StartCoroutine(AnimFade(isOut, AnimFadeDuration));
     }
 
     private void SetupAnimFade()

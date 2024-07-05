@@ -15,10 +15,16 @@ public class AnimPulseInstantiator : MonoBehaviour
         Destroy(obj.GetComponent<AnimPulseInstantiator>());     // prevent recursive instantiating
         obj.transform.localScale = Vector3.one;                 // resize child to be as big as parent
 
-        var animEngine = obj.AddComponent<AnimEngine>();
+        obj.TryGetComponent<AnimEngine>(out var animEngine);
+        if(animEngine is null) 
+            animEngine = obj.AddComponent<AnimEngine>();
+
         //animEngine.InvokeRepeating(nameof(animEngine.TriggerPulse), 1f, 1f);
         animEngine.AnimPulseEndScale = this.AnimPulseEndScale;
         animEngine.SchedulePulse();
+
+        //CamGridAgent y = GetComponent<CamGridAgent>();
+        //y.swapEvent += (started) => animEngine.TriggerAnimFade(started);
     }
 
     // Update is called once per frame

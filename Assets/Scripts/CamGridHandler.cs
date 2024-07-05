@@ -6,19 +6,21 @@ using UnityEngine;
 public class CamGridHandler : MonoBehaviour
 {
     [Serializable]
-    public class CamFrameTransform
+    public class CamFrameSlot
     {
         public Vector3 position;
         public Vector3 scale;
+        public CamGridAgent currentlyOccupiedBy;
 
-        public CamFrameTransform(Vector3 position, Vector3 scale)
+        public CamFrameSlot(Vector3 position, Vector3 scale, CamGridAgent currentlyOccupiedBy)
         {
             this.position = position;
             this.scale = scale;
+            this.currentlyOccupiedBy = currentlyOccupiedBy;
         }
     }
     public static CamGridHandler Instance;
-    public List<CamFrameTransform> CamFrameTransforms = new ();
+    public List<CamFrameSlot> CamFrameSlots = new ();
     public List<CamGridAgent> CamGridAgents = new ();
     //public Dictionary<CamGridAgent, CamFrameTransform> SlotList;
     public CamGridAgent currentFullScreenCam;
@@ -27,13 +29,16 @@ public class CamGridHandler : MonoBehaviour
     {
         TooManyFuncts.Singletonize(ref Instance, this, false);
 
-        foreach (Transform t in TooManyFuncts.GetChildrenParametric(transform, null, null, true))
+        List<Transform> list = TooManyFuncts.GetChildrenParametric(transform, null, null, true);
+        for (int i = 0; i < list.Count; i++)
         {
+            Transform t = list[i];
             if (t.TryGetComponent<CamGridAgent>(out CamGridAgent agent))
             {
-                CamFrameTransform cft = new(t.position, t.localScale);
-                agent.CamFrameTransform = cft;
-                CamFrameTransforms.Add(cft);
+                CamFrameSlot cft = new(t.position, t.localScale, agent);
+                //agent.CamFrameSlot = cft;
+                agent.CamFrameSlotIndex = i;
+                CamFrameSlots.Add(cft);
                 CamGridAgents.Add(agent);
 
                 // Final one is the Full screen
@@ -66,15 +71,18 @@ public class CamGridHandler : MonoBehaviour
         {
             SfxManager.Instance.PlaySfx(SfxManager.Sfx.CameraSwap);
 
-            swapTgtAgent.StartCoroutine(swapTgtAgent.LaunchAnim(currentFullScreenCam.CamFrameTransform));
-            yield return currentFullScreenCam.StartCoroutine(currentFullScreenCam.LaunchAnim(swapTgtAgent.CamFrameTransform));
-
+            swapTgtAgent.StartCoroutine(swapTgtAgent.LaunchAnim(currentFullScreenCam.CamFrameSlotIndex));
+            yield return currentFullScreenCam.StartCoroutine(currentFullScreenCam.LaunchAnim(swapTgtAgent.CamFrameSlotIndex));
+/*
             List<CamAssignAgent> lst = new();
             lst.Add(swapTgtAgent.assignAgent);
             lst.Add(currentFullScreenCam.assignAgent);
             CamAssignHandler.Instance.ApplyCameraResizes(lst); // necessary? the last 4 lines?
-
+*/
             SfxManager.Instance.PlaySfx(SfxManager.Sfx.CameraSwapCompleted);
+            CamFrameSlots[currentFullScreenCam.CamFrameSlotIndex].currentlyOccupiedBy = currentFullScreenCam;
+            CamFrameSlots[swapTgtAgent.CamFrameSlotIndex].currentlyOccupiedBy = swapTgtAgent;
+
             currentFullScreenCam = swapTgtAgent;
             InputManager.Instance.inSwapAnim.Reset();
         }

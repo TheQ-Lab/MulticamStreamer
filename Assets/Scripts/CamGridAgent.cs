@@ -6,29 +6,36 @@ using MBExtensions;
 public class CamGridAgent : MonoBehaviour
 {
     public CamAssignAgent assignAgent;
-    public CamLabel label;
+    //public CamLabel label;
     public UIVoteButton voteBtn;
 
-    public CamGridHandler.CamFrameTransform CamFrameTransform;
+    //public CamGridHandler.CamFrameSlot CamFrameSlot;
+    public int CamFrameSlotIndex;
+
+    public System.Action<bool, string> swapEvent = (starting, name) => { };
 
     private void Awake()
     {
         assignAgent = GetComponent<CamAssignAgent>();
         var index = transform.GetSiblingIndex();
-        label = GameObject.Find("Labels").transform.GetChild(index).GetComponent<CamLabel>();
+        //label = GameObject.Find("Labels").transform.GetChild(index).GetComponent<CamLabel>();
     }
 
-    public IEnumerator LaunchAnim(CamGridHandler.CamFrameTransform tgtFrameTransform)
+    public IEnumerator LaunchAnim(int tgtFrameSlotIndex)
     {
         //StartCoroutine(PhaseBAnim(new Vector3(-2.98f, 0, 0)));
         //StartCoroutine(PhaseBAnim(new Vector3(5.94999981f, -3.20000005f, 0)));
 
         //assignAgent.tx.Pause();
 
-        label.SwapStarted();
-        yield return StartCoroutine(PhaseBAnim(tgtFrameTransform.position, tgtFrameTransform.scale));
-        CamFrameTransform = tgtFrameTransform;
-        label.SwapEnded();
+        //label.SwapStarted();
+        swapEvent(true, gameObject.name);
+        var tgtFrameSlot = CamGridHandler.Instance.CamFrameSlots[tgtFrameSlotIndex];
+        yield return StartCoroutine(ExecuteAnim(tgtFrameSlot.position, tgtFrameSlot.scale));
+        //CamFrameSlot = tgtFrameSlot;
+        CamFrameSlotIndex = tgtFrameSlotIndex;
+        //label.SwapEnded();
+        swapEvent(false, gameObject.name);
 
         //StartCoroutine(this.DelayedExecution(resumeOperation, new WaitForSeconds(0.1f)));
         /*void resumeOperation()
@@ -42,7 +49,7 @@ public class CamGridAgent : MonoBehaviour
 
     }
 
-    private IEnumerator PhaseBAnim(Vector3 tgtPos, Vector3 tgtScale)
+    private IEnumerator ExecuteAnim(Vector3 tgtPos, Vector3 tgtScale)
     {
         //* phase = 'B';
         Vector3 startPos = transform.position;
@@ -50,7 +57,7 @@ public class CamGridAgent : MonoBehaviour
         Vector3 normal = Vector3.down;
         Vector3.OrthoNormalize(ref directPath, ref normal);
 
-        Vector3 startScale = CamFrameTransform.scale;
+        Vector3 startScale = CamGridHandler.Instance.CamFrameSlots[CamFrameSlotIndex].scale;
 
 
         //Debug.Log(tgtPos + " " + startPos);
