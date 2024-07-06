@@ -28,6 +28,31 @@ public class UIVoteButton : MonoBehaviour
         TryGetComponent(out tracker);
         //camGridAgent = tracker.trackedObj.parent.GetComponent<CamGridAgent>();
         //arrow = TooManyFuncts.GetComponentInChildrenParametric<Image>(transform, "Arrow", null, null);
+
+    }
+
+    private void Start()
+    {
+        //StartCoroutine(this.DelayedExecution(on, 1.5f));
+        /*
+        StartCoroutine(this.DelayedExecution(delegate { InitializeVote(5); }, 1f));
+        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(1); }, 2.5f));
+        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(2); }, 4.0f));
+        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(3); }, 5.2f));
+        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(4); }, 6.4f));
+        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(5); }, 7.6f));
+        */
+
+
+        /*void on()
+        {
+            Debug.Log("boop");
+            gameObject.SetActive(true);
+            animator.Play("Pop in", 1);
+        }*/
+        maxVotes = Constants.I.votesNeededBoth;
+
+        KillPanel();
     }
 
     //1st time Init stuff
@@ -170,28 +195,7 @@ public class UIVoteButton : MonoBehaviour
             lateUpdate.Pop().Invoke();
     }
 */
-    private void Start()
-    {
-        //StartCoroutine(this.DelayedExecution(on, 1.5f));
-        /*
-        StartCoroutine(this.DelayedExecution(delegate { InitializeVote(5); }, 1f));
-        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(1); }, 2.5f));
-        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(2); }, 4.0f));
-        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(3); }, 5.2f));
-        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(4); }, 6.4f));
-        StartCoroutine(this.DelayedExecution(delegate { UpdateVote(5); }, 7.6f));
-        */
-
-
-        /*void on()
-        {
-            Debug.Log("boop");
-            gameObject.SetActive(true);
-            animator.Play("Pop in", 1);
-        }*/
-
-        KillPanel();
-    }
+    
 
 
 

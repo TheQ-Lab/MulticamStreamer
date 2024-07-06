@@ -12,7 +12,7 @@ public class Constants : MonoBehaviour
 
     [SerializeField] public Color red, green, blue;
     [SerializeField] public int commandPanelsPoolSize = 10;
-    [SerializeField] public int votesNeededGtrxColor = 6;
+    [SerializeField] public int votesNeededBoth = 6;
     [SerializeField] public float votesDelay = 3f;
 
 }

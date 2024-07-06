@@ -33,8 +33,8 @@ public class HexButtons : MonoBehaviour
     public void IterateBtnProg(InputSimulatorScript.GravitraxConnex.cmds color)
     {
         ColorBtn btn = buttonDict[color];
-        btn.currentValue = Mathf.Clamp(btn.currentValue + 1, 0, Constants.I.votesNeededGtrxColor);
-        var perc = (float) btn.currentValue / Constants.I.votesNeededGtrxColor;
+        btn.currentValue = Mathf.Clamp(btn.currentValue + 1, 0, Constants.I.votesNeededBoth);
+        var perc = (float) btn.currentValue / Constants.I.votesNeededBoth;
         btn.rim.fillAmount = perc;
         // Debug.Log("currentAmount: " + btn.currentValue + " fill perc: " + perc);
     }

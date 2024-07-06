@@ -3128,7 +3128,7 @@ GameObject:
   - component: {fileID: 513962852}
   - component: {fileID: 513962853}
   m_Layer: 0
-  m_Name: IdontEvenKnowAnyMore
+  m_Name: Wide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4444,7 +4444,7 @@ GameObject:
   - component: {fileID: 679534668}
   - component: {fileID: 679534669}
   m_Layer: 0
-  m_Name: Wide
+  m_Name: Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5032,7 +5032,7 @@ GameObject:
   - component: {fileID: 815169769}
   - component: {fileID: 815169770}
   m_Layer: 0
-  m_Name: Switch
+  m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5977,7 +5977,7 @@ GameObject:
   - component: {fileID: 910672542}
   - component: {fileID: 910672543}
   m_Layer: 0
-  m_Name: Close
+  m_Name: Switch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6141,9 +6141,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Did you know? You can toggle a switch by typing its flag color in chat.
+  m_text: 'You can toggle a switch by typing its color in chat.
 
-'
+    Try it out!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7b4e49ae28fdf9b4684387180db847a3, type: 2}
   m_sharedMaterial: {fileID: -871703421140253111, guid: 7b4e49ae28fdf9b4684387180db847a3, type: 2}
@@ -7189,7 +7189,7 @@ MonoBehaviour:
   green: {r: 0.25567997, g: 0.752, b: 0.29531762, a: 1}
   blue: {r: 0.14867201, g: 0.17906745, b: 0.808, a: 1}
   commandPanelsPoolSize: 10
-  votesNeededGtrxColor: 6
+  votesNeededBoth: 1
   votesDelay: 3
 --- !u!1 &1130842310
 GameObject:
@@ -7324,12 +7324,12 @@ RectTransform:
   m_Children:
   - {fileID: 1788717092}
   - {fileID: 1689008334}
-  - {fileID: 1856097226}
   - {fileID: 1335748518}
-  - {fileID: 851658555}
   - {fileID: 1744876880}
   - {fileID: 46238469}
   - {fileID: 1002321821}
+  - {fileID: 1856097226}
+  - {fileID: 851658555}
   m_Father: {fileID: 1130842314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
