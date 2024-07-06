@@ -11,19 +11,35 @@ public class AnimPulseInstantiator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var obj = Instantiate(gameObject, transform, true);
-        Destroy(obj.GetComponent<AnimPulseInstantiator>());     // prevent recursive instantiating
-        obj.transform.localScale = Vector3.one;                 // resize child to be as big as parent
-
-        var animEngine = obj.AddComponent<AnimEngine>();
-        //animEngine.InvokeRepeating(nameof(animEngine.TriggerPulse), 1f, 1f);
-        animEngine.AnimPulseEndScale = this.AnimPulseEndScale;
-        animEngine.SchedulePulse();
+        //Invoke(nameof(CreateDoubleAndStartAnim), 0.0f);
+        CreateDoubleAndStartAnim();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void CreateDoubleAndStartAnim()
+    {
+        var obj = Instantiate(gameObject, transform, true);
+        Destroy(obj.GetComponent<AnimPulseInstantiator>());     // prevent recursive instantiating
+        obj.transform.localScale = Vector3.one;                 // resize child to be as big as parent
+
+        obj.TryGetComponent<AnimEngine>(out var animEngine);
+        if (animEngine is null)
+            animEngine = obj.AddComponent<AnimEngine>();
+
+        //animEngine.InvokeRepeating(nameof(animEngine.TriggerPulse), 1f, 1f);
+        animEngine.AnimPulseEndScale = this.AnimPulseEndScale;
+
+        animEngine.CancelInvoke();
+        animEngine.stopAllAnimations = true;
+
+        animEngine.SchedulePulse();
+
+        //CamGridAgent y = GetComponent<CamGridAgent>();
+        //y.swapEvent += (started) => animEngine.TriggerAnimFade(started);
     }
 }

@@ -62,7 +62,7 @@ public class CamAssignAgent: MonoBehaviour
         Vector2 frameSize = new(transform.localScale.x, transform.localScale.z);
         var mesh = GetComponent<MeshFilter>().mesh;
         Vector2 meshSize = new(mesh.bounds.size.x, mesh.bounds.size.z);
-        Debug.LogWarning("REEE - " + transform.name + " " + meshSize.ToString());
+        //Debug.LogWarning("REEE - " + transform.name + " " + meshSize.ToString());
         // --------------------------------
 
 
