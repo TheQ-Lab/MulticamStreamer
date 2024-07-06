@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8447810563095347859}
   - component: {fileID: 1449537207106502347}
   m_Layer: 5
-  m_Name: Key (3)
+  m_Name: Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 1840326511434122668}
   - component: {fileID: 8122075684660872824}
   - component: {fileID: 4609342100444012751}
+  - component: {fileID: 1363519958214043747}
   m_Layer: 5
   m_Name: header
   m_TagString: Untagged
@@ -197,8 +198,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5455427238707733002}
-  - {fileID: 686686299317469452}
   - {fileID: 4725409164469994413}
+  - {fileID: 686686299317469452}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -261,7 +262,21 @@ MonoBehaviour:
   StorageTMP: []
   StorageTMPColors: []
   recursionSanityCounter: 0
+  stopAllAnimations: 0
   AnimPulseEndScale: 1.2
+  AnimFadeDuration: 0.7
+--- !u!114 &1363519958214043747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7791767079864619306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 583312f1e7d18f6438dc366cb30a3911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8205202271928782887
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +289,7 @@ GameObject:
   - component: {fileID: 754153271440800038}
   - component: {fileID: 3392283742372847256}
   m_Layer: 5
-  m_Name: Text-Main
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

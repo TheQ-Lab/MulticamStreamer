@@ -12,7 +12,7 @@ public class CamGridAgent : MonoBehaviour
     //public CamGridHandler.CamFrameSlot CamFrameSlot;
     public int CamFrameSlotIndex;
 
-    public System.Action<bool, string> swapEvent = (starting, name) => { };
+    //public System.Action<bool, string> swapEvent = (starting, name) => { };
 
     private void Awake()
     {
@@ -29,13 +29,13 @@ public class CamGridAgent : MonoBehaviour
         //assignAgent.tx.Pause();
 
         //label.SwapStarted();
-        swapEvent(true, gameObject.name);
+        //swapEvent(true, gameObject.name);     // obsolete, moved to gridhandler
         var tgtFrameSlot = CamGridHandler.Instance.CamFrameSlots[tgtFrameSlotIndex];
         yield return StartCoroutine(ExecuteAnim(tgtFrameSlot.position, tgtFrameSlot.scale));
         //CamFrameSlot = tgtFrameSlot;
         CamFrameSlotIndex = tgtFrameSlotIndex;
         //label.SwapEnded();
-        swapEvent(false, gameObject.name);
+        //swapEvent(false, gameObject.name);
 
         //StartCoroutine(this.DelayedExecution(resumeOperation, new WaitForSeconds(0.1f)));
         /*void resumeOperation()
