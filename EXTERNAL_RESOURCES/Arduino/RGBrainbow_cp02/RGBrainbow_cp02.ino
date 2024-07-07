@@ -1,7 +1,10 @@
 #include <FastLED.h>
-
+//marker
 #define NUM_LEDS 38
+#define NUM_LEDS_OUTER 26
 // ALL: 38 | Outer RING: 26 max
+
+
 #define DATA_PIN A4
 #define BUTTON_PIN 2
 
@@ -15,7 +18,7 @@ CRGB stripC[NUM_LEDS];
 CRGB stripD[NUM_LEDS];
 CRGB stripE[NUM_LEDS];
 
-int state = 2;
+int state = 5;
 
 unsigned long lastUpdate = 0;
 unsigned long cycleLength = 2500;
@@ -70,16 +73,20 @@ void loop() {
   }
   else if (state == 3) {
     //sinelon(stripA1, NUM_LEDS);
-    lightplanke(stripA, 0, NUM_LEDS, false);
-    lightplanke(stripB, 0, NUM_LEDS, false);
-    lightplanke(stripC, 0, NUM_LEDS, false);
-    lightplanke(stripD, 0, NUM_LEDS, false);
+    lightplanke(stripA, 0, NUM_LEDS_OUTER, false);
+    lightplanke(stripB, 0, NUM_LEDS_OUTER, false);
+    lightplanke(stripC, 0, NUM_LEDS_OUTER, false);
+    lightplanke(stripD, 0, NUM_LEDS_OUTER, false);
   }
   else if (state == 4) {
-    lightplanke(stripA, 0, NUM_LEDS, true);
+    lightplanke(stripA, 0, NUM_LEDS_OUTER, true);
+    lightplanke(stripB, 0, NUM_LEDS_OUTER, true);
+    lightplanke(stripC, 0, NUM_LEDS_OUTER, true);
+    lightplanke(stripD, 0, NUM_LEDS_OUTER, true);
   }
   else if (state == 5) {
-    flash(stripA, 0, 38);
+    flash(stripA, 0, NUM_LEDS);
+    lightschranke(stripB, 0, NUM_LEDS_OUTER, false);
   }
 
   if(digitalRead(BUTTON_PIN) == 0 && remainingPhase<=0 ){
@@ -149,12 +156,15 @@ void sinelon(CRGB* strip, int size)
   int pos = beatsin16( 20, 0, size-1 );
   strip[pos] += CHSV( 0, 255, 192);
 }
-unsigned int revolutionTime = 2500;
-void lightplanke(CRGB* strip, int start, int length, bool couterclockwise)
+
+void lightplanke(CRGB* strip, int start, int length, bool counterclockwise)
 {
-  fadeToBlackBy( strip, length-start, 14);  // this one applies to entire strip
+  byte localBrightness = 190;
+  unsigned int revolutionTime = 2500;
+
+  fadeToBlackBy( strip, NUM_LEDS-start, 14);  // this one applies to entire strip
   int cycleProgress = millis() % revolutionTime;
-  if(!couterclockwise)
+  if(!counterclockwise)
     cycleProgress = map(cycleProgress, 0, revolutionTime, 0, 1000);
   else
     cycleProgress = map(cycleProgress, revolutionTime, 0, 0, 1000);
@@ -163,13 +173,42 @@ void lightplanke(CRGB* strip, int start, int length, bool couterclockwise)
   int pilotLed = map(cycleProgress, 0, 1000, start, length);
   //Serial.println(pilotLed);
 
-  strip[pilotLed] += CHSV( 0, 255, 192);
+  strip[pilotLed] += CHSV( 0, 255, localBrightness);
   cycleProgress = (cycleProgress + 333) % 1000;
   pilotLed = map(cycleProgress, 0, 1000, start, length);
-  strip[pilotLed] += CHSV( 0, 255, 192);
+  strip[pilotLed] += CHSV( 0, 255, localBrightness);
   cycleProgress = (cycleProgress + 333) % 1000;
   pilotLed = map(cycleProgress, 0, 1000, start, length);
-  strip[pilotLed] += CHSV( 0, 255, 192);
+  strip[pilotLed] += CHSV( 0, 255, localBrightness);
+}
+
+void lightschranke(CRGB* strip, int start, int length, bool counterclockwise)
+{
+  byte localBrightness = 130;
+  unsigned int revolutionTime = 3500;
+
+  if(!counterclockwise)
+    fadeToBlackBy( strip, NUM_LEDS-start, 35);  // this one applies to entire strip
+  int cycleProgress = millis() % revolutionTime;
+  if(!counterclockwise)
+    cycleProgress = map(cycleProgress, 0, revolutionTime, 0, 1000);
+  else
+    cycleProgress = map(cycleProgress, revolutionTime, 0, 0, 1000);
+  // Serial.println(cycleProgress);
+
+  int pilotLed = map(cycleProgress, 0, 1000, start, length);
+  //Serial.println(pilotLed);
+
+  strip[pilotLed] += CHSV( 0, 255, localBrightness);
+  cycleProgress = (cycleProgress + 333) % 1000;
+  pilotLed = map(cycleProgress, 0, 1000, start, length);
+  strip[pilotLed] += CHSV( 0, 255, localBrightness);
+  cycleProgress = (cycleProgress + 333) % 1000;
+  pilotLed = map(cycleProgress, 0, 1000, start, length);
+  strip[pilotLed] += CHSV( 0, 255, localBrightness);
+
+  if (!counterclockwise)
+    lightschranke(strip, start, length, true);
 }
 
 // ------------------------------
