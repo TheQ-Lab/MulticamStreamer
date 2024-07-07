@@ -8,7 +8,7 @@
 #define DATA_PIN A4
 #define BUTTON_PIN 2
 
-#define BRIGHTNESS 140
+#define BRIGHTNESS 130
 #define FRAMES_PER_SECOND 120
 
 CRGB stripA[38];
@@ -58,7 +58,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   Serial.println("state " + String(state));
-  Serial.println(FastLED.getFPS());
+  //Serial.println(FastLED.getFPS());
   if(false){
     for (int i=0; i<NUM_LEDS; i++) {
       stripA[i].setColorCode(CRGB::YellowGreen);
@@ -87,6 +87,7 @@ void loop() {
   else if (state == 5) {
     flash(stripA, 0, NUM_LEDS);
     lightschranke(stripB, 0, NUM_LEDS_OUTER, false);
+    breathe(stripC, 0, NUM_LEDS);
   }
 
   if(digitalRead(BUTTON_PIN) == 0 && remainingPhase<=0 ){
@@ -209,6 +210,24 @@ void lightschranke(CRGB* strip, int start, int length, bool counterclockwise)
 
   if (!counterclockwise)
     lightschranke(strip, start, length, true);
+}
+
+int breatheProgress = 255;
+int breatheDelta = -3;
+void breathe(CRGB* strip, int start, int length)
+{
+  byte localBrightness = 220;
+  byte localBrightnessMin = 80;
+
+  breatheProgress += breatheDelta;
+  Serial.println(breatheProgress);
+  if(breatheProgress <= localBrightnessMin || breatheProgress >= localBrightness){
+    breatheDelta *= -1; 
+    breatheProgress = constrain(breatheProgress, localBrightnessMin, localBrightness);
+  }
+  for(int i=start; i<start+length; i++){
+    strip[i].setHSV(0, 255, breatheProgress);
+  }
 }
 
 // ------------------------------
