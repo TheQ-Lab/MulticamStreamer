@@ -8,7 +8,7 @@
 #define DATA_PIN A4
 #define BUTTON_PIN 2
 
-#define BRIGHTNESS 130
+#define BRIGHTNESS 140
 #define FRAMES_PER_SECOND 120
 
 CRGB stripA[38];
