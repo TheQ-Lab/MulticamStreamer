@@ -126,7 +126,7 @@ Shader "Unify/operationUniversalBlurForUI"
     //half4 remapBounds = half4(0.4, 1, 4.9, 0);
     //half4 remapBounds = half4(0.5, 0.99, 0.45, 0);
     //half4 remapBounds = half4(0.90, 0.99, 0.17, 0);
-    half4 remapBounds = half4(0.58, 0.85, 0.17, 0.01);
+    half4 remapBounds = half4(0.58, 0.85, 0.27, 0.01);
 
     gradient = remapBounds.z + (remapBounds.w - remapBounds.z) * ((gradient - remapBounds.x) / (remapBounds.y - remapBounds.x));
     //gradient = clamp(gradient, 1., 300.);
