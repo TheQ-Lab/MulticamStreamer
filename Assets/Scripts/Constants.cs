@@ -14,5 +14,5 @@ public class Constants : MonoBehaviour
     [SerializeField] public int commandPanelsPoolSize = 10;
     [SerializeField] public int votesNeededBoth = 6;
     [SerializeField] public float votesDelay = 3f;
-
+    [SerializeField] public bool turnAllVoteButtonsInvisible = false;
 }

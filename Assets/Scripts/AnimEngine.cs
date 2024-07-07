@@ -130,17 +130,20 @@ public class AnimEngine : MonoBehaviour
 
     private void SetupAnimFade()
     {
-        CrawlForColoredComponents();
+        CrawlForColoredComponents(out StorageImg, out StorageTMP);
         SaveComponentColors();
     }
 
-    private void CrawlForColoredComponents()
+    private void CrawlForColoredComponents(out List<Image> _StorageImg, out List<TextMeshProUGUI> _StorageTMP)
     {
         //AlphaStorage = new();
-        StorageImg = new();
-        StorageTMP = new();
+        List<Image> __StorageImg = new();
+        List<TextMeshProUGUI> __StorageTMP = new();
 
         Recurse(transform);
+
+        _StorageImg = __StorageImg;
+        _StorageTMP = __StorageTMP;
 
         void Recurse(Transform t)
         {
@@ -156,10 +159,10 @@ public class AnimEngine : MonoBehaviour
         {
             t.TryGetComponent<Image>(out var image);
             if (image is not null)
-                StorageImg.Add(image);
+                __StorageImg.Add(image);
             t.TryGetComponent<TextMeshProUGUI>(out var tmpUI);
             if (tmpUI is not null)
-                StorageTMP.Add(tmpUI);
+                __StorageTMP.Add(tmpUI);
         }
     }
 

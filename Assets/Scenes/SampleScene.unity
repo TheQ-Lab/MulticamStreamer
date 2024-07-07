@@ -6231,6 +6231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 946222162}
+  - component: {fileID: 946222163}
   m_Layer: 5
   m_Name: VoteButtons
   m_TagString: Untagged
@@ -6260,6 +6261,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 270.00003, y: 270.00003}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &946222163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946222161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98965a10f60dfd468367b078f0bd27a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recursionSanityCounter: 0
 --- !u!1 &950432264
 GameObject:
   m_ObjectHideFlags: 0
@@ -7191,6 +7205,7 @@ MonoBehaviour:
   commandPanelsPoolSize: 10
   votesNeededBoth: 1
   votesDelay: 3
+  turnAllVoteButtonsInvisible: 1
 --- !u!1 &1130842310
 GameObject:
   m_ObjectHideFlags: 0
