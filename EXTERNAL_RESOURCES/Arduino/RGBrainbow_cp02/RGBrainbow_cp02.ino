@@ -4,6 +4,9 @@
 #define NUM_LEDS_OUTER 26
 // ALL: 38 | Outer RING: 26 max
 
+#define EXIT_HIGHLIGHT_POSA 14
+#define EXIT_HIGHLIGHT_POSB 22
+
 
 #define DATA_PIN A4
 #define BUTTON_PIN 2
@@ -11,7 +14,7 @@
 #define BRIGHTNESS 130
 #define FRAMES_PER_SECOND 120
 
-CRGB stripA[38];
+CRGB stripA[NUM_LEDS];
 //CRGB stripA2[12];
 CRGB stripB[NUM_LEDS];
 CRGB stripC[NUM_LEDS];
@@ -156,6 +159,31 @@ void sinelon(CRGB* strip, int size)
   fadeToBlackBy( strip, size, 40);  // this one applies to entire strip
   int pos = beatsin16( 20, 0, size-1 );
   strip[pos] += CHSV( 0, 255, 192);
+}
+
+void exitHighlight(CRGB* strip, int start, int length, byte hue, int position)
+{
+  byte localBrightness = 220;
+  unsigned int revolutionTime = 2500;
+
+  fadeToBlackBy( strip, NUM_LEDS-start, 14);  // this one applies to entire strip
+  int cycleProgress = millis() % revolutionTime;
+  cycleProgress = map(cycleProgress, 0, revolutionTime, 0, 1000);
+
+  int pilotLed = map(cycleProgress, 0, 1000, ((EXIT_HIGHLIGHT_POSA - (length/4)) + length) %length, EXIT_HIGHLIGHT_POSA);
+  strip[pilotLed] += CHSV( hue, 255, localBrightness);
+  pilotLed = map(cycleProgress, 0, 1000, EXIT_HIGHLIGHT_POSA - (length/4), EXIT_HIGHLIGHT_POSA);
+/*
+  breatheProgress += breatheDelta;
+  Serial.println(breatheProgress);
+  if(breatheProgress <= localBrightnessMin || breatheProgress >= localBrightness){
+    breatheDelta *= -1; 
+    breatheProgress = constrain(breatheProgress, localBrightnessMin, localBrightness);
+  }
+  for(int i=start; i<start+length; i++){
+    strip[i].setHSV(0, 255, breatheProgress);
+  }
+  */
 }
 
 void lightplanke(CRGB* strip, int start, int length, bool counterclockwise)
