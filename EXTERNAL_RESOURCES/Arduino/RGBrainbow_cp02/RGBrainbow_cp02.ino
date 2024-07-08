@@ -21,7 +21,10 @@ CRGB stripC[NUM_LEDS];
 CRGB stripD[NUM_LEDS];
 CRGB stripE[NUM_LEDS];
 
-int state = 5;
+int phase = 2;
+unsigned long phaseTimer=0;
+int serialInByte;
+int exitHighlightPos = EXIT_HIGHLIGHT_POSA;
 
 unsigned long lastUpdate = 0;
 unsigned long cycleLength = 2500;
@@ -60,34 +63,45 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.println("state " + String(state));
+  Serial.println("state " + String(phase));
   //Serial.println(FastLED.getFPS());
   if(false){
     for (int i=0; i<NUM_LEDS; i++) {
       stripA[i].setColorCode(CRGB::YellowGreen);
     }
   }
-  else if(state == 1) {
-    
+  else if(phase == 1) {
+
+    flash(stripE, 0, NUM_LEDS);
+    if(millis() > phaseTimer)
+      phase++;
   }
-  else if(state == 2) {
+  else if(phase == 2) {
     cycleProgress = mapF((lastUpdate % cycleLength), 0, cycleLength, 0, 1000);
     setCycleColors(stripA, cycleProgress);
+
+    exitHighlight(stripE, 0, NUM_LEDS_OUTER, 0, EXIT_HIGHLIGHT_POSA);
   }
-  else if (state == 3) {
+  else if (phase == 3) {
     //sinelon(stripA1, NUM_LEDS);
     lightplanke(stripA, 0, NUM_LEDS_OUTER, false);
     lightplanke(stripB, 0, NUM_LEDS_OUTER, false);
     lightplanke(stripC, 0, NUM_LEDS_OUTER, false);
     lightplanke(stripD, 0, NUM_LEDS_OUTER, false);
+
+    flash(stripE, 0, NUM_LEDS);
+    if(millis() > phaseTimer)
+      phase++;
   }
-  else if (state == 4) {
+  else if (phase == 4) {
     lightplanke(stripA, 0, NUM_LEDS_OUTER, true);
     lightplanke(stripB, 0, NUM_LEDS_OUTER, true);
     lightplanke(stripC, 0, NUM_LEDS_OUTER, true);
     lightplanke(stripD, 0, NUM_LEDS_OUTER, true);
+
+    exitHighlight(stripE, 0, NUM_LEDS_OUTER, 0, EXIT_HIGHLIGHT_POSB);
   }
-  else if (state == 5) {
+  else if (phase == 5) {
     flash(stripA, 0, NUM_LEDS);
     lightschranke(stripB, 0, NUM_LEDS_OUTER, false);
     breathe(stripC, 0, NUM_LEDS);
@@ -95,26 +109,40 @@ void loop() {
   }
 
   if(digitalRead(BUTTON_PIN) == 0 && remainingPhase<=0 ){
-    state = 2;
+    phase = 2;
     remainingPhase = phaseLength;
     randomHue = random(360);
   }
 
-  cycleProgress = mapF((lastUpdate % cycleLength), 0, cycleLength, 0, 1000);
-  setCycleColors(stripE, cycleProgress);
+  if(Serial.available() > 0){
+    serialInByte = Serial.read();
+    if(char(serialInByte) == 'r'){
+      phase++;
+      if (phase%2 == 0) // if phase is even you're changing during transition-animation, that would just advance phase to the target phase of the previous command
+        phase++;        // so we increment directly to the next transition
+      if(phase > 4)
+        phase = 1;
+      //exitHighlightPos = EXIT_HIGHLIGHT_POSB;
+      phaseTimer = millis() +2000;
+    }
+  }
+  
+
+  //cycleProgress = mapF((lastUpdate % cycleLength), 0, cycleLength, 0, 1000);
+  //setCycleColors(stripE, cycleProgress);
 
   FastLED.show();  
   lastUpdate = millis();
   //FastLED.delay(5);
   FastLED.delay(1000/FRAMES_PER_SECOND); // better than vanilla delay
 
-  EVERY_N_SECONDS(8) { incrementState(5,5); }
+  //EVERY_N_SECONDS(8) { incrementState(5,5); }
 }
 
 void incrementState(short firstState, short lastState){
-  state++;
-  if(state > lastState){
-    state = firstState;
+  phase++;
+  if(phase > lastState){
+    phase = firstState;
     for (int i=0; i<38; i++) {
       stripA[i].setHSV(0, 255, 0);
     }
@@ -173,16 +201,16 @@ void exitHighlight(CRGB* strip, int start, int length, byte hue, int position)
   cycleProgress = map(cycleProgress, 0, revolutionTime, 0, 1000);
 
   int tailStart = round(position - (0.3 * length));
-  Serial.println(tailStart);
+  //Serial.println(tailStart);
   int pilotLed = map(cycleProgress, 0, 1000, tailStart, position+1);
   pilotLed = (pilotLed+ length) %length; // rectified Location
-  Serial.println(pilotLed);
+  //Serial.println(pilotLed);
   strip[pilotLed] = CHSV( hue, 255, localBrightness);
 
   tailStart = round(position + (0.3 * length));
   pilotLed = map(cycleProgress, 0, 1000, tailStart, position-1);
   pilotLed = (pilotLed + 0) %length; // rectified Location
-  Serial.println(pilotLed);
+  //Serial.println(pilotLed);
   strip[pilotLed] = CHSV( hue, 255, localBrightness);
   
   CHSV highlight = CHSV( hue, 60, 0.40*localBrightness);
@@ -254,7 +282,7 @@ void breathe(CRGB* strip, int start, int length)
   byte localBrightnessMin = 80;
 
   breatheProgress += breatheDelta;
-  Serial.println(breatheProgress);
+  //Serial.println(breatheProgress);
   if(breatheProgress <= localBrightnessMin || breatheProgress >= localBrightness){
     breatheDelta *= -1; 
     breatheProgress = constrain(breatheProgress, localBrightnessMin, localBrightness);
