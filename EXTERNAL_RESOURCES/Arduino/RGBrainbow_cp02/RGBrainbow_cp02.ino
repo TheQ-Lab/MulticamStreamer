@@ -4,8 +4,8 @@
 #define NUM_LEDS_OUTER 26
 // ALL: 38 | Outer RING: 26 max
 
-#define EXIT_HIGHLIGHT_POSA 14
-#define EXIT_HIGHLIGHT_POSB 22
+#define EXIT_HIGHLIGHT_POSA 10
+#define EXIT_HIGHLIGHT_POSB 19
 
 
 #define DATA_PIN A4
@@ -91,6 +91,7 @@ void loop() {
     flash(stripA, 0, NUM_LEDS);
     lightschranke(stripB, 0, NUM_LEDS_OUTER, false);
     breathe(stripC, 0, NUM_LEDS);
+    exitHighlight(stripD, 0, NUM_LEDS_OUTER, 0, EXIT_HIGHLIGHT_POSA);
   }
 
   if(digitalRead(BUTTON_PIN) == 0 && remainingPhase<=0 ){
@@ -107,7 +108,7 @@ void loop() {
   //FastLED.delay(5);
   FastLED.delay(1000/FRAMES_PER_SECOND); // better than vanilla delay
 
-  EVERY_N_SECONDS(8) { incrementState(3,5); }
+  EVERY_N_SECONDS(8) { incrementState(5,5); }
 }
 
 void incrementState(short firstState, short lastState){
@@ -163,27 +164,32 @@ void sinelon(CRGB* strip, int size)
 
 void exitHighlight(CRGB* strip, int start, int length, byte hue, int position)
 {
-  byte localBrightness = 220;
-  unsigned int revolutionTime = 2500;
+  byte localBrightness = 160;
+  unsigned int revolutionTime = 650;
 
-  fadeToBlackBy( strip, NUM_LEDS-start, 14);  // this one applies to entire strip
+  fadeToBlackBy( strip, NUM_LEDS-start, 60);  // this one applies to entire strip
+
   int cycleProgress = millis() % revolutionTime;
   cycleProgress = map(cycleProgress, 0, revolutionTime, 0, 1000);
 
-  int pilotLed = map(cycleProgress, 0, 1000, ((EXIT_HIGHLIGHT_POSA - (length/4)) + length) %length, EXIT_HIGHLIGHT_POSA);
-  strip[pilotLed] += CHSV( hue, 255, localBrightness);
-  pilotLed = map(cycleProgress, 0, 1000, EXIT_HIGHLIGHT_POSA - (length/4), EXIT_HIGHLIGHT_POSA);
-/*
-  breatheProgress += breatheDelta;
-  Serial.println(breatheProgress);
-  if(breatheProgress <= localBrightnessMin || breatheProgress >= localBrightness){
-    breatheDelta *= -1; 
-    breatheProgress = constrain(breatheProgress, localBrightnessMin, localBrightness);
-  }
-  for(int i=start; i<start+length; i++){
-    strip[i].setHSV(0, 255, breatheProgress);
-  }
-  */
+  int tailStart = round(position - (0.3 * length));
+  Serial.println(tailStart);
+  int pilotLed = map(cycleProgress, 0, 1000, tailStart, position+1);
+  pilotLed = (pilotLed+ length) %length; // rectified Location
+  Serial.println(pilotLed);
+  strip[pilotLed] = CHSV( hue, 255, localBrightness);
+
+  tailStart = round(position + (0.3 * length));
+  pilotLed = map(cycleProgress, 0, 1000, tailStart, position-1);
+  pilotLed = (pilotLed + 0) %length; // rectified Location
+  Serial.println(pilotLed);
+  strip[pilotLed] = CHSV( hue, 255, localBrightness);
+  
+  CHSV highlight = CHSV( hue, 60, 0.40*localBrightness);
+  strip[position] = highlight;
+  strip[position+1] = highlight;
+  strip[position-1] = highlight;
+
 }
 
 void lightplanke(CRGB* strip, int start, int length, bool counterclockwise)
