@@ -192,15 +192,15 @@ void sinelon(CRGB* strip, int size)
 
 void exitHighlight(CRGB* strip, int start, int length, byte hue, int position)
 {
-  byte localBrightness = 160;
+  byte localBrightness = 255;
   unsigned int revolutionTime = 650;
 
-  fadeToBlackBy( strip, NUM_LEDS-start, 60);  // this one applies to entire strip
+  fadeToBlackBy( strip, NUM_LEDS-start, 32);  // this one applies to entire strip
 
   int cycleProgress = millis() % revolutionTime;
   cycleProgress = map(cycleProgress, 0, revolutionTime, 0, 1000);
 
-  int tailStart = round(position - (0.3 * length));
+  int tailStart = round(position - (0.30 * length));
   //Serial.println(tailStart);
   int pilotLed = map(cycleProgress, 0, 1000, tailStart, position+1);
   pilotLed = (pilotLed+ length) %length; // rectified Location
@@ -213,11 +213,13 @@ void exitHighlight(CRGB* strip, int start, int length, byte hue, int position)
   //Serial.println(pilotLed);
   strip[pilotLed] = CHSV( hue, 255, localBrightness);
   
-  CHSV highlight = CHSV( hue, 60, 0.40*localBrightness);
+  //CHSV highlight = CHSV( hue, 60, 0.65*localBrightness);
+  CRGB highlight = CRGB(90, 90, 70);
   strip[position] = highlight;
-  strip[position+1] = highlight;
+  //strip[position+1] = highlight;
   strip[position-1] = highlight;
-
+  //strip[position-2] = highlight;
+  
 }
 
 void lightplanke(CRGB* strip, int start, int length, bool counterclockwise)
