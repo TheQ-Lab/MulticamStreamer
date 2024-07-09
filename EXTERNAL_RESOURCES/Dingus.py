@@ -1,10 +1,10 @@
 import serial
 import sys
 import os
-from pynput.keyboard import Listener, Key, Controller
+from pynput import keyboard
 
 from time import sleep
-
+# Setup
 if os.name == 'nt':
     serialPort = 'COM5'
 else:
@@ -15,6 +15,8 @@ transmitter = serial.Serial(serialPort, 115200)
 print("linking up to <<" + serialPort + ">>...")
 sleep(2)
 
+print("Input your chars:")
+
 'transmitter.write(b'r')'
 'transmitter.write(keyP.encode())'
 
@@ -22,7 +24,7 @@ sleep(2)
 
 def wait_key():
     ''' Wait for a key press on the console and return it. '''
-    print("Input your chars:")
+    
     result = None
     if os.name == 'nt':
         import msvcrt
@@ -44,15 +46,7 @@ def wait_key():
             termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
 
     return result
-
-while True:
-	keyP = wait_key()
-	if(keyP == 'r'):
-		transmitter.write(b'r')
-
 '''
-keyboard = Controller()
-
 def on_press(key):
     try:
         print('alphanumeric key {0} pressed'.format(
@@ -67,11 +61,38 @@ def on_release(key):
     if key == keyboard.Key.esc:
         # Stop listener
         return False
+'''
+def on_release(key):
+	try:
+		print('alphanumeric key {0} released'.format(
+			key.char))
+		if(key.char == 'r'):
+			transmitter.write(b'r')
+	except AttributeError:
+		print('invalid key {0} released'.format(
+			key))
 
-listener = Listener(
-    on_press=on_press,
+'''
+# Collect events until released
+with keyboard.Listener(
+        on_press=on_press,
+        on_release=on_release) as listener:
+    listener.join()
+'''
+
+# ...or, in a non-blocking fashion:
+listener = keyboard.Listener(
+    #on_press=on_press,
     on_release=on_release)
 listener.start()
+
+while True:
+	sleep(1)
+	
+'''
+	keyP = wait_key()
+	if(keyP == 'r'):
+		transmitter.write(b'r')
 '''
 
 '''
