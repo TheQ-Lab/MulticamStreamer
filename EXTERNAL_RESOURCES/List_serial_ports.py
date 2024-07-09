@@ -2,6 +2,8 @@ import sys
 import glob
 import serial
 
+from time import sleep
+
 
 def serial_ports():
     """ Lists serial port names
@@ -33,4 +35,6 @@ def serial_ports():
 
 
 if __name__ == '__main__':
-	print(serial_ports())
+    print(serial_ports())
+    print("Closing in 5...")
+    sleep(5)

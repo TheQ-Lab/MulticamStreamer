@@ -5,7 +5,10 @@ from pynput.keyboard import Listener, Key, Controller
 
 from time import sleep
 
-serialPort = '/dev/ttyUSB0'
+if os.name == 'nt':
+    serialPort = 'COM5'
+else:
+    serialPort = '/dev/ttyUSB0'
 
 print("Dingus.py - Opening serial port")
 transmitter = serial.Serial(serialPort, 115200)
