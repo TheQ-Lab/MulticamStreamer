@@ -68,6 +68,7 @@ def on_release(key):
 			key.char))
 		if(key.char == 'r'):
 			transmitter.write(b'r')
+			print("                             <" + key.char + "> transmitted")
 	except AttributeError:
 		print('invalid key {0} released'.format(
 			key))
