@@ -62,17 +62,22 @@ def on_release(key):
         # Stop listener
         return False
 '''
-def on_release(key):
-	try:
-		print('alphanumeric key {0} released'.format(
-			key.char))
-		if(key.char == 'r'):
-			transmitter.write(b'r')
-			print("                             <" + key.char + "> transmitted")
-	except AttributeError:
-		print('invalid key {0} released'.format(
-			key))
-
+def on_pressKeyboard(key):
+    try:
+        print('alphanumeric key {0}'.format(
+            key.char))
+        if(key.char == 'r'):
+            transmitter.write(b'r')
+            print("                             <" + key.char + "> transmitted")
+    except AttributeError:
+        print('invalid key {0}'.format(
+            key))
+        if(key == keyboard.Key.esc):
+            if os.name == 'nt':
+                os._exit(0)
+            else:
+                os.kill(os.getpid(), signal.SIGINT)
+            
 '''
 # Collect events until released
 with keyboard.Listener(
@@ -84,7 +89,8 @@ with keyboard.Listener(
 # ...or, in a non-blocking fashion:
 listener = keyboard.Listener(
     #on_press=on_press,
-    on_release=on_release)
+    #on_release=on_release
+    on_press=on_pressKeyboard)
 listener.start()
 
 while True:
