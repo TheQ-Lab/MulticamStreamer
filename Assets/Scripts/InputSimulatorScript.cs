@@ -17,6 +17,7 @@ public class InputSimulatorScript : MonoBehaviour
 
         UnityEngine.Debug.LogWarning(Application.dataPath);
 
+        Invoke(nameof(RunArduinoLightSpacerScript), 0.25f);
         Invoke(nameof(RunGravitraxConnectCliScript), 0.15f);
         Invoke(nameof(RunTwitchPlaysScript), 0.05f);
 
@@ -54,6 +55,7 @@ public class InputSimulatorScript : MonoBehaviour
 
         CloseGravitraxConnectCliScript();
         CloseTwitchPlaysScript();
+        CloseArduinoLightSpacerScript();
 
         InvokeRepeating(nameof(RetryQuit), 0.5f, 1.0f);
         isShutdownRequested = true;
@@ -105,10 +107,16 @@ public class InputSimulatorScript : MonoBehaviour
     {
         string path = Application.dataPath + "/Tools/GraviTrax-Connect/Applications/CLI_Application/gravitrax_cli.py";
         //string command = "cd " + path;
-        UnityEngine.Debug.Log(path);
+        //UnityEngine.Debug.Log(path);
         System.Diagnostics.Process process = System.Diagnostics.Process.Start(path);
 
         startTimeGravitrax = Time.unscaledTime;
+    }
+
+    void RunArduinoLightSpacerScript()
+    {
+        string path = Application.dataPath + "/Tools/Dingus.py";
+        System.Diagnostics.Process process = System.Diagnostics.Process.Start(path);
     }
 
     void CloseTwitchPlaysScript()
@@ -145,6 +153,11 @@ public class InputSimulatorScript : MonoBehaviour
     void CloseGravitraxConnectCliScript()
     {
         inputSimulator.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
+    }
+
+    void CloseArduinoLightSpacerScript()
+    {
+        // Do nothing, Gravitrax already presses Esc
     }
 
     public class GravitraxConnex
