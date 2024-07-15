@@ -63,12 +63,12 @@ void stripECycle(){
 void stripDCycle(){
 
   if(dPhase == 1) {
-    flash(stripD, 0, NUM_LEDS, 240);
+    flash(stripD, 0, NUM_LEDS, 160);
     if(millis() > dPhaseTimer)
       dPhase++;
   }
   else if(dPhase == 2) {
-    lightschranke(stripD, 0, NUM_LEDS_OUTER, 240, false);
+    lightschranke(stripD, 0, NUM_LEDS_OUTER, 160, false);
   }
 }
 
