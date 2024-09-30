@@ -115,7 +115,7 @@ public class InputSimulatorScript : MonoBehaviour
 
     void RunArduinoLightSpacerScript()
     {
-        string path = Application.dataPath + "/Tools/Dingus.py";
+        string path = Application.dataPath + "/Tools/LightSpacer/LightSpacer.py";
         System.Diagnostics.Process process = System.Diagnostics.Process.Start(path);
     }
 

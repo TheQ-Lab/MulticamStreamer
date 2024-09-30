@@ -6,7 +6,7 @@ from pynput import keyboard
 from time import sleep
 # Setup
 if os.name == 'nt':
-    serialPort = 'COM5'
+    serialPort = 'COM6'
 else:
     serialPort = '/dev/ttyUSB0'
 

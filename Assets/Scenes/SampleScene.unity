@@ -8167,7 +8167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1932774e5cdf9f24ea597a9f44887cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultToolbarIndices: 02000000000000000100000003000000
+  defaultToolbarIndices: 00000000000000000100000002000000
   requestedRessolutionHz: {x: 1920, y: 1080, z: 30}
   menuActive: 0
 --- !u!4 &1209219592
