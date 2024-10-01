@@ -44,16 +44,20 @@ void stripECycle(){
 
   if(ePhase == 1) {
     flash(stripE, 0, NUM_LEDS, 0);
-    if(millis() > ePhaseTimer)
+    if(millis() > ePhaseTimer) {
       ePhase++;
+      blink = 0;
+    }
   }
   else if(ePhase == 2) {
     exitHighlight(stripE, 0, NUM_LEDS_OUTER, 0, EXIT_HIGHLIGHT_POSA);
   }
   else if (ePhase == 3) {
     flash(stripE, 0, NUM_LEDS, 0);
-    if(millis() > ePhaseTimer)
+    if(millis() > ePhaseTimer) {
       ePhase++;
+      blink = 0;
+    }
   }
   else if (ePhase == 4) {
     exitHighlight(stripE, 0, NUM_LEDS_OUTER, 0, EXIT_HIGHLIGHT_POSB);
@@ -117,7 +121,7 @@ void loop() {
       if(ePhase > 4)
         ePhase = 1;
       //exitHighlightPos = EXIT_HIGHLIGHT_POSB;
-      ePhaseTimer = millis() +2000;
+      ePhaseTimer = millis() +1500;
     }
     if(char(serialInByte) == 'b'){
       dPhase++;
