@@ -10,12 +10,6 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
-# My Additions
-*.vsconfig
- # Excepts .7z in the Builds Folder
-/[Bb]uilds/*
-!/[Bb]uilds/*.7z
-!/[Bb]uilds/*.exe
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -95,3 +89,9 @@ Thumbs.db
 *.mov
 *.wmv
 
+# My Additions
+*.vsconfig
+ # Excepts .7z in the Builds Folder
+/[Bb]uilds/*
+!/[Bb]uilds/*.7z
+!/[Bb]uilds/*.exe
